@@ -1,0 +1,671 @@
+{
+  "run_id": "addd55bda68b4d70b16b36aaf4843f0e",
+  "match_id": "star",
+  "at_ms": 4200000,
+  "framework": "Microsoft Agent Framework 1.22.0",
+  "provider_requested": "local",
+  "favorite_team": null,
+  "execution_mode": "local-llm",
+  "duration_ms": 31034.502,
+  "published": {
+    "claim": {
+      "claim_id": "star-4200000-vale-pressure",
+      "team_id": "vale",
+      "metric": "pressure",
+      "value": 7.0,
+      "previous_value": 1.0,
+      "window_start_ms": 3600000,
+      "window_end_ms": 4200000,
+      "source_event_ids": [
+        "star-01407",
+        "star-01432",
+        "star-01453",
+        "star-01454",
+        "star-01463",
+        "star-01482",
+        "star-01501"
+      ],
+      "confidence": "moderate",
+      "reason_code": "pressing"
+    },
+    "headline": "Pressure, with the evidence",
+    "text": "Vale Athletic: 7 pressure events in the latest 10 minutes. Previous window: 1. Change: +6. Evidence: 7 events.",
+    "why": "These actions suggest defensive activity. They do not prove a tactical cause or a future goal.",
+    "confidence": "moderate",
+    "audience": "analyst",
+    "language": "en",
+    "overlay": {
+      "overlay_id": "overlay-star-4200000-vale-pressure-analyst-en",
+      "match_id": "star",
+      "start_ms": 4200000,
+      "end_ms": 4215000,
+      "overlay_type": "score_bug",
+      "heading": "Pressure, with the evidence",
+      "supporting_statistic": "Vale Athletic: 7 pressure events in the latest 10 minutes. Previous window: 1. Change: +6. Evidence: 7 events.",
+      "source_event_ids": [
+        "star-01407",
+        "star-01432",
+        "star-01453",
+        "star-01454",
+        "star-01463",
+        "star-01482",
+        "star-01501"
+      ],
+      "position": {
+        "x": 0.05,
+        "y": 0.78,
+        "width": 0.6
+      },
+      "audience": "analyst",
+      "language": "en",
+      "verification_status": "verified"
+    }
+  },
+  "variants": [
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "Pressure, with the evidence",
+      "text": "Vale Athletic: 7 pressure events in the latest 10 minutes. A moment to watch.",
+      "why": "These actions suggest defensive activity. They do not prove a tactical cause or a future goal.",
+      "confidence": "moderate",
+      "audience": "fan",
+      "language": "en",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-fan-en",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "Pressure, with the evidence",
+        "supporting_statistic": "Vale Athletic: 7 pressure events in the latest 10 minutes. A moment to watch.",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "fan",
+        "language": "en",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "दबाव के पीछे के तथ्य",
+      "text": "Vale Athletic: पिछले 10 मिनट में 7 दबाव की घटनाएँ। खेल का यह पहलू ध्यान देने लायक है।",
+      "why": "ये घटनाएँ रक्षात्मक सक्रियता दिखाती हैं। इनसे रणनीतिक कारण या अगले गोल की पुष्टि नहीं होती।",
+      "confidence": "moderate",
+      "audience": "fan",
+      "language": "hi",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-fan-hi",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "दबाव के पीछे के तथ्य",
+        "supporting_statistic": "Vale Athletic: पिछले 10 मिनट में 7 दबाव की घटनाएँ। खेल का यह पहलू ध्यान देने लायक है।",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "fan",
+        "language": "hi",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "La presión y sus pruebas",
+      "text": "Vale Athletic: 7 acciones de presión en los últimos 10 minutos. Un aspecto del juego que merece atención.",
+      "why": "Estas acciones sugieren actividad defensiva; no prueban una causa táctica ni un gol futuro.",
+      "confidence": "moderate",
+      "audience": "fan",
+      "language": "es",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-fan-es",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "La presión y sus pruebas",
+        "supporting_statistic": "Vale Athletic: 7 acciones de presión en los últimos 10 minutos. Un aspecto del juego que merece atención.",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "fan",
+        "language": "es",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "Pressure, with the evidence",
+      "text": "Vale Athletic: 7 pressure events in the latest 10 minutes. Previous window: 1. Change: +6. Evidence: 7 events.",
+      "why": "These actions suggest defensive activity. They do not prove a tactical cause or a future goal.",
+      "confidence": "moderate",
+      "audience": "analyst",
+      "language": "en",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-analyst-en",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "Pressure, with the evidence",
+        "supporting_statistic": "Vale Athletic: 7 pressure events in the latest 10 minutes. Previous window: 1. Change: +6. Evidence: 7 events.",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "analyst",
+        "language": "en",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "दबाव के पीछे के तथ्य",
+      "text": "Vale Athletic: पिछले 10 मिनट में 7 दबाव की घटनाएँ। पिछली अवधि: 1। अंतर: +6। साक्ष्य: 7 घटनाएँ।",
+      "why": "ये घटनाएँ रक्षात्मक सक्रियता दिखाती हैं। इनसे रणनीतिक कारण या अगले गोल की पुष्टि नहीं होती।",
+      "confidence": "moderate",
+      "audience": "analyst",
+      "language": "hi",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-analyst-hi",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "दबाव के पीछे के तथ्य",
+        "supporting_statistic": "Vale Athletic: पिछले 10 मिनट में 7 दबाव की घटनाएँ। पिछली अवधि: 1। अंतर: +6। साक्ष्य: 7 घटनाएँ।",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "analyst",
+        "language": "hi",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "La presión y sus pruebas",
+      "text": "Vale Athletic: 7 acciones de presión en los últimos 10 minutos. Ventana anterior: 1. Cambio: +6. Pruebas: 7 eventos.",
+      "why": "Estas acciones sugieren actividad defensiva; no prueban una causa táctica ni un gol futuro.",
+      "confidence": "moderate",
+      "audience": "analyst",
+      "language": "es",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-analyst-es",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "La presión y sus pruebas",
+        "supporting_statistic": "Vale Athletic: 7 acciones de presión en los últimos 10 minutos. Ventana anterior: 1. Cambio: +6. Pruebas: 7 eventos.",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "analyst",
+        "language": "es",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "Pressure, with the evidence",
+      "text": "VAL | 7 pressure events | in the latest 10 minutes.",
+      "why": "These actions suggest defensive activity. They do not prove a tactical cause or a future goal.",
+      "confidence": "moderate",
+      "audience": "broadcaster",
+      "language": "en",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-broadcaster-en",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "Pressure, with the evidence",
+        "supporting_statistic": "VAL | 7 pressure events | in the latest 10 minutes.",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "broadcaster",
+        "language": "en",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "दबाव के पीछे के तथ्य",
+      "text": "Vale Athletic: पिछले 10 मिनट में 7 दबाव की घटनाएँ।",
+      "why": "ये घटनाएँ रक्षात्मक सक्रियता दिखाती हैं। इनसे रणनीतिक कारण या अगले गोल की पुष्टि नहीं होती।",
+      "confidence": "moderate",
+      "audience": "broadcaster",
+      "language": "hi",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-broadcaster-hi",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "दबाव के पीछे के तथ्य",
+        "supporting_statistic": "Vale Athletic: पिछले 10 मिनट में 7 दबाव की घटनाएँ।",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "broadcaster",
+        "language": "hi",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "star-4200000-vale-pressure",
+        "team_id": "vale",
+        "metric": "pressure",
+        "value": 7.0,
+        "previous_value": 1.0,
+        "window_start_ms": 3600000,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "confidence": "moderate",
+        "reason_code": "pressing"
+      },
+      "headline": "La presión y sus pruebas",
+      "text": "Vale Athletic: 7 acciones de presión en los últimos 10 minutos.",
+      "why": "Estas acciones sugieren actividad defensiva; no prueban una causa táctica ni un gol futuro.",
+      "confidence": "moderate",
+      "audience": "broadcaster",
+      "language": "es",
+      "overlay": {
+        "overlay_id": "overlay-star-4200000-vale-pressure-broadcaster-es",
+        "match_id": "star",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "La presión y sus pruebas",
+        "supporting_statistic": "Vale Athletic: 7 acciones de presión en los últimos 10 minutos.",
+        "source_event_ids": [
+          "star-01407",
+          "star-01432",
+          "star-01453",
+          "star-01454",
+          "star-01463",
+          "star-01482",
+          "star-01501"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "broadcaster",
+        "language": "es",
+        "verification_status": "verified"
+      }
+    }
+  ],
+  "traces": [
+    {
+      "agent": "match_analyst",
+      "task": "You are the Match Analyst. Choose the most useful numerical claim, preferring shots or score changes. Use metric_lookup if helpful. Never compute your own facts. Return JSON {choice: zero-based index, note: short explanation}.",
+      "input_summary": "star @ 4200000 ms; 3 candidate claims; analyst/en",
+      "output_summary": "Ranked 3 evidence-linked claims",
+      "duration_ms": 13560.312,
+      "source_event_ids": [
+        "star-00406",
+        "star-01358"
+      ],
+      "validation": "bounded source metrics",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"Delta values show significant increases for goals and shots in Harbor's favor.\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "tactical_analyst",
+      "task": "You are the Tactical Intelligence specialist. Prefer evidence of a pressure/recovery change, with at least five observations. Avoid causal assertions. Choose from supplied candidates only. Return JSON {choice: index, note: short uncertainty-aware explanation}.",
+      "input_summary": "star @ 4200000 ms; 3 candidate claims; analyst/en",
+      "output_summary": "Ranked 3 evidence-linked claims",
+      "duration_ms": 12889.367,
+      "source_event_ids": [
+        "star-01407",
+        "star-01432",
+        "star-01453",
+        "star-01454",
+        "star-01463",
+        "star-01482",
+        "star-01501"
+      ],
+      "validation": "bounded source metrics",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"Evidence shows a significant increase in pressure and a decrease in recoveries for Vale.\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "narrative",
+      "task": "You are the Narrative editor. Select one claim for a concise football story matching the audience. Prefer a meaningful recent change over routine passing. Return JSON {choice: index, note: short editorial reason}. Do not invent events.",
+      "input_summary": "star @ 4200000 ms; 6 candidate claims; analyst/en",
+      "output_summary": "Selected star-4200000-vale-pressure",
+      "duration_ms": 6720.771,
+      "source_event_ids": [
+        "star-01407",
+        "star-01432",
+        "star-01453",
+        "star-01454",
+        "star-01463",
+        "star-01482",
+        "star-01501"
+      ],
+      "validation": "pending",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"Recent increase in goals by Harbor team.\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "fact_checker",
+      "task": "You are the independent Fact Checker. The supplied tool recount is authoritative. Choice 0 means accept, 1 means reject. Return JSON {choice: 0 or 1, note: short verification reason}. Never accept a failed recount.",
+      "input_summary": "star @ 4200000 ms; 6 candidate claims; analyst/en",
+      "output_summary": "independent event recount and exact evidence set passed",
+      "duration_ms": 6448.361,
+      "source_event_ids": [
+        "star-01407",
+        "star-01432",
+        "star-01453",
+        "star-01454",
+        "star-01463",
+        "star-01482",
+        "star-01501"
+      ],
+      "validation": "passed",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"Evidence supports this choice\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "publisher",
+      "task": "You are the Personalization and Publishing specialist. Select layout: 0=lower third for fans/broadcast, 1=stat card for analysts, 2=score bug for goals. Return JSON {choice: 0,1,2, note: short audience-specific reason}. Verified facts must stay unchanged.",
+      "input_summary": "star @ 4200000 ms; 6 candidate claims; analyst/en",
+      "output_summary": "Published 9 fact-consistent persona/language variants; score_bug",
+      "duration_ms": 3840.113,
+      "source_event_ids": [
+        "star-01407",
+        "star-01432",
+        "star-01453",
+        "star-01454",
+        "star-01463",
+        "star-01482",
+        "star-01501"
+      ],
+      "validation": "verified before publication",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":2,\"note\":\"This metric is typically associated with goal scoring events.\"}",
+      "tool_calls": [],
+      "errors": []
+    }
+  ],
+  "repairs": 0,
+  "status": "published"
+}

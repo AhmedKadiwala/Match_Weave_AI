@@ -1,0 +1,556 @@
+{
+  "run_id": "59e0b24797064b8fb3db9c799a3c7db9",
+  "match_id": "comeback",
+  "at_ms": 4200000,
+  "framework": "Microsoft Agent Framework 1.22.0",
+  "provider_requested": "local",
+  "favorite_team": null,
+  "execution_mode": "local-llm",
+  "duration_ms": 29129.597,
+  "published": {
+    "claim": {
+      "claim_id": "comeback-4200000-vale-goals",
+      "team_id": "vale",
+      "metric": "goals",
+      "value": 2.0,
+      "previous_value": 0.0,
+      "window_start_ms": 0,
+      "window_end_ms": 4200000,
+      "source_event_ids": [
+        "comeback-00485",
+        "comeback-01340"
+      ],
+      "confidence": "high",
+      "reason_code": "score"
+    },
+    "headline": "The score tells a new story",
+    "text": "Vale Athletic: 2 goals in the match so far. Previous window: 0. Change: +2. Evidence: 2 events.",
+    "why": "The score changes the match state. The events show what happened, not who will win.",
+    "confidence": "high",
+    "audience": "analyst",
+    "language": "en",
+    "overlay": {
+      "overlay_id": "overlay-comeback-4200000-vale-goals-analyst-en",
+      "match_id": "comeback",
+      "start_ms": 4200000,
+      "end_ms": 4215000,
+      "overlay_type": "score_bug",
+      "heading": "The score tells a new story",
+      "supporting_statistic": "Vale Athletic: 2 goals in the match so far. Previous window: 0. Change: +2. Evidence: 2 events.",
+      "source_event_ids": [
+        "comeback-00485",
+        "comeback-01340"
+      ],
+      "position": {
+        "x": 0.05,
+        "y": 0.78,
+        "width": 0.6
+      },
+      "audience": "analyst",
+      "language": "en",
+      "verification_status": "verified"
+    }
+  },
+  "variants": [
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "The score tells a new story",
+      "text": "Vale Athletic: 2 goals in the match so far. The story has moved on.",
+      "why": "The score changes the match state. The events show what happened, not who will win.",
+      "confidence": "high",
+      "audience": "fan",
+      "language": "en",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-fan-en",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "The score tells a new story",
+        "supporting_statistic": "Vale Athletic: 2 goals in the match so far. The story has moved on.",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "fan",
+        "language": "en",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "स्कोर की नई कहानी",
+      "text": "Vale Athletic: मैच में अब तक 2 गोल। खेल का यह पहलू ध्यान देने लायक है।",
+      "why": "स्कोर से मैच की स्थिति बदलती है। इससे विजेता की भविष्यवाणी नहीं की जा सकती।",
+      "confidence": "high",
+      "audience": "fan",
+      "language": "hi",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-fan-hi",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "स्कोर की नई कहानी",
+        "supporting_statistic": "Vale Athletic: मैच में अब तक 2 गोल। खेल का यह पहलू ध्यान देने लायक है।",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "fan",
+        "language": "hi",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "Una nueva historia en el marcador",
+      "text": "Vale Athletic: 2 goles en lo que va de partido. Un aspecto del juego que merece atención.",
+      "why": "El marcador cambia el estado del partido; no predice al ganador.",
+      "confidence": "high",
+      "audience": "fan",
+      "language": "es",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-fan-es",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "Una nueva historia en el marcador",
+        "supporting_statistic": "Vale Athletic: 2 goles en lo que va de partido. Un aspecto del juego que merece atención.",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "fan",
+        "language": "es",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "The score tells a new story",
+      "text": "Vale Athletic: 2 goals in the match so far. Previous window: 0. Change: +2. Evidence: 2 events.",
+      "why": "The score changes the match state. The events show what happened, not who will win.",
+      "confidence": "high",
+      "audience": "analyst",
+      "language": "en",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-analyst-en",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "The score tells a new story",
+        "supporting_statistic": "Vale Athletic: 2 goals in the match so far. Previous window: 0. Change: +2. Evidence: 2 events.",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "analyst",
+        "language": "en",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "स्कोर की नई कहानी",
+      "text": "Vale Athletic: मैच में अब तक 2 गोल। पिछली अवधि: 0। अंतर: +2। साक्ष्य: 2 घटनाएँ।",
+      "why": "स्कोर से मैच की स्थिति बदलती है। इससे विजेता की भविष्यवाणी नहीं की जा सकती।",
+      "confidence": "high",
+      "audience": "analyst",
+      "language": "hi",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-analyst-hi",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "स्कोर की नई कहानी",
+        "supporting_statistic": "Vale Athletic: मैच में अब तक 2 गोल। पिछली अवधि: 0। अंतर: +2। साक्ष्य: 2 घटनाएँ।",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "analyst",
+        "language": "hi",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "Una nueva historia en el marcador",
+      "text": "Vale Athletic: 2 goles en lo que va de partido. Ventana anterior: 0. Cambio: +2. Pruebas: 2 eventos.",
+      "why": "El marcador cambia el estado del partido; no predice al ganador.",
+      "confidence": "high",
+      "audience": "analyst",
+      "language": "es",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-analyst-es",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "Una nueva historia en el marcador",
+        "supporting_statistic": "Vale Athletic: 2 goles en lo que va de partido. Ventana anterior: 0. Cambio: +2. Pruebas: 2 eventos.",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "analyst",
+        "language": "es",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "The score tells a new story",
+      "text": "VAL | 2 goals | in the match so far.",
+      "why": "The score changes the match state. The events show what happened, not who will win.",
+      "confidence": "high",
+      "audience": "broadcaster",
+      "language": "en",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-broadcaster-en",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "The score tells a new story",
+        "supporting_statistic": "VAL | 2 goals | in the match so far.",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "broadcaster",
+        "language": "en",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "स्कोर की नई कहानी",
+      "text": "Vale Athletic: मैच में अब तक 2 गोल।",
+      "why": "स्कोर से मैच की स्थिति बदलती है। इससे विजेता की भविष्यवाणी नहीं की जा सकती।",
+      "confidence": "high",
+      "audience": "broadcaster",
+      "language": "hi",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-broadcaster-hi",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "स्कोर की नई कहानी",
+        "supporting_statistic": "Vale Athletic: मैच में अब तक 2 गोल।",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "broadcaster",
+        "language": "hi",
+        "verification_status": "verified"
+      }
+    },
+    {
+      "claim": {
+        "claim_id": "comeback-4200000-vale-goals",
+        "team_id": "vale",
+        "metric": "goals",
+        "value": 2.0,
+        "previous_value": 0.0,
+        "window_start_ms": 0,
+        "window_end_ms": 4200000,
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "confidence": "high",
+        "reason_code": "score"
+      },
+      "headline": "Una nueva historia en el marcador",
+      "text": "Vale Athletic: 2 goles en lo que va de partido.",
+      "why": "El marcador cambia el estado del partido; no predice al ganador.",
+      "confidence": "high",
+      "audience": "broadcaster",
+      "language": "es",
+      "overlay": {
+        "overlay_id": "overlay-comeback-4200000-vale-goals-broadcaster-es",
+        "match_id": "comeback",
+        "start_ms": 4200000,
+        "end_ms": 4215000,
+        "overlay_type": "score_bug",
+        "heading": "Una nueva historia en el marcador",
+        "supporting_statistic": "Vale Athletic: 2 goles en lo que va de partido.",
+        "source_event_ids": [
+          "comeback-00485",
+          "comeback-01340"
+        ],
+        "position": {
+          "x": 0.05,
+          "y": 0.78,
+          "width": 0.6
+        },
+        "audience": "broadcaster",
+        "language": "es",
+        "verification_status": "verified"
+      }
+    }
+  ],
+  "traces": [
+    {
+      "agent": "match_analyst",
+      "task": "You are the Match Analyst. Choose the most useful numerical claim, preferring shots or score changes. Use metric_lookup if helpful. Never compute your own facts. Return JSON {choice: zero-based index, note: short explanation}.",
+      "input_summary": "comeback @ 4200000 ms; 3 candidate claims; analyst/en",
+      "output_summary": "Ranked 3 evidence-linked claims",
+      "duration_ms": 13945.853,
+      "source_event_ids": [
+        "comeback-00485",
+        "comeback-01340"
+      ],
+      "validation": "bounded source metrics",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"The first candidate shows a high confidence increase in goals scored by Vale.\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "tactical_analyst",
+      "task": "You are the Tactical Intelligence specialist. Prefer evidence of a pressure/recovery change, with at least five observations. Avoid causal assertions. Choose from supplied candidates only. Return JSON {choice: index, note: short uncertainty-aware explanation}.",
+      "input_summary": "comeback @ 4200000 ms; 3 candidate claims; analyst/en",
+      "output_summary": "Ranked 3 evidence-linked claims",
+      "duration_ms": 12205.291,
+      "source_event_ids": [
+        "comeback-01390",
+        "comeback-01420",
+        "comeback-01443",
+        "comeback-01456",
+        "comeback-01476",
+        "comeback-01482",
+        "comeback-01485"
+      ],
+      "validation": "bounded source metrics",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"Evidence shows a significant decrease in pressure and recovery metrics for both teams.\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "narrative",
+      "task": "You are the Narrative editor. Select one claim for a concise football story matching the audience. Prefer a meaningful recent change over routine passing. Return JSON {choice: index, note: short editorial reason}. Do not invent events.",
+      "input_summary": "comeback @ 4200000 ms; 6 candidate claims; analyst/en",
+      "output_summary": "Selected comeback-4200000-vale-goals",
+      "duration_ms": 8332.93,
+      "source_event_ids": [
+        "comeback-00485",
+        "comeback-01340"
+      ],
+      "validation": "pending",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"Recent increase in passes completed by V&A (from 11 to 33) while pressure and final third entries decrease.\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "fact_checker",
+      "task": "You are the independent Fact Checker. The supplied tool recount is authoritative. Choice 0 means accept, 1 means reject. Return JSON {choice: 0 or 1, note: short verification reason}. Never accept a failed recount.",
+      "input_summary": "comeback @ 4200000 ms; 6 candidate claims; analyst/en",
+      "output_summary": "independent event recount and exact evidence set passed",
+      "duration_ms": 3757.683,
+      "source_event_ids": [
+        "comeback-00485",
+        "comeback-01340"
+      ],
+      "validation": "passed",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":0,\"note\":\"Evidence supports this choice\"}",
+      "tool_calls": [],
+      "errors": []
+    },
+    {
+      "agent": "publisher",
+      "task": "You are the Personalization and Publishing specialist. Select layout: 0=lower third for fans/broadcast, 1=stat card for analysts, 2=score bug for goals. Return JSON {choice: 0,1,2, note: short audience-specific reason}. Verified facts must stay unchanged.",
+      "input_summary": "comeback @ 4200000 ms; 6 candidate claims; analyst/en",
+      "output_summary": "Published 9 fact-consistent persona/language variants; score_bug",
+      "duration_ms": 2432.645,
+      "source_event_ids": [
+        "comeback-00485",
+        "comeback-01340"
+      ],
+      "validation": "verified before publication",
+      "mode": "local-llm",
+      "model": "qwen2.5-1.5b-instruct-generic-cpu:4",
+      "status": "completed",
+      "attempts": 1,
+      "raw_output": "{\"choice\":2,\"note\":\"Goals are typically tracked in score bugs for analytics purposes.\"}",
+      "tool_calls": [],
+      "errors": []
+    }
+  ],
+  "repairs": 0,
+  "status": "published"
+}

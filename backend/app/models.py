@@ -1,6 +1,8 @@
 """Shared validated event and publication contracts. Coordinates are metres, team-normalized."""
+
 from enum import StrEnum
 from typing import Any, Literal
+
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
