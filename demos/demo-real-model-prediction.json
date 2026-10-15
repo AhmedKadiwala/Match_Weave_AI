@@ -1,0 +1,14 @@
+{
+  "match_id": "real-04682121918019efc4de",
+  "probabilities": {
+    "home": 0.6549302570430482,
+    "draw": 0.18355798978555185,
+    "away": 0.16151175317139993
+  },
+  "model": "Chronological result softmax v1",
+  "model_variant": "evaluation",
+  "feature_cutoff": "2025-09-16",
+  "evaluation": "held-out walk-forward",
+  "source_url": "https://raw.githubusercontent.com/openfootball/champions-league/abfaeddc2ee3d14f99ecc163c9ddb46cb4d67cef/2025-26/cl.txt",
+  "live_feed": false
+}

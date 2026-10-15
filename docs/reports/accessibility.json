@@ -22,5 +22,9 @@
   {
     "view": "Match recap",
     "violations": []
+  },
+  {
+    "view": "Real match lab",
+    "violations": []
   }
 ]

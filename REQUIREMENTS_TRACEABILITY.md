@@ -29,3 +29,14 @@ Reviewed 2026-10-15 against [official rules](https://github.com/microsoft/inside
 | Rubric §6 / honest audit | SCORING_MATRIX, SCORECARD_FINAL | linked tests/benchmarks/screens/video/security evidence | Provisional internal 89/100, below target |
 
 Optional video auto-eventing, live partner integration, cloud provisioning and official tracking/speed metrics are not implemented or claimed. Public URLs and hackathon submission are not fabricated. Registration: Oct 20 noon Pacific; submission: Oct 27 23:59 Pacific; judging access through Nov 10 23:59 Pacific.
+
+## Follow-up traceability
+
+| Request | Implementation | Executed evidence | Status |
+|---|---|---|---|
+| Simple reliable local launch | RUN_MATCHWEAVE.cmd, run-local.ps1, serve_local.py, mounted frontend | One-server browser journey and launcher readiness check | Verified locally |
+| Vercel frontend / Render backend | vercel.json, render.yaml, small requirements, config.py, auto-connect | Config/body/host/CORS tests + separate minimal environment browser test | Prepared and locally simulated; actual cloud auth/deploy pending |
+| Google ping every five minutes | GOOGLE_KEEP_ALIVE.gs + trigger instructions | 5 Node unit checks | Code tested; user installs trigger |
+| Big five + 3 UEFA main competitions, 2021–2025/26, no 2026/27 | history parser/fetcher, licensed source snapshots, cutoff validation | Coverage/uniqueness/exclusion tests; 12,372 scored results and 2 cancelled | Main-competition count coverage complete; no qualifiers/live feed |
+| Actual real-data model training and inference | train_history.py, two fitted JSON models, history_api.py | Reproduced metrics/hashes, 2,283-match holdout, actual server recompute | Executed; not LLM fine-tuning |
+| Explain uniqueness/tests and one-folder upload | WHAT_IS_UNIQUE, TESTING_EXPLAINED, START_HERE, UPLOAD_CHECKLIST | Reports, source/archive inventory | Prepared |

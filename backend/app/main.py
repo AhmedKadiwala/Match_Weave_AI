@@ -9,34 +9,25 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi import APIRouter, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .analytics import state_at
+from .config import Settings
 from .generator import SCENARIOS, generate
+from .history_api import router as history_router
 from .models import Event, Match
+from .security import BodyLimitMiddleware
 from .store import Store
 from .workflow import run_workflow
 
 ROOT = Path(__file__).resolve().parents[2]
-app = FastAPI(
-    title="MatchWeave AI",
-    version="1.0.0",
-    description="Synthetic replay and evidence-verified local AI. No paid APIs.",
-)
-app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver", "[::1]"])
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173", "http://127.0.0.1:4173"],
-    allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
-)
+router = APIRouter()
 log = logging.getLogger("matchweave")
-requests_by_ip = defaultdict(deque)
-model_slots = asyncio.Semaphore(1)
 
 
 @lru_cache(maxsize=1)
@@ -56,18 +47,15 @@ def match_by_id(match_id: str) -> Match:
     )
 
 
-@app.middleware("http")
 async def limits(request: Request, call_next):
     key = request.client.host if request.client else "local"
     now = time.monotonic()
-    recent = requests_by_ip[key]
+    recent = request.app.state.requests_by_ip[key]
     while recent and recent[0] < now - 60:
         recent.popleft()
     if len(recent) >= 240:
         return JSONResponse({"detail": "Request limit reached; retry in one minute"}, 429)
     recent.append(now)
-    if request.method == "POST" and len(await request.body()) > 1_000_000:
-        return JSONResponse({"detail": "Body exceeds 1 MB"}, 413)
     try:
         response = await call_next(request)
         response.headers["X-Content-Type-Options"] = "nosniff"
@@ -78,17 +66,23 @@ async def limits(request: Request, call_next):
         return JSONResponse({"detail": "Internal processing error; inspect local server logs"}, 500)
 
 
-@app.get("/api/health")
-def health():
+@router.get("/api/health")
+def health(request: Request):
+    settings = request.app.state.settings
     return {
         "status": "ok",
-        "cost_mode": "local-only",
+        "cost_mode": "no-paid-inference",
+        "deployment": settings.deployment,
+        "local_inference_enabled": settings.local_inference_enabled,
+        "storage": "ephemeral" if settings.deployment == "render" else "local-sqlite",
         "framework": "Microsoft Agent Framework 1.22.0",
-        "inference": "optional local Foundry / Ollama",
+        "inference": "optional local Foundry / Ollama"
+        if settings.local_inference_enabled
+        else "recorded local LLM outputs + deterministic Microsoft workflow; no hosted model",
     }
 
 
-@app.get("/api/matches")
+@router.get("/api/matches")
 def matches():
     return [
         {k: v for k, v in match_by_id(s[0]).model_dump(mode="json").items() if k != "events"}
@@ -96,12 +90,12 @@ def matches():
     ]
 
 
-@app.get("/api/matches/{match_id}")
+@router.get("/api/matches/{match_id}")
 def get_match(match_id: str):
     return match_by_id(match_id)
 
 
-@app.get("/api/matches/{match_id}/state")
+@router.get("/api/matches/{match_id}/state")
 def state(match_id: str, at_ms: int = Query(default=4_200_000, ge=0, le=5_400_000)):
     return state_at(match_by_id(match_id), at_ms)
 
@@ -110,7 +104,7 @@ class IngestRequest(BaseModel):
     events: list[Event] = Field(min_length=1, max_length=500)
 
 
-@app.post("/api/matches/{match_id}/ingest")
+@router.post("/api/matches/{match_id}/ingest")
 def ingest(match_id: str, body: IngestRequest):
     try:
         return store().ingest(match_by_id(match_id), body.events)
@@ -118,7 +112,7 @@ def ingest(match_id: str, body: IngestRequest):
         raise HTTPException(409, str(exc)) from exc
 
 
-@app.get("/api/matches/{match_id}/ingested-state")
+@router.get("/api/matches/{match_id}/ingested-state")
 def ingested_state(match_id: str):
     source = match_by_id(match_id)
     events = store().events(match_id)
@@ -135,8 +129,14 @@ class AnalyzeRequest(BaseModel):
     source: Literal["replay", "ingested"] = "replay"
 
 
-@app.post("/api/matches/{match_id}/analyze")
-async def analyze(match_id: str, body: AnalyzeRequest):
+@router.post("/api/matches/{match_id}/analyze")
+async def analyze(match_id: str, body: AnalyzeRequest, request: Request):
+    if body.provider == "local" and not request.app.state.settings.local_inference_enabled:
+        raise HTTPException(
+            400,
+            "Local-model inference is disabled on Render. Choose deterministic workflow or inspect recorded local-model runs.",
+        )
+    model_slots = request.app.state.model_slots
     match = match_by_id(match_id)
     if body.source == "ingested":
         match = match.model_copy(update={"events": store().events(match_id)})
@@ -152,7 +152,7 @@ async def analyze(match_id: str, body: AnalyzeRequest):
     return run
 
 
-@app.get("/api/runs/{run_id}")
+@router.get("/api/runs/{run_id}")
 def get_run(run_id: str):
     result = store().get_run(run_id)
     if result is None:
@@ -160,7 +160,7 @@ def get_run(run_id: str):
     return result
 
 
-@app.get("/api/matches/{match_id}/stream")
+@router.get("/api/matches/{match_id}/stream")
 async def stream(
     match_id: str, request: Request, speed: float = Query(120, ge=1, le=10_000), after: int = Query(-1, ge=-1)
 ):
@@ -180,3 +180,45 @@ async def stream(
         yield "event: complete\ndata: {}\n\n"
 
     return StreamingResponse(replay(), media_type="text/event-stream", headers={"X-Accel-Buffering": "no"})
+
+
+def create_app(settings: Settings | None = None, frontend_dir: Path | None = None) -> FastAPI:
+    settings = settings or Settings.from_env()
+    application = FastAPI(
+        title="MatchWeave AI",
+        version="1.1.0",
+        description="Synthetic replay and verified Microsoft workflows. No paid APIs.",
+    )
+    application.state.settings = settings
+    application.state.requests_by_ip = defaultdict(deque)
+    application.state.model_slots = asyncio.Semaphore(1)
+    application.add_middleware(TrustedHostMiddleware, allowed_hosts=list(settings.allowed_hosts))
+    application.add_middleware(BodyLimitMiddleware)
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=list(settings.cors_origins),
+        allow_methods=["GET", "POST"],
+        allow_headers=["Content-Type"],
+    )
+    application.middleware("http")(limits)
+    application.include_router(router)
+    application.include_router(history_router)
+    frontend = frontend_dir if frontend_dir is not None else ROOT / "frontend" / "dist"
+    if (frontend / "index.html").is_file():
+        application.mount("/", StaticFiles(directory=str(frontend), html=True), name="frontend")
+    else:
+
+        @application.get("/")
+        def welcome():
+            return {
+                "service": "MatchWeave API",
+                "status": "ready",
+                "health": "/api/health",
+                "docs": "/docs",
+                "frontend": "Deploy frontend/ to Vercel, or run scripts/setup.ps1 for local use.",
+            }
+
+    return application
+
+
+app = create_app()

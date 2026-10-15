@@ -18,8 +18,14 @@ def main():
     cases = list(suite.iter("testcase"))
     errors = list(suite.iter("failure")) + list(suite.iter("error"))
     browser = json.loads((report_dir / "browser-tests.json").read_text(encoding="utf-8-sig"))["stats"]
+    cloud_browser = json.loads((report_dir / "render-browser-tests.json").read_text(encoding="utf-8-sig"))[
+        "stats"
+    ]
+    script_suite = ET.parse(report_dir / "keep-alive-tests.xml").getroot()
+    script_cases = list(script_suite.iter("testcase"))
     video = json.loads((report_dir / "video.json").read_text(encoding="utf-8"))
     assert not errors and browser["unexpected"] == 0 and browser["skipped"] == 0
+    assert cloud_browser["unexpected"] == 0 and not list(script_suite.iter("failure"))
     assert video["duration_seconds"] < 120
     source = output / "matchweave-submission.zip"
     static = output / "matchweave-static-demo.zip"
@@ -51,6 +57,18 @@ def main():
         for path in sorted(dist.rglob("*")):
             if path.is_file():
                 archive.write(path, path.relative_to(dist).as_posix())
+    clean = (root / "READY_TO_UPLOAD").resolve()
+    assert clean.is_relative_to(root) and clean.name == "READY_TO_UPLOAD"
+    clean.mkdir(exist_ok=True)
+    # Materialize only this source archive's safe files; never recursively delete or move user files.
+    with zipfile.ZipFile(source) as archive:
+        assert archive.testzip() is None
+        for name in archive.namelist():
+            relative = Path(name).relative_to("matchweave-ai")
+            destination = (clean / relative).resolve()
+            assert destination.is_relative_to(clean)
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(archive.read(name))
 
     def entry(path):
         return {
@@ -66,6 +84,16 @@ def main():
         "video": entry(root / "demos/matchweave-demo.mp4"),
         "backend_tests": f"{len(cases)}/{len(cases)} passed",
         "browser_tests": f"{browser['expected']}/{browser['expected']} passed",
+        "minimal_render_profile_browser_tests": f"{cloud_browser['expected']} passed locally",
+        "google_script_unit_tests": f"{len(script_cases)} passed in Node",
+        "clean_upload_folder": str(clean),
+        "historical_results": json.loads((report_dir / "historical-model.json").read_text())[
+            "production_training_matches"
+        ],
+        "historical_holdout_matches": json.loads((report_dir / "historical-model.json").read_text())[
+            "heldout"
+        ]["matches"],
+        "excluded_season": "2026-27",
         "video_duration_seconds": video["duration_seconds"],
         "internal_score": 89,
         "public_repository_url": None,
@@ -74,6 +102,10 @@ def main():
         "portal_submitted": False,
     }
     (output / "release-manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    (clean / "deployment").mkdir(exist_ok=True)
+    (clean / "deployment" / "release-manifest.json").write_text(
+        json.dumps(manifest, indent=2), encoding="utf-8"
+    )
     print(json.dumps(manifest, indent=2))
 
 

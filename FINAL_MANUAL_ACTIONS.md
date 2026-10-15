@@ -1,10 +1,11 @@
-# Remaining actions for the entrant
+# Remaining manual actions
 
-1. **Confirm eligibility and register before Oct 21, 2026, 00:30 IST** (Oct 20 noon Pacific). Use the official portal; verify residence/adult/conflict/ownership requirements and enter only real team details. No registration has been made by this project.
-2. Sign in to GitHub, create a new empty public repository, push this local source, enable GitHub Actions as the Pages source and run the prepared Pages workflow. DEPLOYMENT.md has exact commands. GitHub Git authentication was unavailable here.
-3. Open the literal successful deployment URL signed out. Verify all five matches, languages, player/evidence/agent views and JSON downloads. Paste the verified public source/demo URLs into SUBMISSION.md.
-4. Watch demos/matchweave-demo.mp4, then upload it to an allowed public video host (YouTube/Vimeo, etc.). It is verified at 105 seconds. Upload captions.srt if supported, confirm signed-out unrestricted access and paste the actual video URL into the submission.
-5. Paste the prepared title, pitch, full description and testing instructions into the portal, complete any additional authenticated fields, submit before **Oct 28, 12:29 IST** (Oct 27 23:59 Pacific), and retain the confirmation.
-6. Keep public source, video and demo/test build free and accessible until **Nov 11, 13:29 IST** (Nov 10 23:59 Pacific). Do not enable a paid plan or cloud inference.
+1. Follow UPLOAD_CHECKLIST.md: push/upload this complete source repository to GitHub.
+2. Deploy the backend on Render Free with the supplied settings, then deploy frontend/ to Vercel Hobby with VITE_API_URL set to the actual backend URL.
+3. Set MATCHWEAVE_CORS_ORIGINS on Render to the actual Vercel production origin and verify signed-out browser access.
+4. Paste GOOGLE_KEEP_ALIVE.gs into Google Apps Script, set its real backend URL, run pingBackend once, and create your Time-driven > Every 5 minutes trigger. No Google trigger has been installed here.
+5. Inspect the seven views, historical match sources/estimates, fresh hosted deterministic workflows, model recompute and overlay export in the deployed app. Public deployment has not been claimed as successful.
+6. Review/upload the actual 105-second demo video and captions, include the Real match lab screenshot/model report, paste actual public URLs into SUBMISSION.md, complete real entrant/team/eligibility details and submit through the portal.
+7. Maintain free, unrestricted judging access through Nov 10, 2026, 23:59 Pacific (Nov 11, 13:29 IST). Registration closes Oct 20 noon Pacific (Oct 21, 00:30 IST); submission closes Oct 27, 23:59 Pacific (Oct 28, 12:29 IST).
 
-No code, paid key, cloud provisioning or minor design choice is required to demonstrate the current application. Independent football/language/user review and broader evaluation are recommended quality improvements, not completed claims. The provisional internal evidence score is 89/100; the minimum 90 target has not been asserted.
+Everything is under C:\Users\Ahmed Kadiwala\matchweave-ai. The original OneDrive workspace continues to reject writes; no security setting was weakened to bypass it. The ML dataset excludes 2026–27 as confirmed. No paid API key, Foundry model on Render, or invented public URL is needed.

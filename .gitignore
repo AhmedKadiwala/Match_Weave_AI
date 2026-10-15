@@ -12,3 +12,4 @@ playwright-report/
 .tools/
 *.zip
 *.tsbuildinfo
+READY_TO_UPLOAD/

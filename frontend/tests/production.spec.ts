@@ -23,5 +23,8 @@ test("production static build serves every view, bundled font and recorded model
     await page.getByRole("button", { name, exact: true }).click();
     await expect(page.locator(".page-heading")).toBeVisible();
   }
+  await page.getByRole('button',{name:'Real match lab',exact:true}).click();
+  await expect(page.locator('.history-metrics')).toContainText('12,372');
+  await expect(page.locator('.data-label')).toContainText('REAL HISTORICAL DATA');
   expect(failures).toEqual([]);
 });

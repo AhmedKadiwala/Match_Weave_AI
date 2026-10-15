@@ -14,6 +14,7 @@ test("all views expose usable accessible names and no serious axe violations", a
     "Broadcast studio",
     "Agent intelligence",
     "Match recap",
+    "Real match lab",
   ]) {
     await page.getByRole("button", { name, exact: true }).click();
     const result = await new AxeBuilder({ page })

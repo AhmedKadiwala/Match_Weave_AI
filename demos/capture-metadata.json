@@ -6,7 +6,9 @@
     "height": 900
   },
   "scene_duration_seconds": 105,
-  "trim_start_seconds": 2.574,
-  "recorded_model_outputs": true,
-  "live_inference_during_capture": false
+  "trim_start_seconds": 2.373,
+  "recorded_local_llm_outputs": true,
+  "live_llm_inference_during_capture": false,
+  "fresh_historical_model_inference_during_capture": true,
+  "views_captured": 7
 }

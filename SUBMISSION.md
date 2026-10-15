@@ -70,3 +70,9 @@ Legal entrant/representative name, country/residence, adult eligibility, organiz
 - [ ] Free unrestricted judging access maintained through November 10 at 23:59 Pacific.
 
 Registration deadline: **October 20 noon Pacific / October 21 at 00:30 IST**. Submission deadline: **October 27 at 23:59 Pacific / October 28 at 12:29 IST**. Judging access ends **November 10 at 23:59 Pacific / November 11 at 13:29 IST**. Verify portal notices against the [official rules](https://github.com/microsoft/insidethegamehackathon/blob/main/OFFICIAL%20RULES.md).
+
+## Updated project description addendum
+
+The current build adds Real match lab to the original six event-intelligence views. It includes 12,372 scored main-competition results plus two cancelled fixtures across the big five leagues and Champions/Europa/Conference Leagues, from Jan 2021 through Jun 2026, with 2026–27 excluded. A multinomial logistic-regression result model is actually trained and tested chronologically; a separate production refit uses all completed matches. The frozen-model 2025–26 holdout contains 2,283 matches and measured 52.17% accuracy versus 45.38% frequency baseline. It is not an LLM fine-tune or a real tactical-event feed. The synthetic challenge pipeline stays separate and labeled. Historical sources retain CC0/CC BY-SA attribution and revision metadata; data/model artifacts have their own license.
+
+Deployment instructions now target Vercel frontend + Render Free backend with an optional Google Apps Script health GET every five minutes. Render runs real deterministic Microsoft workflows and trained result-model inference; actual local LLM traces are recorded and local-model generation stays on the PC. Authenticated public deployment and trigger creation remain pending. The updated 105-second actual video shows all seven views and fresh historical-model recomputation. Use UPLOAD_CHECKLIST.md before publishing and paste only verified public URLs into the portal.

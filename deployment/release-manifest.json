@@ -1,25 +1,31 @@
 {
-  "created_ist": "2026-10-15T20:34:54.096245+05:30",
-  "source_files": 130,
+  "created_ist": "2026-10-15T21:36:47.219590+05:30",
+  "source_files": 241,
   "archives": [
     {
       "path": "deployment/matchweave-submission.zip",
-      "bytes": 15406219,
-      "sha256": "521386943417acc3057163b7d814a5c2360f3537e530c9bf5e444ce0674c7432"
+      "bytes": 18762965,
+      "sha256": "7c40d5d443b832e3b6917218e335b8ef05f4d251be6a732d22cf49205defc38a"
     },
     {
       "path": "deployment/matchweave-static-demo.zip",
-      "bytes": 836348,
-      "sha256": "2a723f6899cf890230db23bfcbbbf80b26b5ea974e945c4778369e6fb0254db9"
+      "bytes": 2081279,
+      "sha256": "724cdfd309205b346b4921b53d2f1cdc01a9e66d5e9aa9cf500653abdbe7c3da"
     }
   ],
   "video": {
     "path": "demos/matchweave-demo.mp4",
-    "bytes": 4573008,
-    "sha256": "a84b99dd1ec8754745e7ee6729ac8b36d515526d765a8ae6ef5207b49af52def"
+    "bytes": 4815509,
+    "sha256": "cd596c6a134c8051a06560f8072dc7070d7450e7ca988e3e8d02ab5cdde5757b"
   },
-  "backend_tests": "27/27 passed",
-  "browser_tests": "9/9 passed",
+  "backend_tests": "45/45 passed",
+  "browser_tests": "11/11 passed",
+  "minimal_render_profile_browser_tests": "1 passed locally",
+  "google_script_unit_tests": "5 passed in Node",
+  "clean_upload_folder": "C:\\Users\\Ahmed Kadiwala\\matchweave-ai\\READY_TO_UPLOAD",
+  "historical_results": 12372,
+  "historical_holdout_matches": 2283,
+  "excluded_season": "2026-27",
   "video_duration_seconds": 105.0,
   "internal_score": 89,
   "public_repository_url": null,

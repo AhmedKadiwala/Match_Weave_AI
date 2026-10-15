@@ -1,0 +1,34 @@
+MATCHWEAVE AI — original software demonstration, actual local browser recording.
+
+Real historical results: OpenFootball public-domain/CC0 repositories and Wikipedia contributors (CC BY-SA 4.0). Structured result fields were extracted and normalized; no article prose, imagery, club logos or footage is used. Synthetic events, interface graphics and narration are original.
+
+Data license: https://creativecommons.org/licenses/by-sa/4.0/
+OpenFootball: https://github.com/openfootball/football.json and https://github.com/openfootball/champions-league
+Wikipedia revision/contributor attribution:
+2025–26 UEFA Europa League league phase
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Europa+League+league+phase&oldid=1379822606
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Europa+League+league+phase&action=history
+
+2025–26 UEFA Europa League knockout phase
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Europa+League+knockout+phase&oldid=1355264072
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Europa+League+knockout+phase&action=history
+
+2026 UEFA Europa League final
+https://en.wikipedia.org/w/index.php?title=2026+UEFA+Europa+League+final&oldid=1378011998
+https://en.wikipedia.org/w/index.php?title=2026+UEFA+Europa+League+final&action=history
+
+2025–26 UEFA Conference League league phase
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Conference+League+league+phase&oldid=1379823011
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Conference+League+league+phase&action=history
+
+2025–26 UEFA Conference League knockout phase
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Conference+League+knockout+phase&oldid=1366540053
+https://en.wikipedia.org/w/index.php?title=2025%E2%80%9326+UEFA+Conference+League+knockout+phase&action=history
+
+2026 UEFA Conference League final
+https://en.wikipedia.org/w/index.php?title=2026+UEFA+Conference+League+final&oldid=1378012006
+https://en.wikipedia.org/w/index.php?title=2026+UEFA+Conference+League+final&action=history
+
+The displayed LLM execution traces are actual recorded local runs; the real-result model recomputation is a fresh local backend request. Vercel/Render hosting is a prepared deployment path, not a publicly deployed service shown in this footage.
+
+Add your verified public repository, demo and testing links here before publishing. Full licenses, source hashes, model card and test reports accompany the repository.

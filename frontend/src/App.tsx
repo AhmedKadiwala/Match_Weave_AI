@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
+  Database,
   ArrowDownToLine,
   ArrowRight,
   AudioLines,
@@ -45,6 +46,8 @@ import type {
 import { Pitch } from "./components/Pitch";
 import { Momentum } from "./components/Momentum";
 import "./styles.css";
+import { HistoryLab } from "./features/HistoryLab";
+import { API_CONFIG } from "./services/api";
 
 const views = [
   { id: "live", name: "Live intelligence", icon: Activity },
@@ -53,8 +56,9 @@ const views = [
   { id: "broadcast", name: "Broadcast studio", icon: Radio },
   { id: "agents", name: "Agent intelligence", icon: Network },
   { id: "recap", name: "Match recap", icon: FileText },
+  { id: "history", name: "Real match lab", icon: Database },
 ];
-const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const API = API_CONFIG.baseURL;
 const time = (ms: number) =>
   `${String(Math.floor(ms / 60000)).padStart(2, "0")}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")}`;
 const words = (s: string) => s.replaceAll("_", " ");
@@ -86,6 +90,9 @@ function Club({ short, away = false }: { short: string; away?: boolean }) {
 }
 
 export default function App() {
+  const [backendConnecting, setBackendConnecting] = useState(false);
+  const [backendDeployment, setBackendDeployment] = useState("local");
+  const [localInferenceEnabled, setLocalInferenceEnabled] = useState(true);
   const [comparison, setComparison] = useState<{
     sample_size: number;
     single_correct: number;
@@ -121,6 +128,9 @@ export default function App() {
     [freshRun, setFreshRun] = useState<Run | null>(null),
     [busy, setBusy] = useState(false),
     [provider, setProvider] = useState("deterministic");
+  useEffect(() => {
+    if (API_CONFIG.autoConnect) void connect();
+  }, []);
   const [overlayType, setOverlayType] = useState("lower_third"),
     [showOverlay, setShowOverlay] = useState(true),
     [recovery, setRecovery] = useState(false),
@@ -284,22 +294,44 @@ export default function App() {
     .slice(-14)
     .reverse();
   async function connect() {
+    if (!API) {
+      setNotice(API_CONFIG.error);
+      return;
+    }
+    setBackendConnecting(true);
     try {
       const r = await fetch(`${API}/api/health`, {
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(API_CONFIG.remote ? 75000 : 5000),
       });
-      if (!r.ok) throw Error();
+      if (!r.ok) throw Error(`Health request returned HTTP ${r.status}`);
+      const health = await r.json();
+      if (health.status !== "ok") throw Error("Backend is not ready");
+      setBackendDeployment(health.deployment || "local");
+      setLocalInferenceEnabled(health.local_inference_enabled !== false);
+      if (health.local_inference_enabled === false)
+        setProvider("deterministic");
       setConnected(true);
-      setNotice("Connected to the local Python backend.");
-    } catch {
       setNotice(
-        "Start the backend on port 8000 to connect. Offline replay is available.",
+        health.deployment === "render"
+          ? "Render backend connected. Fresh Microsoft workflows are available; LLM runs remain recorded."
+          : "Connected to the local Python backend.",
       );
+    } catch (e) {
+      setConnected(false);
+      setNotice(
+        API_CONFIG.remote
+          ? "Render is unavailable or still waking. Recorded replay works now. Check the backend URL and allowed Vercel origin, then retry."
+          : "Start RUN_MATCHWEAVE.cmd in the project folder, then retry. Recorded replay is available.",
+      );
+    } finally {
+      setBackendConnecting(false);
     }
   }
   async function analyze(inject = false) {
     if (!connected) {
-      setNotice("Connect the local backend to execute a new workflow.");
+      setNotice(
+        "Connect the backend to execute a new workflow. Recorded runs remain available.",
+      );
       return;
     }
     setBusy(true);
@@ -596,6 +628,7 @@ export default function App() {
           {views.map((v) => (
             <button
               key={v.id}
+              aria-label={v.name}
               className={view === v.id ? "active" : ""}
               onClick={() => {
                 setView(v.id);
@@ -644,14 +677,25 @@ export default function App() {
           </div>
           <div className="topbar-right">
             <span className="data-label">
-              <span className="tiny-dot" /> SYNTHETIC DATA
+              <span className="tiny-dot" /> {view === "history" ? "REAL HISTORICAL DATA" : "SYNTHETIC DATA"}
             </span>
             <button
               className={`connect-button ${connected ? "connected" : ""}`}
+              disabled={backendConnecting}
               onClick={() => (connected ? setConnected(false) : connect())}
             >
               <Link2 size={13} />
-              {connected ? "Local backend connected" : "Connect local backend"}
+              {backendConnecting
+                ? "Connecting backend…"
+                : connected
+                  ? backendDeployment === "render"
+                    ? "Render backend connected"
+                    : "Local backend connected"
+                  : API_CONFIG.remote
+                    ? "Connect Render backend"
+                    : API
+                      ? "Connect local backend"
+                      : "Backend setup"}
             </button>
             <button
               className="avatar"
@@ -669,165 +713,183 @@ export default function App() {
                 <span className="tiny-dot" /> MATCHWEAVE LAB / MATCHDAY 01
               </div>
               <h1>
-                {view === "live"
-                  ? "The match, beyond the score."
-                  : view === "fans"
-                    ? "One match. Your perspective."
-                    : view === "broadcast"
-                      ? "From insight to on air."
-                      : view === "agents"
-                        ? "Intelligence you can inspect."
-                        : view === "recap"
-                          ? "Every moment. One story."
-                          : "Read the game in detail."}
+                {view === "history"
+                  ? "Real matches. Measured intelligence."
+                  : view === "live"
+                    ? "The match, beyond the score."
+                    : view === "fans"
+                      ? "One match. Your perspective."
+                      : view === "broadcast"
+                        ? "From insight to on air."
+                        : view === "agents"
+                          ? "Intelligence you can inspect."
+                          : view === "recap"
+                            ? "Every moment. One story."
+                            : "Read the game in detail."}
               </h1>
               <p>
                 {view === "live"
                   ? "Real-time context. Traceable evidence. A story for every fan."
-                  : match.description}
+                  : view === "history"
+                    ? "Licensed historical results and an actually trained, chronologically evaluated model."
+                    : match.description}
               </p>
             </div>
-            <select
-              className="scenario-select"
-              aria-label="Match scenario"
-              value={matchId}
-              onChange={(e) => {
-                setMatchId(e.target.value);
-                seek(view === "recap" ? 5400000 : 4200000);
-              }}
-            >
-              {matches.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.title}
-                </option>
-              ))}
-            </select>
-          </div>
-          <section className="scoreboard" aria-label="Match scoreboard">
-            <div className="score-meta">
-              <Badge tone="gray">
-                <span className="tiny-dot" />{" "}
-                {at === 5400000 ? "FULL TIME" : "SYNTHETIC REPLAY"}
-              </Badge>
-              <span>WEAVE PARK · FICTIONAL FIXTURE</span>
-            </div>
-            <div className="score-main">
-              <div className="team home-team">
-                <span>
-                  <strong>{match.home.name}</strong>
-                  <small>HOME</small>
-                </span>
-                <Club short="HC" />
-              </div>
-              <div className="score">
-                <div>
-                  {home.goals}
-                  <span>:</span>
-                  {away.goals}
-                </div>
-                <span className="match-clock">
-                  {time(at)} <i />
-                </span>
-              </div>
-              <div className="team">
-                <Club short="VA" away />
-                <span>
-                  <strong>{match.away.name}</strong>
-                  <small>AWAY</small>
-                </span>
-              </div>
-            </div>
-            <div className="replay-controls">
-              <button
-                className="play-button"
-                disabled={view === "recap"}
-                onClick={() => {
-                  if (at === 5400000) seek(0);
-                  setPlaying(!playing);
-                }}
-                aria-label={playing ? "Pause replay" : "Play replay"}
-              >
-                {playing ? <Pause size={16} /> : <Play size={16} />}
-              </button>
-              <button
-                className="icon-button"
-                onClick={() => {
-                  seek(0);
-                  setPlaying(false);
-                }}
-                disabled={view === "recap"}
-                aria-label="Restart replay"
-              >
-                <RotateCcw size={14} />
-              </button>
-              <span className="replay-time">{time(at)}</span>
-              <input
-                aria-label="Match timeline"
-                disabled={view === "recap"}
-                type="range"
-                min="0"
-                max="5400000"
-                step="60000"
-                value={at}
-                onChange={(e) => seek(+e.target.value)}
-                style={
-                  {
-                    "--progress": `${(at / 5400000) * 100}%`,
-                  } as React.CSSProperties
-                }
-              />
-              <span className="replay-time end-time">90:00</span>
+            {view !== "history" && (
               <select
-                aria-label="Replay speed"
-                value={speed}
-                onChange={(e) => setSpeed(+e.target.value)}
+                className="scenario-select"
+                aria-label="Match scenario"
+                value={matchId}
+                onChange={(e) => {
+                  setMatchId(e.target.value);
+                  seek(view === "recap" ? 5400000 : 4200000);
+                }}
               >
-                <option value="1">1 min/s</option>
-                <option value="2">2 min/s</option>
-                <option value="4">4 min/s</option>
-              </select>
-              <div className="snapshot-tag">
-                <Clock3 size={12} /> 1-minute snapshots
-              </div>
-            </div>
-          </section>
-          <div className="experience-bar">
-            <div>
-              <Settings2 size={15} />
-              <span>YOUR LENS</span>
-              <div className="segmented" aria-label="Audience mode">
-                {(["fan", "analyst", "broadcaster"] as Persona[]).map((p) => (
-                  <button
-                    key={p}
-                    className={persona === p ? "selected" : ""}
-                    onClick={() => setPersona(p)}
-                  >
-                    {p === "fan"
-                      ? "Casual fan"
-                      : p === "analyst"
-                        ? "Analyst"
-                        : "Broadcast"}
-                  </button>
+                {matches.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.title}
+                  </option>
                 ))}
-              </div>
-            </div>
-            <div>
-              <Globe2 size={14} />
-              <select
-                aria-label="Narrative language"
-                value={language}
-                onChange={(e) => setLanguage(e.target.value as Language)}
-              >
-                <option value="en">English</option>
-                <option value="hi">हिन्दी</option>
-                <option value="es">Español</option>
               </select>
-              <span className="bar-divider" />
-              <Badge tone="gray">
-                {connected ? "LOCAL API" : "RECORDED REPLAY"}
-              </Badge>
-            </div>
+            )}
           </div>
+          {view !== "history" && (
+            <>
+              {" "}
+              <section className="scoreboard" aria-label="Match scoreboard">
+                <div className="score-meta">
+                  <Badge tone="gray">
+                    <span className="tiny-dot" />{" "}
+                    {at === 5400000 ? "FULL TIME" : "SYNTHETIC REPLAY"}
+                  </Badge>
+                  <span>WEAVE PARK · FICTIONAL FIXTURE</span>
+                </div>
+                <div className="score-main">
+                  <div className="team home-team">
+                    <span>
+                      <strong>{match.home.name}</strong>
+                      <small>HOME</small>
+                    </span>
+                    <Club short="HC" />
+                  </div>
+                  <div className="score">
+                    <div>
+                      {home.goals}
+                      <span>:</span>
+                      {away.goals}
+                    </div>
+                    <span className="match-clock">
+                      {time(at)} <i />
+                    </span>
+                  </div>
+                  <div className="team">
+                    <Club short="VA" away />
+                    <span>
+                      <strong>{match.away.name}</strong>
+                      <small>AWAY</small>
+                    </span>
+                  </div>
+                </div>
+                <div className="replay-controls">
+                  <button
+                    className="play-button"
+                    disabled={view === "recap"}
+                    onClick={() => {
+                      if (at === 5400000) seek(0);
+                      setPlaying(!playing);
+                    }}
+                    aria-label={playing ? "Pause replay" : "Play replay"}
+                  >
+                    {playing ? <Pause size={16} /> : <Play size={16} />}
+                  </button>
+                  <button
+                    className="icon-button"
+                    onClick={() => {
+                      seek(0);
+                      setPlaying(false);
+                    }}
+                    disabled={view === "recap"}
+                    aria-label="Restart replay"
+                  >
+                    <RotateCcw size={14} />
+                  </button>
+                  <span className="replay-time">{time(at)}</span>
+                  <input
+                    aria-label="Match timeline"
+                    disabled={view === "recap"}
+                    type="range"
+                    min="0"
+                    max="5400000"
+                    step="60000"
+                    value={at}
+                    onChange={(e) => seek(+e.target.value)}
+                    style={
+                      {
+                        "--progress": `${(at / 5400000) * 100}%`,
+                      } as React.CSSProperties
+                    }
+                  />
+                  <span className="replay-time end-time">90:00</span>
+                  <select
+                    aria-label="Replay speed"
+                    value={speed}
+                    onChange={(e) => setSpeed(+e.target.value)}
+                  >
+                    <option value="1">1 min/s</option>
+                    <option value="2">2 min/s</option>
+                    <option value="4">4 min/s</option>
+                  </select>
+                  <div className="snapshot-tag">
+                    <Clock3 size={12} /> 1-minute snapshots
+                  </div>
+                </div>
+              </section>
+              <div className="experience-bar">
+                <div>
+                  <Settings2 size={15} />
+                  <span>YOUR LENS</span>
+                  <div className="segmented" aria-label="Audience mode">
+                    {(["fan", "analyst", "broadcaster"] as Persona[]).map(
+                      (p) => (
+                        <button
+                          key={p}
+                          className={persona === p ? "selected" : ""}
+                          onClick={() => setPersona(p)}
+                        >
+                          {p === "fan"
+                            ? "Casual fan"
+                            : p === "analyst"
+                              ? "Analyst"
+                              : "Broadcast"}
+                        </button>
+                      ),
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <Globe2 size={14} />
+                  <select
+                    aria-label="Narrative language"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value as Language)}
+                  >
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="es">Español</option>
+                  </select>
+                  <span className="bar-divider" />
+                  <Badge tone="gray">
+                    {connected
+                      ? backendDeployment === "render"
+                        ? "HOSTED API"
+                        : "LOCAL API"
+                      : "RECORDED REPLAY"}
+                  </Badge>
+                </div>
+              </div>
+            </>
+          )}
+          {view === "history" && <HistoryLab connected={connected} />}
           {view === "live" && (
             <>
               <div className="primary-grid">
@@ -1153,8 +1215,10 @@ export default function App() {
                     <option value="deterministic">
                       Deterministic · no LLM
                     </option>
-                    <option value="local">
-                      Local model · Foundry / Ollama
+                    <option value="local" disabled={!localInferenceEnabled}>
+                      {localInferenceEnabled
+                        ? "Local model · Foundry / Ollama"
+                        : "Local model · available on your PC"}
                     </option>
                   </select>
                   <button
@@ -1188,7 +1252,10 @@ export default function App() {
                     <div>
                       <span>EXECUTION</span>
                       <strong>
-                        {run.recording_label || "Fresh local workflow"}
+                        {run.recording_label ||
+                          (backendDeployment === "render"
+                            ? "Fresh hosted workflow"
+                            : "Fresh local workflow")}
                       </strong>
                     </div>
                     <div>

@@ -1,0 +1,21 @@
+{
+  "environment": "fresh local Windows venv with Render deployment settings; not an authenticated cloud deployment",
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "installed_capabilities": {
+    "agent_framework": true,
+    "foundry_local_sdk": false,
+    "onnxruntime": false,
+    "numpy": false,
+    "agent_framework_openai": false
+  },
+  "actual_health_response": {
+    "status": "ok",
+    "cost_mode": "no-paid-inference",
+    "deployment": "render",
+    "local_inference_enabled": false,
+    "storage": "ephemeral",
+    "framework": "Microsoft Agent Framework 1.22.0",
+    "inference": "recorded local LLM outputs + deterministic Microsoft workflow; no hosted model"
+  },
+  "browser_report": "docs/reports/render-browser-tests.json"
+}

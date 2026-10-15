@@ -1,7 +1,7 @@
 {
   "file": "demos\\matchweave-demo.mp4",
   "duration_seconds": 105.0,
-  "bytes": 4573008,
+  "bytes": 4815509,
   "video": "Actual working browser recording, H.264, 1600x900, 30 fps",
   "audio": "Original narration synthesized locally using Windows System.Speech; no music",
   "public_url": null,

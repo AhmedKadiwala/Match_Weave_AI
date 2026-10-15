@@ -1,9 +1,11 @@
 [
  {"start":0,"duration":12,"text":"Football tells more than a scoreline. MatchWeave turns synthetic match events into explainable intelligence, giving fans, analysts and broadcasters a different, factually consistent story."},
- {"start":12,"duration":18,"text":"Five fictional matches contain almost ten thousand reproducible events. Replay a tactical press or a late comeback. Python calculates possession, passing, shot and momentum proxies from the event log. These are transparent synthetic measures, not official statistics."},
- {"start":30,"duration":20,"text":"After the hour, Harbor City's pressure rises. Each story includes its window, comparison, sample warning and exact source events. Open the evidence drawer to inspect the independent recount. We describe observed patterns without claiming they caused the next goal."},
- {"start":50,"duration":20,"text":"A real Microsoft Agent Framework graph coordinates five specialists using Foundry Local inference. This is a recorded local run. Inspect each handoff and tool calculation. The fact checker rejects an injected false count, repairs it from source events, and verifies it before publication."},
- {"start":70,"duration":18,"text":"Choose your club, follow a player, or switch between casual and analytical stories. English, Hindi and Spanish templates preserve the approved facts. Models choose structured claims. Unsupported model prose stays in the trace, away from published narration."},
- {"start":88,"duration":12,"text":"The broadcast studio exports timed, verified overlay JSON with source IDs. The interactive static replay works without a live AI backend, ready for free public hosting."},
- {"start":100,"duration":5,"text":"MatchWeave AI. Every moment has a story. Every fan gets their version."}
+ {"start":12,"duration":13,"text":"Replay five fictional matches with nearly ten thousand events. Python calculates transparent possession, passing, shot and momentum proxies. No real pressure events or player movement are invented from a scoreline."},
+ {"start":25,"duration":13,"text":"Real match lab adds twelve thousand three hundred seventy two completed matches across eight competitions. Twenty twenty six, twenty seven is excluded. A chronological holdout measures actual model performance."},
+ {"start":38,"duration":14,"text":"Each tactical story includes its comparison window, sample limit and exact source events. Open the evidence to inspect the independent recount. These are observed patterns, without a claim that they caused a goal."},
+ {"start":52,"duration":18,"text":"A real Microsoft Agent Framework graph coordinates five Foundry Local specialists. This is a recorded local run. Inspect its handoffs and tool calculations. An injected false count is rejected, repaired from source events, and checked before publication."},
+ {"start":70,"duration":13,"text":"Follow a player or switch between casual and analytical stories. English, Hindi and Spanish templates preserve the approved facts. Unsupported model prose stays outside published narration."},
+ {"start":83,"duration":16,"text":"The broadcast studio exports timed, verified graphics with source IDs. Vercel can serve the interactive replay while Render runs verification and the trained result model. Local language model inference remains on your own computer."},
+ {"start":99,"duration":6,"text":"MatchWeave AI. Every moment has a story. Every fan gets their version."
+ }
 ]

@@ -23,6 +23,12 @@ Local repository: `C:\Users\Ahmed Kadiwala\matchweave-ai`. The requested OneDriv
 | Licenses | LICENSE, THIRD_PARTY_NOTICES, docs/licenses font notices; model weights not redistributed |
 | Integrity | scripts/package_release.py, deployment/release-manifest.json with SHA-256 hashes and actual report-derived counts |
 
-Verified current results: **27 backend tests, 9 browser tests, no serious/critical six-view axe findings, no known pip/npm advisories at scan time, no common credential-pattern findings; video 105.0 seconds; deterministic core p95 44.624 ms; local model runs 25.57–31.03 seconds.** Full workflow graph latency is reported separately. Provisional internal score: **89/100**, below the requested minimum target.
+Verified current results: **45 backend tests, 11 browser tests, no serious/critical six-view axe findings, no known pip/npm advisories at scan time, no common credential-pattern findings; video 105.0 seconds; deterministic core p95 44.624 ms; local model runs 25.57–31.03 seconds.** Full workflow graph latency is reported separately. Provisional internal score: **89/100**, below the requested minimum target.
 
 Remaining external work: entrant eligibility/registration, authenticated public repository/Pages/video publication, signed-out judging-access verification and portal submission. Broader football/model/language/user studies and production controls remain quality limitations, not completed claims.
+
+## Current requested delivery
+
+Primary upload instructions: START_HERE.txt, UPLOAD_CHECKLIST.md and DEPLOY_TO_VERCEL_RENDER.md. Added render.yaml, requirements-render.txt, frontend/vercel.json, environment examples, GOOGLE_KEEP_ALIVE.gs, scripts/run-local.ps1, serve_local.py, pre_upload_check.ps1 and RUN_MATCHWEAVE.cmd. Real-data extension: history/history_api/history_wiki/result_model modules, fetch/train scripts, datasets/historical with licenses and provenance, two fitted model JSON files, frontend/public/history, HistoryLab.tsx, MODEL_CARD and REAL_DATA_AND_TRAINING. Explanations: WHAT_IS_UNIQUE and TESTING_EXPLAINED. Tests: deployment configuration/body/host/CORS, chronological leakage and independently reproduced result metrics, real history UI, one-server launcher flow, minimal Render-profile integration and Google ping unit checks. The updated video covers all seven views.
+
+All source, assets and instructions remain in C:\Users\Ahmed Kadiwala\matchweave-ai. The initial 89/100 score is retained as a provisional internal assessment; these added features do not automatically inflate it. Vercel/Render public deployment and the actual Google trigger have not been executed.

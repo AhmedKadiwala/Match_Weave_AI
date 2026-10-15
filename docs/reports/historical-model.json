@@ -1,0 +1,142 @@
+{
+  "name": "Chronological result softmax v1",
+  "data_sha256": "34cace93be4a81be66a9cbaef1e808cecb8b4238b59b328994f47d5f410055dc",
+  "data_window": {
+    "start": "2021-01-01",
+    "end": "2026-06-30",
+    "excluded_season": "2026-27"
+  },
+  "splits": {
+    "training": 7806,
+    "validation": 2283,
+    "refit_training": 10089,
+    "untouched_test": 2283
+  },
+  "selection_metric": "2024/25 validation log loss; 2025/26 held out from weight fitting and hyperparameter selection",
+  "trials": [
+    {
+      "l2": 0.001,
+      "validation": {
+        "matches": 2283,
+        "accuracy": 0.536575,
+        "log_loss": 0.983799,
+        "brier": 0.586175
+      }
+    },
+    {
+      "l2": 0.01,
+      "validation": {
+        "matches": 2283,
+        "accuracy": 0.536137,
+        "log_loss": 0.983228,
+        "brier": 0.585901
+      }
+    },
+    {
+      "l2": 0.1,
+      "validation": {
+        "matches": 2283,
+        "accuracy": 0.539203,
+        "log_loss": 0.985223,
+        "brier": 0.587399
+      }
+    }
+  ],
+  "heldout": {
+    "matches": 2283,
+    "accuracy": 0.521682,
+    "log_loss": 0.993249,
+    "brier": 0.591497
+  },
+  "frequency_baseline": {
+    "matches": 2283,
+    "accuracy": 0.453789,
+    "log_loss": 1.063426,
+    "brier": 0.642776
+  },
+  "uniform_baseline": {
+    "matches": 2283,
+    "accuracy": 0.453789,
+    "log_loss": 1.098612,
+    "brier": 0.666667
+  },
+  "per_competition": {
+    "en.1": {
+      "matches": 380,
+      "accuracy": 0.489474,
+      "log_loss": 1.035282,
+      "brier": 0.624471
+    },
+    "es.1": {
+      "matches": 380,
+      "accuracy": 0.526316,
+      "log_loss": 0.982109,
+      "brier": 0.580713
+    },
+    "de.1": {
+      "matches": 306,
+      "accuracy": 0.552288,
+      "log_loss": 0.963059,
+      "brier": 0.57085
+    },
+    "it.1": {
+      "matches": 380,
+      "accuracy": 0.510526,
+      "log_loss": 0.99988,
+      "brier": 0.595894
+    },
+    "fr.1": {
+      "matches": 306,
+      "accuracy": 0.503268,
+      "log_loss": 0.997161,
+      "brier": 0.595927
+    },
+    "uefa.cl": {
+      "matches": 189,
+      "accuracy": 0.539683,
+      "log_loss": 0.958241,
+      "brier": 0.56765
+    },
+    "uefa.el": {
+      "matches": 189,
+      "accuracy": 0.560847,
+      "log_loss": 0.982509,
+      "brier": 0.578754
+    },
+    "uefa.conf": {
+      "matches": 153,
+      "accuracy": 0.522876,
+      "log_loss": 1.009124,
+      "brier": 0.603104
+    }
+  },
+  "limitations": [
+    "Historical backtest, not a live feed or guarantee of future accuracy.",
+    "Features update after each completed match day; model weights stay fixed throughout the 2025/26 walk-forward holdout.",
+    "Community/encyclopedia sources can contain errors; licenses and revisions retained.",
+    "Some club aliases and missing pre-2021 history can affect estimates.",
+    "No shot, pressure, player-tracking or live tactical event data is invented from final scores."
+  ],
+  "features": [
+    "intercept",
+    "home_advantage",
+    "rating_gap_400",
+    "recent_points_gap_3",
+    "recent_attack_gap_3",
+    "recent_defence_gap_3",
+    "rest_gap_14",
+    "home_history_10",
+    "away_history_10",
+    "competition_en.1",
+    "competition_es.1",
+    "competition_de.1",
+    "competition_it.1",
+    "competition_fr.1",
+    "competition_uefa.cl",
+    "competition_uefa.el",
+    "competition_uefa.conf"
+  ],
+  "duration_seconds": 3.399,
+  "production_training_matches": 12372,
+  "evaluation_model_training_matches": 10089
+}

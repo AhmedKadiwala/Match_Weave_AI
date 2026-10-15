@@ -1,0 +1,17 @@
+# Import as a Render Blueprint, or use the identical settings in DEPLOY_TO_VERCEL_RENDER.md.
+services:
+  - type: web
+    name: matchweave-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-render.txt
+    startCommand: python -m uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.7
+      - key: MATCHWEAVE_DEPLOYMENT
+        value: render
+      - key: MATCHWEAVE_DB
+        value: /tmp/matchweave/matchweave.db
+      # After Vercel deploys, manually add MATCHWEAVE_CORS_ORIGINS with its exact HTTPS origin.

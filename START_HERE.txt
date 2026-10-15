@@ -1,0 +1,50 @@
+MATCHWEAVE AI — EVERYTHING IS IN THIS FOLDER
+=========================================
+
+1. RUN ON YOUR PC
+   Double-click RUN_MATCHWEAVE.cmd.
+   It serves the built frontend and API together at http://127.0.0.1:8000/.
+   The normal browser opens AFTER the server is ready. Keep the terminal window open.
+   If setup is required, the launcher installs dependencies/builds first.
+   A localhost link is only available on the PC running the app; it is not a public website.
+
+2. BEFORE UPLOADING
+   Use the clean READY_TO_UPLOAD folder for GitHub/Vercel/Render source upload.
+   It excludes installed dependencies, runtime files and secrets.
+   Read UPLOAD_CHECKLIST.md.
+   Detailed copy/paste settings: DEPLOY_TO_VERCEL_RENDER.md.
+
+3. YOUR DEPLOYMENT STACK
+   Frontend: Vercel, Root Directory = frontend, Framework = Vite.
+   Backend: Render, Python Web Service, Free plan, repository root.
+   Vercel variable: VITE_API_URL = your actual Render HTTPS origin (no /api).
+   Render variable: MATCHWEAVE_CORS_ORIGINS = your actual Vercel HTTPS origin.
+   Google Apps Script: copy GOOGLE_KEEP_ALIVE.gs, change its URL, set pingBackend to run every 5 minutes.
+   You set the trigger; no trigger or cloud account has been created for you.
+
+4. REAL DATA + ACTUAL TRAINING
+   Open Real match lab in the app.
+   12,372 completed main-competition matches plus 2 cancelled fixtures.
+   Big five + Champions League, Europa League, Conference League.
+   Jan 2021 through 2025/26; 2026/27 excluded from both training and analysis.
+   Evaluation model tested on 2,283 unseen 2025/26 matches: 52.17% accuracy.
+   Frequency baseline: 45.38%. A separate final model is fitted on all completed matches.
+   Read REAL_DATA_AND_TRAINING.md and MODEL_CARD.md for scope, licenses and limits.
+
+5. WHAT IS UNIQUE / WHAT WAS TESTED
+   WHAT_IS_UNIQUE.md
+   TESTING_EXPLAINED.md
+   TEST_RESULTS.md and docs/reports/ contain actual execution results.
+
+6. READY ASSETS
+   demos/matchweave-demo.mp4 — 105-second video of the updated seven-view build.
+   docs/screenshots/ — actual screenshots, including the added Real match lab.
+   deployment/matchweave-submission.zip — source upload package.
+   deployment/matchweave-static-demo.zip — built static frontend backup.
+   SUBMISSION.md — pitch, description and submission text; public URLs still need your deployment.
+
+FOLDER LOCATION IN THIS SESSION:
+C:\Users\Ahmed Kadiwala\matchweave-ai
+
+The original OneDrive workspace still rejects writes from the tools. No Windows security settings were changed.
+The complete source, data, model weights, configs, instructions, tests and assets are here.

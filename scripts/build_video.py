@@ -11,7 +11,7 @@ import imageio_ffmpeg
 
 def main():
     root = Path(__file__).resolve().parents[1]
-    segments = json.loads((root / "demos/narration-segments.json").read_text())
+    segments = json.loads((root / "demos/narration-segments.json").read_text(encoding="utf-8-sig"))
     meta = json.loads((root / "demos/capture-metadata.json").read_text())
     command = [
         imageio_ffmpeg.get_ffmpeg_exe(),

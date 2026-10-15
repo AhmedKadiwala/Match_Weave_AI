@@ -1,13 +1,14 @@
 # Judge quick start
 
-Public replay URL: **pending publication**. This source contains a working test build and prerecorded data, not a fictional hosted backend. No credentials or payment are required for the local build.
+Public URL: pending your Vercel/Render deployment. No hosting or submission is claimed. See UPLOAD_CHECKLIST.md for the deployment order and exact configuration.
 
-1. Run `scripts/setup.ps1` then `scripts/start.ps1` on Windows. Open http://127.0.0.1:5173. For just the static build, serve frontend/dist over HTTP after `npm run build`.
-2. Start with **Pressure makes the moment**, 70:00. Compare casual fan and analyst text; choose Hindi or Spanish. The selected claim's facts stay identical. Click Explore evidence and inspect exact event IDs and count.
-3. Move the timeline to 60:00, then 70:00. The pressure pattern changes. No future events contribute to earlier snapshots. Choose **The comeback**, open Match recap, and inspect the 3–2 finish and five linked goals.
-4. Open Your match. Choose a fictional club and player; observe their actual event locations, passing/defensive contributions and key events.
-5. Open Broadcast studio. Select a graphic layout, toggle its preview and download JSON. Inspect match ID, time interval, persona/language, verified status and source IDs.
-6. Open Agent intelligence. The 70:00 default run is a **Recorded Agent Run** using Foundry Local. Expand roles to inspect actual duration, input/output, untrusted model notes, scheduled FunctionTool calls and verification. Click Inspect failure recovery to see the rejected +99 claim and corrected publication.
-7. For a fresh run, click Connect local backend. Choose deterministic mode and Run workflow. For actual inference, start `python -m scripts.local_model`, select Local model and run again. Expect about 30 seconds on the documented CPU. The optional local model download is not required for the static or deterministic experience.
+For local use, double-click RUN_MATCHWEAVE.cmd. It opens http://127.0.0.1:8000/ after readiness and serves frontend plus API from one process. Keep the window open. First-run setup requires Python/Node and can download the open-source dependencies; no paid API key is required.
 
-All claims are synthetic observations. Metrics labeled proxies are not official statistics or predictions. No footage or video inference exists. See TEST_RESULTS.md, BENCHMARKS.md and SCORECARD_FINAL.md for evidence and limitations. Portal submission and public publication have not been verified.
+1. Start with Pressure makes the moment at 70:00. Compare fan/analyst/broadcast and English/Hindi/Spanish outputs. Explore evidence; its exact event set and count were verified before publication.
+2. Replay earlier times, inspect the analyst shot/event maps, then player/club focus. Open The comeback and its 3–2 full-time recap.
+3. Broadcast studio: choose a layout, hide/show the graphic and export timed, verified JSON with source IDs.
+4. Agent intelligence: inspect actual recorded Foundry traces and executor-scheduled tools. Show the rejected +99 claim, canonical repair and re-verification. Fresh deterministic Microsoft workflows run on the local or Render backend. Local model generation requires the optional Foundry process on your PC and is intentionally disabled on Render.
+5. Real match lab: inspect the eight agreed main competitions and seasons; 2026–27 is excluded. There are 12,372 scored results and two cancelled fixtures. Select a fixture, inspect its source/features/evaluation label, export data and recompute its trained evaluation-model estimate through the backend.
+6. Read MODEL_CARD.md and REAL_DATA_AND_TRAINING.md. The 2,283-match 2025–26 holdout measured 52.17% accuracy versus 45.38% baseline; a separate final model fits all completed matches. Main-competition count coverage is checked, not every score independently certified. No real pressure/tracking is inferred from final scores.
+
+Tests and limitations: TESTING_EXPLAINED.md, TEST_RESULTS.md, BENCHMARKS.md. Actual seven-view demo video: demos/matchweave-demo.mp4 (105 seconds), with captions and source attribution. All historical sources and model licenses are included.

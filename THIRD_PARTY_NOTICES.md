@@ -14,3 +14,5 @@ Original MatchWeave code, SVG graphics and fictional datasets are MIT licensed. 
 | FFmpeg via imageio-ffmpeg | FFmpeg bundled executable is used as a local build tool, not redistributed; inspect its license/build configuration if redistributing |
 
 No match footage, club badges, paid data, copied broadcast graphics, copyrighted music or stock media is used. The official rules are linked, not republished. Product references to Microsoft describe implemented technologies; no endorsement or affiliation is claimed.
+
+Historical-data extension: combined normalized data, derived real-match public artifacts and fitted result-model JSON use CC BY-SA 4.0, retaining underlying OpenFootball CC0 notices and per-revision Wikipedia contributor attribution. See datasets/historical/LICENSE.md. This exception does not change the MIT license of original application code, synthetic scenarios or original graphics. No article prose, club logo, match footage or protected broadcast asset is copied into the historical corpus.

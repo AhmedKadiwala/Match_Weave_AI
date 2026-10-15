@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="one health GET only, never inference; HTTP 200 JSON status checked" time="0.003152" classname="test" file="C:\Users\Ahmed Kadiwala\matchweave-ai\scripts\tests\keep-alive.test.cjs"/>
+	<testcase name="non-200 health is a failed execution" time="0.001417" classname="test" file="C:\Users\Ahmed Kadiwala\matchweave-ai\scripts\tests\keep-alive.test.cjs"/>
+	<testcase name="HTML cold-start screen is not counted as healthy" time="0.000888" classname="test" file="C:\Users\Ahmed Kadiwala\matchweave-ai\scripts\tests\keep-alive.test.cjs"/>
+	<testcase name="unhealthy JSON is rejected" time="0.001577" classname="test" file="C:\Users\Ahmed Kadiwala\matchweave-ai\scripts\tests\keep-alive.test.cjs"/>
+	<testcase name="unconfigured URL sends no request" time="0.001127" classname="test" file="C:\Users\Ahmed Kadiwala\matchweave-ai\scripts\tests\keep-alive.test.cjs"/>
+	<!-- tests 5 -->
+	<!-- suites 0 -->
+	<!-- pass 5 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 117.6698 -->
+</testsuites>

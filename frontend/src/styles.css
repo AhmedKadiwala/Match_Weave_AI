@@ -2873,3 +2873,264 @@ pre {
 .page-footer {
   font-size: 8px;
 }
+.history-notice {
+  display: flex;
+  gap: 13px;
+  background: #162b27;
+  border: 1px solid #385646;
+  border-radius: 8px;
+  padding: 18px;
+  color: #b7d6a4;
+  margin-bottom: 18px;
+}
+.history-notice > svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.history-notice strong {
+  font-size: 12px;
+}
+.history-notice p {
+  font-size: 10px;
+  color: #a4b9b5;
+  margin-top: 7px;
+}
+.history-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 18px;
+}
+.history-metrics section {
+  padding: 21px;
+}
+.history-metrics span {
+  display: block;
+  font-size: 10px;
+  color: #91a6b9;
+}
+.history-metrics strong {
+  display: block;
+  font:
+    650 28px "Manrope Variable",
+    sans-serif;
+  color: #b7e88c;
+  margin-top: 12px;
+}
+.history-filters {
+  display: grid;
+  grid-template-columns: 1.1fr 0.65fr 1fr;
+  gap: 16px;
+  padding: 0 20px;
+}
+.history-filters label {
+  margin: 8px 0 17px;
+}
+.history-filters input {
+  padding: 10px 12px;
+  border: 1px solid #2b3b4c;
+  border-radius: 6px;
+  background: #142233;
+  color: #bed0df;
+  min-width: 0;
+}
+.history-coverage {
+  font-size: 9px;
+  color: #9bb2c4;
+  padding: 0 20px 17px;
+}
+.history-table-wrap {
+  overflow-x: auto;
+}
+.history-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 10px;
+  min-width: 690px;
+}
+.history-table th {
+  text-align: left;
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  padding: 14px 16px;
+  color: #91a9bd;
+  background: #172536;
+}
+.history-table td {
+  padding: 12px 16px;
+  color: #b7c9db;
+  border-top: 1px solid #243648;
+}
+.history-table td:nth-child(3) {
+  white-space: nowrap;
+  text-align: center;
+}
+.history-table button {
+  border: 1px solid #41513b;
+  border-radius: 4px;
+  background: #1d3228;
+  color: #c8eea7;
+  padding: 5px 10px;
+  font-size: 10px;
+  min-width: 55px;
+}
+.history-table a {
+  color: #9fb8cb;
+}
+.probability-bar {
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 180px;
+  max-width: 100%;
+  height: 22px;
+}
+.probability-bar span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: #102012;
+  min-width: 23px;
+}
+.probability-bar .home {
+  background: #a2cd75;
+}
+.probability-bar .draw {
+  background: #8fa6bd;
+  color: #112131;
+}
+.probability-bar .away {
+  background: #ad9cda;
+  color: #29233e;
+}
+.history-pages {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 18px 20px;
+  color: #91a8bc;
+  font-size: 10px;
+}
+.history-pages span {
+  margin-right: auto;
+}
+.history-pages button {
+  background: #1a2c3d;
+  border: 1px solid #33495a;
+  padding: 7px 11px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+.coverage-grid {
+  margin: 18px 0;
+}
+.coverage-grid > div {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 10px;
+  border-top: 1px solid #2c4052;
+  padding: 12px 0;
+  font-size: 10px;
+}
+.coverage-grid small {
+  font-size: 8px;
+  text-align: right;
+}
+.coverage-grid strong {
+  color: #b8d89e;
+  font-weight: 500;
+}
+.history-prediction {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin: 22px 0;
+}
+.history-prediction > div {
+  flex: 1;
+  background: #1c3040;
+  border: 1px solid #385365;
+  padding: 12px;
+  text-align: center;
+  border-radius: 6px;
+}
+.history-prediction span {
+  display: block;
+  font-size: 10px;
+  text-transform: capitalize;
+  color: #9eb3c5;
+}
+.history-prediction strong {
+  font: 650 22px "Manrope Variable";
+  display: block;
+  margin-top: 9px;
+  color: #b8dd91;
+}
+.history-lab .evidence-drawer > h3 {
+  margin: 25px 0 10px;
+}
+.history-lab .evidence-drawer > .secondary-button {
+  width: 100%;
+  margin-bottom: 15px;
+}
+@media (max-width: 900px) {
+  .history-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .history-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+  .history-filters label:last-child {
+    grid-column: 1/-1;
+  }
+  .history-table {
+    font-size: 9px;
+  }
+  .history-notice strong {
+    font-size: 11px;
+  }
+}
+@media (max-width: 600px) {
+  .history-metrics {
+    gap: 10px;
+  }
+  .history-metrics section {
+    padding: 15px;
+  }
+  .history-metrics strong {
+    font-size: 24px;
+  }
+  .history-metrics span {
+    font-size: 8px;
+  }
+  .history-filters {
+    padding: 0 15px;
+    gap: 12px;
+  }
+  .history-notice {
+    padding: 14px;
+  }
+  .history-notice p {
+    font-size: 9px;
+  }
+  .history-pages {
+    font-size: 8px;
+    padding: 15px;
+  }
+  .history-pages button {
+    font-size: 9px;
+    padding: 6px 8px;
+  }
+  .coverage-grid > div {
+    font-size: 9px;
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
+  .history-prediction {
+    gap: 7px;
+  }
+  .history-prediction strong {
+    font-size: 18px;
+  }
+}
