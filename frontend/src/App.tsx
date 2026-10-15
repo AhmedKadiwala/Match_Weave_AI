@@ -1,82 +1,1685 @@
-import {useEffect,useMemo,useState} from 'react';
-import {Activity,ArrowDownToLine,ArrowRight,AudioLines,Check,CheckCheck,ChevronRight,Clock3,Code2,FileText,Globe2,Layers3,LayoutDashboard,Link2,LoaderCircle,Maximize2,Network,Pause,Play,Radio,RotateCcw,Search,Settings2,ShieldCheck,SlidersHorizontal,Sparkles,Target,Users,X,Zap} from 'lucide-react';
-import type {Artifact,Claim,Event,Language,Match,Persona,Run,State,Story} from './types';
-import {Pitch} from './components/Pitch';
-import {Momentum} from './components/Momentum';
-import './styles.css';
+import { useEffect, useMemo, useState } from "react";
+import {
+  Activity,
+  ArrowDownToLine,
+  ArrowRight,
+  AudioLines,
+  Check,
+  CheckCheck,
+  ChevronRight,
+  Clock3,
+  Code2,
+  FileText,
+  Globe2,
+  Layers3,
+  LayoutDashboard,
+  Link2,
+  LoaderCircle,
+  Maximize2,
+  Network,
+  Pause,
+  Play,
+  Radio,
+  RotateCcw,
+  Search,
+  Settings2,
+  ShieldCheck,
+  SlidersHorizontal,
+  Sparkles,
+  Target,
+  Users,
+  X,
+  Zap,
+} from "lucide-react";
+import type {
+  Artifact,
+  Claim,
+  Event,
+  Language,
+  Match,
+  Persona,
+  Run,
+  State,
+  Story,
+} from "./types";
+import { Pitch } from "./components/Pitch";
+import { Momentum } from "./components/Momentum";
+import "./styles.css";
 
-const views=[{id:'live',name:'Live intelligence',icon:Activity},{id:'analyst',name:'Analyst control room',icon:SlidersHorizontal},{id:'fans',name:'Your match',icon:Users},{id:'broadcast',name:'Broadcast studio',icon:Radio},{id:'agents',name:'Agent intelligence',icon:Network},{id:'recap',name:'Match recap',icon:FileText}];
-const API=import.meta.env.VITE_API_URL||'http://127.0.0.1:8000';
-const time=(ms:number)=>`${String(Math.floor(ms/60000)).padStart(2,'0')}:${String(Math.floor(ms/1000)%60).padStart(2,'0')}`;
-const words=(s:string)=>s.replaceAll('_',' ');
-function save(data:unknown,name:string){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),500);}
-function Badge({children,tone='green'}:{children:React.ReactNode;tone?:string}){return <span className={`badge ${tone}`}>{children}</span>}
-function Club({short,away=false}:{short:string;away?:boolean}){return <div className={`club ${away?'away':''}`}><span>{short}</span></div>}
-
-export default function App(){
- const [matches,setMatches]=useState<Match[]>([]),[matchId,setMatchId]=useState('pressing'),[artifact,setArtifact]=useState<Artifact|null>(null);
- const [view,setView]=useState('live'),[at,setAt]=useState(4200000),[playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1);
- const [persona,setPersona]=useState<Persona>('analyst'),[language,setLanguage]=useState<Language>('en'),[favorite,setFavorite]=useState(''),[player,setPlayer]=useState('harbor-9');
- const [layer,setLayer]=useState('all'),[eventFilter,setEventFilter]=useState('all'),[query,setQuery]=useState('');
- const [evidence,setEvidence]=useState<Claim|Event|null>(null),[showMethods,setShowMethods]=useState(false),[notice,setNotice]=useState('');
- const [connected,setConnected]=useState(false),[serverState,setServerState]=useState<State|null>(null),[freshRun,setFreshRun]=useState<Run|null>(null),[busy,setBusy]=useState(false),[provider,setProvider]=useState('deterministic');
- const [overlayType,setOverlayType]=useState('lower_third'),[showOverlay,setShowOverlay]=useState(true),[recovery,setRecovery]=useState(false),[loadError,setLoadError]=useState('');
- useEffect(()=>{fetch(`${import.meta.env.BASE_URL}artifacts/index.json`).then(r=>{if(!r.ok)throw Error('Artifact index unavailable');return r.json()}).then(setMatches).catch(e=>setLoadError(String(e)))},[]);
- useEffect(()=>{let active=true;setArtifact(null);setFreshRun(null);setServerState(null);setPlaying(false);fetch(`${import.meta.env.BASE_URL}artifacts/${matchId}.json`).then(r=>{if(!r.ok)throw Error('Match artifact unavailable');return r.json()}).then(v=>{if(active){setArtifact(v);setLoadError('')}}).catch(e=>{if(active)setLoadError(String(e))});return()=>{active=false}},[matchId]);
- useEffect(()=>{if(!playing)return;const timer=setInterval(()=>setAt(v=>{if(v>=5400000){setPlaying(false);return v}return Math.min(5400000,v+60000)}),1000/speed);return()=>clearInterval(timer)},[playing,speed]);
- useEffect(()=>{if(!connected)return;const controller=new AbortController();fetch(`${API}/api/matches/${matchId}/state?at_ms=${at}`,{signal:controller.signal}).then(r=>{if(!r.ok)throw Error('Backend request failed');return r.json()}).then(setServerState).catch(e=>{if(e.name!=='AbortError'){setConnected(false);setServerState(null);setNotice('Backend unavailable. Reproducible offline replay remains active.')}});return()=>controller.abort()},[at,connected,matchId]);
- useEffect(()=>{if(!notice)return;const t=setTimeout(()=>setNotice(''),6000);return()=>clearTimeout(t)},[notice]);
- useEffect(()=>{
-  if(!evidence&&!showMethods)return;
-  const previous=document.activeElement as HTMLElement|null;
-  const oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';
-  const key=(e:KeyboardEvent)=>{
-   if(e.key==='Escape'){setEvidence(null);setShowMethods(false)}
-   if(e.key==='Tab'){
-    const items=Array.from(document.querySelectorAll<HTMLElement>('.evidence-drawer button, .evidence-drawer a, .evidence-drawer select, .evidence-drawer input')).filter(x=>!x.hasAttribute('disabled'));
-    const first=items[0],last=items[items.length-1];
-    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus()}
-    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus()}
-   }
-  };document.addEventListener('keydown',key);
-  return()=>{document.removeEventListener('keydown',key);document.body.style.overflow=oldOverflow;previous?.focus()}
- },[evidence,showMethods]);
- const match=artifact?.match;
- const state=artifact?(connected&&serverState?.at_ms===at&&serverState.match_id===matchId?serverState:artifact.snapshots[Math.min(90,Math.floor(at/60000))]):null;
- const run=useMemo(()=>{if(!artifact)return null;if(recovery&&view==='agents'&&at>=artifact.recovery_run.at_ms)return artifact.recovery_run;if(freshRun&&freshRun.at_ms===at&&freshRun.match_id===matchId)return freshRun;return artifact.runs.filter(r=>r.at_ms<=at&&(r.favorite_team||'')===favorite).sort((a,b)=>b.at_ms-a.at_ms)[0]||null},[artifact,freshRun,at,matchId,favorite,recovery,view]);
- const story=run?.variants.find(s=>s.audience===persona&&s.language===language)||null;
- const events=useMemo(()=>artifact?.match.events.filter(e=>e.match_clock_ms<=at)||[],[artifact,at]);
- const roster=match?[...match.home.players,...match.away.players]:[];
- const playerState=state?.players.find(p=>p.id===player);
- const eventName=(e:Event)=>roster.find(p=>p.id===e.player_id)?.name||'Match event';
- const currentEvents=events.filter(e=>!['reception','possession_change','metadata'].includes(e.event_type)&&(eventFilter==='all'||e.event_type===eventFilter)&&(!query||`${eventName(e)} ${e.event_type} ${e.event_id}`.toLowerCase().includes(query.toLowerCase()))).slice(-14).reverse();
- async function connect(){try{const r=await fetch(`${API}/api/health`,{signal:AbortSignal.timeout(3000)});if(!r.ok)throw Error();setConnected(true);setNotice('Connected to the local Python backend.')}catch{setNotice('Start the backend on port 8000 to connect. Offline replay is available.')}}
- async function analyze(inject=false){if(!connected){setNotice('Connect the local backend to execute a new workflow.');return}setBusy(true);try{const r=await fetch(`${API}/api/matches/${matchId}/analyze`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({at_ms:at,provider,audience:persona,language,favorite_team:favorite||null,inject_failure:inject}),signal:AbortSignal.timeout(185000)});if(!r.ok)throw Error((await r.json()).detail||'Workflow request failed');setFreshRun(await r.json());setRecovery(false);setNotice('Workflow completed. Actual trace and verified output are ready.')}catch(e){setNotice(String(e))}finally{setBusy(false)}}
- function seek(ms:number){setAt(ms);setFreshRun(null);setRecovery(false)}
- if(!artifact||!match||!state)return <div className="loading"><div className="brandmark">m<span>≋</span></div><h1>Weaving the match.</h1><p>{loadError||'Loading reproducible football intelligence…'}</p>{loadError&&<button onClick={()=>location.reload()}>Retry</button>}</div>;
- const home=state.stats[match.home.id],away=state.stats[match.away.id];
- const panelTitle=views.find(v=>v.id===view)?.name||'Live intelligence';
- const narrative=<section className="panel story-panel"><div className="panel-heading"><h2><Sparkles size={16}/> The story behind the moment</h2><Badge><span className="tiny-dot"/> {story?'EVIDENCE VERIFIED':'AWAITING EVIDENCE'}</Badge></div>{story?<><div className="story-kicker">{words(story.claim.reason_code).toUpperCase()} <span>· {time(run!.at_ms)}</span></div><h3>{story.headline}</h3><p className="story-text" lang={language}>{story.text}</p><div className="why-box"><span>WHY IT MATTERS</span><p lang={language}>{story.why}</p></div><div className="story-bottom"><span><ShieldCheck size={13}/>{story.confidence} · {story.claim.source_event_ids.length} source events</span><button className="text-button" onClick={()=>setEvidence(story.claim)}>Explore evidence <ArrowRight size={14}/></button></div><div className="source-label"><Network size={12}/>{run?.recording_label||(run?.execution_mode==='local-llm'?'Local model workflow':'Deterministic workflow · no LLM inference')}</div></>:<div className="empty"><Clock3/><p>Play five minutes to build enough evidence for a story.</p></div>}</section>;
- const pitch=<section className="panel pitch-panel"><div className="panel-heading"><h2>Pitch intelligence</h2><select aria-label="Pitch layer" value={layer} onChange={e=>setLayer(e.target.value)}><option value="all">Recent actions</option><option value="shots">Shot map</option><option value="recoveries">Recoveries</option></select></div><div className="pitch-top"><span><i className="dot home"/> {match.home.name}</span><span><i className="dot away"/> {match.away.name}</span><span className="muted">105 × 68 m</span></div><Pitch match={match} events={events} layer={layer} onEvent={setEvidence}/><div className="pitch-foot"><span><span className="tiny-dot"/> EVENT LOCATION MAP</span><span>Team-normalized event coordinates · no tracking data</span></div></section>;
- const momentum=<section className="panel momentum-panel"><div className="panel-heading"><h2><Activity size={16}/> Attacking momentum</h2><button className="text-button muted" onClick={()=>setShowMethods(true)}>How it's calculated <ChevronRight size={13}/></button></div><Momentum state={state} match={match} onSeek={seek}/><div className="chart-caption"><span><i className="dot home"/> {match.home.short} <i className="dot away"/> {match.away.short}</span><span>Weighted event proxy · 5-minute windows</span></div></section>;
- const stats=<section className="panel stats-panel"><div className="panel-heading"><h2>Match pulse</h2><span className="muted small">{time(at)}</span></div>{[['Possession proxy','possession','%'],['Shots / on target','shots',''],['Pass completion','pass_completion','%'],['Final-third entries','final_third_entries',''],['Synthetic xG Proxy','xg_proxy','']].map(([label,key,suffix])=><div className="stat-row" key={key}><div><strong>{home[key]}{suffix}</strong><span>{label}</span><strong>{away[key]}{suffix}</strong></div><div className="stat-track"><span style={{width:`${home[key]/(home[key]+away[key]||1)*100}%`}}/></div>{key==='shots'&&<div className="stat-sub"><span>{home.shots_on_target} on target</span><span>{away.shots_on_target} on target</span></div>}</div>)}</section>;
- const feed=<section className="panel feed-panel"><div className="panel-heading"><h2>Match event log</h2><Badge tone="gray">{state.event_count.toLocaleString()} EVENTS</Badge></div><div className="feed-tools"><div className="search"><Search size={14}/><input aria-label="Search events" placeholder="Find player or event…" value={query} onChange={e=>setQuery(e.target.value)}/></div><select aria-label="Event filter" value={eventFilter} onChange={e=>setEventFilter(e.target.value)}><option value="all">All actions</option>{['pass','shot','goal','pressure','recovery','tackle','substitution'].map(k=><option key={k} value={k}>{words(k)}</option>)}</select></div><div className="event-list">{currentEvents.length?currentEvents.map(e=><button className="event-row" key={e.event_id} onClick={()=>setEvidence(e)}><span className="event-time">{time(e.match_clock_ms)}</span><span className={`event-dot ${e.team_id==='harbor'?'home':'away'}`}/><span><b>{eventName(e)}</b><small>{words(e.event_type)} · {e.outcome.replace('_',' ')}</small></span><ChevronRight size={13}/></button>):<p className="empty">No matching events at this time.</p>}</div></section>;
- return <div className="app-shell"><aside className="sidebar"><a href="#" className="brand" onClick={e=>{e.preventDefault();setView('live')}} aria-label="MatchWeave home"><div className="brandmark">m<span>≋</span></div><div>MATCHWEAVE<span>FOOTBALL INTELLIGENCE</span></div></a><div className="workspace-label">WORKSPACE <span>01</span></div><nav aria-label="Main navigation">{views.map(v=><button key={v.id} className={view===v.id?'active':''} onClick={()=>{setView(v.id);if(v.id==='recap'){seek(5400000);setPlaying(false)}}}><v.icon size={18}/><span>{v.name}</span>{view===v.id&&<i/>}</button>)}</nav><div className="sidebar-match"><span className="eyebrow">ON THE REPLAY DESK</span><div><Club short="HC"/><span>Harbor vs Vale<small>Fictional match series</small></span></div><p><span className="tiny-dot"/> Synthetic. Transparent. Yours.</p></div><div className="sidebar-bottom"><div className="local-tag"><ShieldCheck size={16}/><span>Local-first. Zero API spend.<small>Microsoft Agent Framework</small></span></div><button onClick={()=>setShowMethods(true)}><Code2 size={15}/> Methodology & provenance <ChevronRight size={14}/></button></div></aside>
- <main><header className="topbar"><div className="breadcrumb">Workspace <ChevronRight size={13}/> <span>{panelTitle}</span></div><div className="topbar-right"><span className="data-label"><span className="tiny-dot"/> SYNTHETIC DATA</span><button className={`connect-button ${connected?'connected':''}`} onClick={()=>connected?setConnected(false):connect()}><Link2 size={13}/>{connected?'Local backend connected':'Connect local backend'}</button><button className="avatar" onClick={()=>setView('fans')} aria-label="Open personalized fan experience">MW</button></div></header>
- <div className="page-body"><div className="page-heading"><div><div className="eyebrow"><span className="tiny-dot"/> MATCHWEAVE LAB / MATCHDAY 01</div><h1>{view==='live'?'The match, beyond the score.':view==='fans'?'One match. Your perspective.':view==='broadcast'?'From insight to on air.':view==='agents'?'Intelligence you can inspect.':view==='recap'?'Every moment. One story.':'Read the game in detail.'}</h1><p>{view==='live'?'Real-time context. Traceable evidence. A story for every fan.':match.description}</p></div><select className="scenario-select" aria-label="Match scenario" value={matchId} onChange={e=>{setMatchId(e.target.value);seek(view==='recap'?5400000:4200000)}}>{matches.map(m=><option key={m.id} value={m.id}>{m.title}</option>)}</select></div>
- <section className="scoreboard" aria-label="Match scoreboard"><div className="score-meta"><Badge tone="gray"><span className="tiny-dot"/> {at===5400000?'FULL TIME':'SYNTHETIC REPLAY'}</Badge><span>WEAVE PARK · FICTIONAL FIXTURE</span></div><div className="score-main"><div className="team home-team"><span><strong>{match.home.name}</strong><small>HOME</small></span><Club short="HC"/></div><div className="score"><div>{home.goals}<span>:</span>{away.goals}</div><span className="match-clock">{time(at)} <i/></span></div><div className="team"><Club short="VA" away/><span><strong>{match.away.name}</strong><small>AWAY</small></span></div></div><div className="replay-controls"><button className="play-button" disabled={view==='recap'} onClick={()=>{if(at===5400000)seek(0);setPlaying(!playing)}} aria-label={playing?'Pause replay':'Play replay'}>{playing?<Pause size={16}/>:<Play size={16}/>}</button><button className="icon-button" onClick={()=>{seek(0);setPlaying(false)}} disabled={view==='recap'} aria-label="Restart replay"><RotateCcw size={14}/></button><span className="replay-time">{time(at)}</span><input aria-label="Match timeline" disabled={view==='recap'} type="range" min="0" max="5400000" step="60000" value={at} onChange={e=>seek(+e.target.value)} style={{'--progress':`${at/5400000*100}%`} as React.CSSProperties}/><span className="replay-time end-time">90:00</span><select aria-label="Replay speed" value={speed} onChange={e=>setSpeed(+e.target.value)}><option value="1">1 min/s</option><option value="2">2 min/s</option><option value="4">4 min/s</option></select><div className="snapshot-tag"><Clock3 size={12}/> 1-minute snapshots</div></div></section>
- <div className="experience-bar"><div><Settings2 size={15}/><span>YOUR LENS</span><div className="segmented" aria-label="Audience mode">{(['fan','analyst','broadcaster'] as Persona[]).map(p=><button key={p} className={persona===p?'selected':''} onClick={()=>setPersona(p)}>{p==='fan'?'Casual fan':p==='analyst'?'Analyst':'Broadcast'}</button>)}</div></div><div><Globe2 size={14}/><select aria-label="Narrative language" value={language} onChange={e=>setLanguage(e.target.value as Language)}><option value="en">English</option><option value="hi">हिन्दी</option><option value="es">Español</option></select><span className="bar-divider"/><Badge tone="gray">{connected?'LOCAL API':'RECORDED REPLAY'}</Badge></div></div>
- {view==='live'&&<><div className="primary-grid">{pitch}{narrative}</div><div className="secondary-grid">{momentum}{stats}{feed}</div></>}
- {view==='analyst'&&<><div className="analyst-grid"><div>{pitch}{momentum}</div><div>{stats}<section className="panel mini-panel"><h2><Zap size={16}/> Transition watch</h2><div className="big-number">{state.counterattacks.length}<span>counterattack proxy sequences</span></div><p>Possession won deep, then reaches the final third within 15 seconds.</p><button className="text-button" onClick={()=>setShowMethods(true)}>Inspect the method <ArrowRight size={14}/></button></section></div></div><div className="two-grid"><section className="panel"><div className="panel-heading"><h2>Player comparison</h2><span className="muted small">Observed involvement</span></div><PlayerTable state={state} setPlayer={p=>{setPlayer(p);setView('fans')}}/></section>{feed}</div></>}
- {view==='fans'&&<><div className="two-grid"><section className="panel preference-panel"><div className="panel-heading"><h2><Users size={16}/> Make this match yours</h2></div><p>Follow the story that matters to you. Every version shares the same verified facts.</p><label>Favorite club<select aria-label="Favorite club" value={favorite} onChange={e=>setFavorite(e.target.value)}><option value="">The whole match</option><option value="harbor">Harbor City</option><option value="vale">Vale Athletic</option></select></label><label>Player focus<select aria-label="Favorite player" value={player} onChange={e=>setPlayer(e.target.value)}>{roster.map(p=><option key={p.id} value={p.id}>{p.name} · {p.position}</option>)}</select></label><div className="player-profile"><span className="jersey">{playerState?.number}</span><div><h3>{playerState?.name}</h3><p>{playerState?.position} · {playerState?.team_id==='harbor'?match.home.name:match.away.name}</p></div></div><div className="player-metrics">{[['Actions',playerState?.involvement],['Passes',playerState?.completed],['Shots',playerState?.shots],['Goals',playerState?.goals]].map(([k,v])=><div key={k}><strong>{v}</strong><span>{k}</span></div>)}</div><p className="small muted">Evidence-derived focus: {playerState?.name} has {playerState?.defensive} defensive actions and {playerState?.completed} completed passes from {playerState?.passes} attempts at {time(at)}.</p></section>{narrative}</div><section className="panel"><div className="panel-heading"><h2>{playerState?.name} · observed actions</h2><Badge tone="gray">PLAYER FOCUS</Badge></div><div className="player-pitch"><Pitch match={match} events={events} playerId={player} onEvent={setEvidence}/><div><h3>Every touch has a source.</h3><p>These locations come from {playerState?.name}'s own synthetic events. Inspect any action to see the original record.</p><div className="focus-events">{events.filter(e=>e.player_id===player).slice(-5).reverse().map(e=><button key={e.event_id} onClick={()=>setEvidence(e)}><span>{time(e.match_clock_ms)}</span> {words(e.event_type)} <ChevronRight size={12}/></button>)}</div></div></div></section></>}
- {view==='broadcast'&&<><div className="broadcast-grid"><section className="panel"><div className="panel-heading"><h2><Radio size={16}/> Program preview</h2><Badge tone="green">{showOverlay?'GRAPHIC ACTIVE':'GRAPHIC HIDDEN'}</Badge></div><div className="program"><div className="program-bug">HBC <b>{home.goals}–{away.goals}</b> VAL <span>{time(at)}</span></div><Pitch match={match} events={events.slice(-10)}/><div className="program-watermark">MATCHWEAVE / SYNTHETIC EVENT REPLAY</div>{showOverlay&&story&&<div className={`broadcast-graphic ${overlayType}`}><span className="graphic-brand">MW <i>INTELLIGENCE</i></span><h3>{story.headline}</h3><p lang={language}>{story.text}</p><small><ShieldCheck size={11}/> VERIFIED · {story.claim.source_event_ids.length} SOURCE EVENTS · {time(run!.at_ms)}</small></div>}</div><div className="program-footer"><span>16:9 composition · original SVG graphics</span><button onClick={()=>setShowOverlay(!showOverlay)}>{showOverlay?'Hide graphic':'Show graphic'}</button></div></section><section className="panel studio-controls"><div className="panel-heading"><h2>Graphic controls</h2><Layers3 size={16}/></div><label>Output format<select aria-label="Overlay format" value={overlayType} onChange={e=>setOverlayType(e.target.value)}><option value="lower_third">Lower third</option><option value="stat_card">Stat card</option><option value="score_bug">Score bug</option></select></label><div className="verification-block"><ShieldCheck size={22}/><h3>{story?'Ready for the rundown':'Awaiting evidence'}</h3><p>Only source-verified claims reach this output. Timings refer to the recorded insight window.</p></div><button className="primary-button" disabled={!story} onClick={()=>save({...story!.overlay,overlay_type:overlayType},`matchweave-${matchId}-overlay.json`)}><ArrowDownToLine size={15}/> Export overlay JSON</button><button className="secondary-button" disabled={!story} onClick={()=>setEvidence(story!.claim)}><Search size={14}/> Review source evidence</button><p className="small muted">Overlay interval: {story?`${time(story.overlay.start_ms)}–${time(story.overlay.end_ms)}`:'—'}. Preview is a design monitor; exported timing synchronizes the graphic with replay.</p></section></div><section className="panel"><div className="panel-heading"><h2>Narrative rundown</h2><span className="muted small">Verified published moments</span></div><div className="rundown">{artifact.runs.filter(r=>r.at_ms<=at&&!r.favorite_team&&r.published).sort((a,b)=>b.at_ms-a.at_ms).slice(0,5).map(r=><button key={r.run_id} onClick={()=>seek(r.at_ms)}><span>{time(r.at_ms)}</span><div><strong>{r.published!.headline}</strong><small>{r.published!.text}</small></div><ShieldCheck size={15}/></button>)}</div></section></>}
- {view==='agents'&&<><div className="agent-intro"><div><Badge><Network size={12}/> MICROSOFT AGENT FRAMEWORK 1.22.0</Badge><h2>A story earns its place on screen.</h2><p>Parallel analysis → evidence reconciliation → narrative → independent recount → publication.</p></div><div className="agent-actions"><select aria-label="Inference provider" value={provider} onChange={e=>setProvider(e.target.value)}><option value="deterministic">Deterministic · no LLM</option><option value="local">Local model · Foundry / Ollama</option></select><button className="primary-button" disabled={!connected||busy} onClick={()=>analyze()}>{busy?<LoaderCircle size={15} className="spin"/>:<Play size={15}/>} Run workflow</button><button className="secondary-button" onClick={()=>{if(at<4200000)seek(4200000);setRecovery(!recovery);setFreshRun(null)}}><ShieldCheck size={14}/>{recovery?'Show regular run':'Inspect failure recovery'}</button></div></div>{run&&<><div className="run-summary"><div><span>EXECUTION</span><strong>{run.recording_label||'Fresh local workflow'}</strong></div><div><span>DURATION</span><strong>{run.duration_ms.toFixed(1)} ms</strong></div><div><span>PUBLICATION</span><strong className="lime">{run.status}</strong></div><div><span>CORRECTIONS</span><strong>{run.repairs}</strong></div></div><div className="agent-traces">{run.traces.map((t,i)=><details className={`trace-card ${t.validation==='rejected'?'rejected':''}`} key={`${t.agent}-${i}`}><summary><span className="agent-step">{String(i+1).padStart(2,'0')}</span><div className="trace-identity"><strong>{words(t.agent)}</strong><small>{t.output_summary}</small></div><Badge tone={t.mode==='local-llm'?'purple':t.status==='fallback'?'amber':'gray'}>{t.mode}</Badge><span className="trace-duration">{t.duration_ms.toFixed(1)} ms</span><span className="trace-validation">{t.validation==='rejected'?<X size={16}/>:<CheckCheck size={16}/>}</span><ChevronRight size={15}/></summary><div className="trace-detail"><p><b>Task:</b> {t.task}</p><p><b>Input:</b> {t.input_summary}</p><p><b>Validation:</b> {t.validation} · {t.source_event_ids.length} sources · {t.attempts} inference attempts</p>{t.raw_output&&<><span className="muted small">UNTRUSTED MODEL ADVICE · NOT PUBLISHED AS FACT</span><pre>{t.raw_output}</pre></>}{t.errors?.map((e,j)=><p className="error-note" key={j}>{e}</p>)}{t.source_event_ids.length>0&&<button className="text-button" onClick={()=>setEvidence(story?.claim||events.find(e=>e.event_id===t.source_event_ids[0])||null)}>Inspect published claim evidence <ArrowRight size={13}/></button>}</div></details>)}</div><div className="two-grid"><section className="panel mini-panel"><h2>What the comparison measures</h2><p>One editorial selection without a gate versus the complete workflow under the same injected +99 count fault. This is a controlled deterministic ablation, not evidence of LLM superiority.</p><div className="comparison-row"><span>Unverified corrupted claim</span><Badge tone="amber">REJECTED BY RECOUNT</Badge></div><div className="comparison-row"><span>Complete verified workflow</span><Badge>REPAIRED BEFORE PUBLISHING</Badge></div><button className="text-button" onClick={()=>save(artifact.recovery_run,`${matchId}-recovery-trace.json`)}>Download actual recovery run <ArrowDownToLine size={13}/></button></section><section className="panel mini-panel"><h2>Proof before prose.</h2><p>The local model chooses evidence-backed claims and layouts. Published language uses constrained English, Hindi and Spanish templates, so arithmetic stays identical in every version. Unsupported claims are withheld or repaired.</p><div className="run-id">RUN {run.run_id}</div><button className="text-button" onClick={()=>save(run,`${matchId}-agent-trace.json`)}>Export execution trace <ArrowDownToLine size={13}/></button></section></div></>}</>}
- {view==='recap'&&<><section className="panel recap-hero"><Badge tone="gray">FULL-TIME · {match.title.toUpperCase()}</Badge><h2>{match.home.name} {home.goals} – {away.goals} {match.away.name}</h2><p>{home.goals>away.goals?'Harbor City finish ahead.':home.goals<away.goals?'Vale Athletic finish ahead.':'The sides finish level.'} {state.event_count.toLocaleString()} synthetic events, one reproducible match story.</p><div className="recap-numbers"><div><strong>{home.shots+away.shots}</strong><span>total shots</span></div><div><strong>{state.key_moments.length}</strong><span>goals, source linked</span></div><div><strong>{state.counterattacks.length}</strong><span>counterattack proxies</span></div></div></section><div className="two-grid"><section className="panel"><div className="panel-heading"><h2>The moments that changed the score</h2><Target size={17}/></div><div className="goal-timeline">{state.key_moments.map((e,i)=><button key={e.event_id} onClick={()=>setEvidence(e)}><span>{time(e.match_clock_ms)}</span><div><b>{eventName(e)}</b><p>{e.team_id==='harbor'?match.home.name:match.away.name} · Goal {i+1}</p><small>Linked on-target shot: {e.related_event_ids[0]}</small></div><ShieldCheck size={17}/></button>)}</div></section>{narrative}</div><div className="two-grid">{stats}<section className="panel"><div className="panel-heading"><h2>Player highlights</h2><Users size={16}/></div><PlayerTable state={state} setPlayer={p=>{setPlayer(p);setView('fans')}}/></section></div></>}
- <footer className="page-footer"><span>MATCHWEAVE AI <i/> Every moment has a story. Every fan gets their version.</span><button onClick={()=>setShowMethods(true)}>Synthetic data & transparent methods <ArrowRight size={12}/></button></footer></div></main>
- {notice&&<div role="status" className="toast"><ShieldCheck size={17}/>{notice}<button aria-label="Dismiss notification" onClick={()=>setNotice('')}><X size={15}/></button></div>}
- {(evidence||showMethods)&&<div className="drawer-backdrop" onClick={()=>{setEvidence(null);setShowMethods(false)}}><aside className="evidence-drawer" role="dialog" aria-modal="true" aria-label={showMethods?'Methods and provenance':'Evidence inspector'} onClick={e=>e.stopPropagation()}><div className="drawer-header"><span><ShieldCheck size={18}/>{showMethods?'Methods & provenance':'Follow the evidence'}</span><button autoFocus aria-label="Close evidence inspector" onClick={()=>{setEvidence(null);setShowMethods(false)}}><X size={19}/></button></div>{showMethods?<Methods/>:evidence&&('claim_id'in evidence?<><Badge>INDEPENDENT EVENT RECOUNT</Badge><h2>{words(evidence.metric)}</h2><div className="evidence-value">{evidence.value}<span>observations · {evidence.confidence}</span></div><p>Window {time(evidence.window_start_ms)}–{time(evidence.window_end_ms)}. Previous window: {evidence.previous_value}. Exact source set and count are checked before publication.</p><p className="warning-note">Descriptive evidence, not a causal conclusion or a statistically calibrated confidence interval.</p>{evidence.source_event_ids.map(id=>{const e=events.find(x=>x.event_id===id);return e?<div className="evidence-event" key={id}><b>{time(e.match_clock_ms)} · {eventName(e)}</b><span>{words(e.event_type)} · {e.outcome}</span><code>{id}</code><small>({e.start_x}, {e.start_y}) → ({e.end_x}, {e.end_y}) m</small></div>:<p key={id}>Event not available at this replay time: {id}</p>})}</>:<><Badge tone="gray">SOURCE EVENT</Badge><h2>{words(evidence.event_type)}</h2><p>{eventName(evidence)} · {time(evidence.match_clock_ms)}</p><pre>{JSON.stringify(evidence,null,2)}</pre></>)}</aside></div>}
- </div>
+const views = [
+  { id: "live", name: "Live intelligence", icon: Activity },
+  { id: "analyst", name: "Analyst control room", icon: SlidersHorizontal },
+  { id: "fans", name: "Your match", icon: Users },
+  { id: "broadcast", name: "Broadcast studio", icon: Radio },
+  { id: "agents", name: "Agent intelligence", icon: Network },
+  { id: "recap", name: "Match recap", icon: FileText },
+];
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+const time = (ms: number) =>
+  `${String(Math.floor(ms / 60000)).padStart(2, "0")}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")}`;
+const words = (s: string) => s.replaceAll("_", " ");
+function save(data: unknown, name: string) {
+  const url = URL.createObjectURL(
+    new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }),
+  );
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 500);
+}
+function Badge({
+  children,
+  tone = "green",
+}: {
+  children: React.ReactNode;
+  tone?: string;
+}) {
+  return <span className={`badge ${tone}`}>{children}</span>;
+}
+function Club({ short, away = false }: { short: string; away?: boolean }) {
+  return (
+    <div className={`club ${away ? "away" : ""}`}>
+      <span>{short}</span>
+    </div>
+  );
 }
 
-function PlayerTable({state,setPlayer}:{state:State;setPlayer:(id:string)=>void}){return <div className="player-table"><div className="table-head"><span>PLAYER</span><span>ACT</span><span>PASS</span><span>G</span></div>{[...state.players].sort((a,b)=>b.goals*30+b.involvement-(a.goals*30+a.involvement)).slice(0,8).map(p=><button key={p.id} onClick={()=>setPlayer(p.id)}><span><i className={p.team_id==='harbor'?'home':'away'}>{p.number}</i><b>{p.name}<small>{p.position} · {p.team_id==='harbor'?'HBC':'VAL'}</small></b></span><span>{p.involvement}</span><span>{p.completed}/{p.passes}</span><span>{p.goals}</span></button>)}</div>}
-function Methods(){return <div className="methods"><Badge tone="gray">ORIGINAL SYNTHETIC DATA</Badge><h2>Understand the measurement.</h2><p>Five fictional matches, reproducible seeds, no real clubs, match footage or tracking feeds. All metrics are computed by Python from the original event log.</p><h3>Possession proxy</h3><p>Share of pass, carry and shot actions. This is event share, not measured possession time.</p><h3>Attacking momentum</h3><p>Weighted shots (5), goals (8), pressures (1.5), recoveries (1), carries (0.25). Outside the attacking third, the weight is 35%. Five-minute bins; arbitrary relative units.</p><h3>Synthetic xG Proxy</h3><p>0.55 × exp(−distance/18) × (1 − |y−34|/68), clamped to 0.01–0.7. An uncalibrated geometry heuristic. It is not an official statistic or a predictive model.</p><h3>Evidence and uncertainty</h3><p>Claims require the exact source event set and an independent recount. Fewer than five events: small sample. Five or more: moderate descriptive evidence. Goals: high observation certainty. No causal attribution or outcome prediction.</p><h3>Local AI and recorded replay</h3><p>Microsoft Agent Framework runs the actual workflow. Optional Foundry Local model agents choose constrained claims and graphic layouts. Published language uses English, Hindi and Spanish templates. Per-agent fallback and timing are visible in the trace.</p><h3>Replay resolution</h3><p>Offline statistics are sampled each minute. Stories are recorded every five minutes, with their original timestamps. Event dots show event locations, not live player tracking. Pitch coordinates are team-normalized metres.</p><h3>Zero additional monetary cost</h3><p>No paid API keys, subscriptions or cloud infrastructure. Foundry inference is local. GitHub Pages packaging is static and requires a public repository for publication.</p></div>}
+export default function App() {
+  const [comparison, setComparison] = useState<{
+    sample_size: number;
+    single_correct: number;
+    multi_correct: number;
+    single_median_ms: number;
+    multi_median_ms: number;
+  } | null>(null);
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}artifacts/comparison.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setComparison)
+      .catch(() => {});
+  }, []);
+  const [matches, setMatches] = useState<Match[]>([]),
+    [matchId, setMatchId] = useState("pressing"),
+    [artifact, setArtifact] = useState<Artifact | null>(null);
+  const [view, setView] = useState("live"),
+    [at, setAt] = useState(4200000),
+    [playing, setPlaying] = useState(false),
+    [speed, setSpeed] = useState(1);
+  const [persona, setPersona] = useState<Persona>("analyst"),
+    [language, setLanguage] = useState<Language>("en"),
+    [favorite, setFavorite] = useState(""),
+    [player, setPlayer] = useState("harbor-9");
+  const [layer, setLayer] = useState("all"),
+    [eventFilter, setEventFilter] = useState("all"),
+    [query, setQuery] = useState("");
+  const [evidence, setEvidence] = useState<Claim | Event | null>(null),
+    [showMethods, setShowMethods] = useState(false),
+    [notice, setNotice] = useState("");
+  const [connected, setConnected] = useState(false),
+    [serverState, setServerState] = useState<State | null>(null),
+    [freshRun, setFreshRun] = useState<Run | null>(null),
+    [busy, setBusy] = useState(false),
+    [provider, setProvider] = useState("deterministic");
+  const [overlayType, setOverlayType] = useState("lower_third"),
+    [showOverlay, setShowOverlay] = useState(true),
+    [recovery, setRecovery] = useState(false),
+    [loadError, setLoadError] = useState("");
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}artifacts/index.json`)
+      .then((r) => {
+        if (!r.ok) throw Error("Artifact index unavailable");
+        return r.json();
+      })
+      .then(setMatches)
+      .catch((e) => setLoadError(String(e)));
+  }, []);
+  useEffect(() => {
+    let active = true;
+    setArtifact(null);
+    setFreshRun(null);
+    setServerState(null);
+    setPlaying(false);
+    fetch(`${import.meta.env.BASE_URL}artifacts/${matchId}.json`)
+      .then((r) => {
+        if (!r.ok) throw Error("Match artifact unavailable");
+        return r.json();
+      })
+      .then((v) => {
+        if (active) {
+          setArtifact(v);
+          setLoadError("");
+        }
+      })
+      .catch((e) => {
+        if (active) setLoadError(String(e));
+      });
+    return () => {
+      active = false;
+    };
+  }, [matchId]);
+  useEffect(() => {
+    if (!playing) return;
+    const timer = setInterval(
+      () =>
+        setAt((v) => {
+          if (v >= 5400000) {
+            setPlaying(false);
+            return v;
+          }
+          return Math.min(5400000, v + 60000);
+        }),
+      1000 / speed,
+    );
+    return () => clearInterval(timer);
+  }, [playing, speed]);
+  useEffect(() => {
+    if (!connected) return;
+    const controller = new AbortController();
+    fetch(`${API}/api/matches/${matchId}/state?at_ms=${at}`, {
+      signal: controller.signal,
+    })
+      .then((r) => {
+        if (!r.ok) throw Error("Backend request failed");
+        return r.json();
+      })
+      .then(setServerState)
+      .catch((e) => {
+        if (e.name !== "AbortError") {
+          setConnected(false);
+          setServerState(null);
+          setNotice(
+            "Backend unavailable. Reproducible offline replay remains active.",
+          );
+        }
+      });
+    return () => controller.abort();
+  }, [at, connected, matchId]);
+  useEffect(() => {
+    if (!notice) return;
+    const t = setTimeout(() => setNotice(""), 6000);
+    return () => clearTimeout(t);
+  }, [notice]);
+  useEffect(() => {
+    if (!evidence && !showMethods) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const oldOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setEvidence(null);
+        setShowMethods(false);
+      }
+      if (e.key === "Tab") {
+        const items = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            ".evidence-drawer button, .evidence-drawer a, .evidence-drawer select, .evidence-drawer input",
+          ),
+        ).filter((x) => !x.hasAttribute("disabled"));
+        const first = items[0],
+          last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("keydown", key);
+      document.body.style.overflow = oldOverflow;
+      previous?.focus();
+    };
+  }, [evidence, showMethods]);
+  const match = artifact?.match;
+  const state = artifact
+    ? connected && serverState?.at_ms === at && serverState.match_id === matchId
+      ? serverState
+      : artifact.snapshots[Math.min(90, Math.floor(at / 60000))]
+    : null;
+  const run = useMemo(() => {
+    if (!artifact) return null;
+    if (recovery && view === "agents" && at >= artifact.recovery_run.at_ms)
+      return artifact.recovery_run;
+    if (
+      freshRun &&
+      freshRun.at_ms === at &&
+      freshRun.match_id === matchId &&
+      (freshRun.favorite_team || "") === favorite
+    )
+      return freshRun;
+    return (
+      artifact.runs
+        .filter((r) => r.at_ms <= at && (r.favorite_team || "") === favorite)
+        .sort((a, b) => b.at_ms - a.at_ms)[0] || null
+    );
+  }, [artifact, freshRun, at, matchId, favorite, recovery, view]);
+  const story =
+    run?.variants.find(
+      (s) => s.audience === persona && s.language === language,
+    ) || null;
+  const events = useMemo(
+    () => artifact?.match.events.filter((e) => e.match_clock_ms <= at) || [],
+    [artifact, at],
+  );
+  const roster = match ? [...match.home.players, ...match.away.players] : [];
+  const playerState = state?.players.find((p) => p.id === player);
+  const eventName = (e: Event) =>
+    roster.find((p) => p.id === e.player_id)?.name || "Match event";
+  const currentEvents = events
+    .filter(
+      (e) =>
+        !["reception", "possession_change", "metadata"].includes(
+          e.event_type,
+        ) &&
+        (eventFilter === "all" || e.event_type === eventFilter) &&
+        (!query ||
+          `${eventName(e)} ${e.event_type} ${e.event_id}`
+            .toLowerCase()
+            .includes(query.toLowerCase())),
+    )
+    .slice(-14)
+    .reverse();
+  async function connect() {
+    try {
+      const r = await fetch(`${API}/api/health`, {
+        signal: AbortSignal.timeout(3000),
+      });
+      if (!r.ok) throw Error();
+      setConnected(true);
+      setNotice("Connected to the local Python backend.");
+    } catch {
+      setNotice(
+        "Start the backend on port 8000 to connect. Offline replay is available.",
+      );
+    }
+  }
+  async function analyze(inject = false) {
+    if (!connected) {
+      setNotice("Connect the local backend to execute a new workflow.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const r = await fetch(`${API}/api/matches/${matchId}/analyze`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          at_ms: at,
+          provider,
+          audience: persona,
+          language,
+          favorite_team: favorite || null,
+          inject_failure: inject,
+        }),
+        signal: AbortSignal.timeout(185000),
+      });
+      if (!r.ok)
+        throw Error((await r.json()).detail || "Workflow request failed");
+      setFreshRun(await r.json());
+      setRecovery(false);
+      setNotice(
+        "Workflow completed. Actual trace and verified output are ready.",
+      );
+    } catch (e) {
+      setNotice(String(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+  function seek(ms: number) {
+    setAt(ms);
+    setFreshRun(null);
+    setRecovery(false);
+  }
+  if (!artifact || !match || !state)
+    return (
+      <div className="loading">
+        <div className="brandmark">
+          m<span>≋</span>
+        </div>
+        <h1>Weaving the match.</h1>
+        <p>{loadError || "Loading reproducible football intelligence…"}</p>
+        {loadError && <button onClick={() => location.reload()}>Retry</button>}
+      </div>
+    );
+  const home = state.stats[match.home.id],
+    away = state.stats[match.away.id];
+  const panelTitle =
+    views.find((v) => v.id === view)?.name || "Live intelligence";
+  const narrative = (
+    <section className="panel story-panel">
+      <div className="panel-heading">
+        <h2>
+          <Sparkles size={16} /> The story behind the moment
+        </h2>
+        <Badge>
+          <span className="tiny-dot" />{" "}
+          {story ? "EVIDENCE VERIFIED" : "AWAITING EVIDENCE"}
+        </Badge>
+      </div>
+      {story ? (
+        <>
+          <div className="story-kicker">
+            {words(story.claim.reason_code).toUpperCase()}{" "}
+            <span>· {time(run!.at_ms)}</span>
+          </div>
+          <h3>{story.headline}</h3>
+          <p className="story-text" lang={language}>
+            {story.text}
+          </p>
+          <div className="why-box">
+            <span>WHY IT MATTERS</span>
+            <p lang={language}>{story.why}</p>
+          </div>
+          <div className="story-bottom">
+            <span>
+              <ShieldCheck size={13} />
+              {story.confidence} · {story.claim.source_event_ids.length} source
+              events
+            </span>
+            <button
+              className="text-button"
+              onClick={() => setEvidence(story.claim)}
+            >
+              Explore evidence <ArrowRight size={14} />
+            </button>
+          </div>
+          <div className="source-label">
+            <Network size={12} />
+            {run?.recording_label ||
+              (run?.execution_mode === "local-llm"
+                ? "Local model workflow"
+                : "Deterministic workflow · no LLM inference")}
+          </div>
+        </>
+      ) : (
+        <div className="empty">
+          <Clock3 />
+          <p>Play five minutes to build enough evidence for a story.</p>
+        </div>
+      )}
+    </section>
+  );
+  const pitch = (
+    <section className="panel pitch-panel">
+      <div className="panel-heading">
+        <h2>Pitch intelligence</h2>
+        <select
+          aria-label="Pitch layer"
+          value={layer}
+          onChange={(e) => setLayer(e.target.value)}
+        >
+          <option value="all">Recent actions</option>
+          <option value="shots">Shot map</option>
+          <option value="recoveries">Recoveries</option>
+        </select>
+      </div>
+      <div className="pitch-top">
+        <span>
+          <i className="dot home" /> {match.home.name}
+        </span>
+        <span>
+          <i className="dot away" /> {match.away.name}
+        </span>
+        <span className="muted">105 × 68 m</span>
+      </div>
+      <Pitch
+        match={match}
+        events={events}
+        layer={layer}
+        onEvent={setEvidence}
+      />
+      <div className="pitch-foot">
+        <span>
+          <span className="tiny-dot" /> EVENT LOCATION MAP
+        </span>
+        <span>Team-normalized event coordinates · no tracking data</span>
+      </div>
+    </section>
+  );
+  const momentum = (
+    <section className="panel momentum-panel">
+      <div className="panel-heading">
+        <h2>
+          <Activity size={16} /> Attacking momentum
+        </h2>
+        <button
+          className="text-button muted"
+          onClick={() => setShowMethods(true)}
+        >
+          How it's calculated <ChevronRight size={13} />
+        </button>
+      </div>
+      <Momentum state={state} match={match} onSeek={seek} />
+      <div className="chart-caption">
+        <span>
+          <i className="dot home" /> {match.home.short}{" "}
+          <i className="dot away" /> {match.away.short}
+        </span>
+        <span>Weighted event proxy · 5-minute windows</span>
+      </div>
+    </section>
+  );
+  const stats = (
+    <section className="panel stats-panel">
+      <div className="panel-heading">
+        <h2>Match pulse</h2>
+        <span className="muted small">{time(at)}</span>
+      </div>
+      {[
+        ["Possession proxy", "possession", "%"],
+        ["Shots / on target", "shots", ""],
+        ["Pass completion", "pass_completion", "%"],
+        ["Final-third entries", "final_third_entries", ""],
+        ["Synthetic xG Proxy", "xg_proxy", ""],
+      ].map(([label, key, suffix]) => (
+        <div className="stat-row" key={key}>
+          <div>
+            <strong>
+              {home[key]}
+              {suffix}
+            </strong>
+            <span>{label}</span>
+            <strong>
+              {away[key]}
+              {suffix}
+            </strong>
+          </div>
+          <div className="stat-track">
+            <span
+              style={{
+                width: `${(home[key] / (home[key] + away[key] || 1)) * 100}%`,
+              }}
+            />
+          </div>
+          {key === "shots" && (
+            <div className="stat-sub">
+              <span>{home.shots_on_target} on target</span>
+              <span>{away.shots_on_target} on target</span>
+            </div>
+          )}
+        </div>
+      ))}
+    </section>
+  );
+  const feed = (
+    <section className="panel feed-panel">
+      <div className="panel-heading">
+        <h2>Match event log</h2>
+        <Badge tone="gray">{state.event_count.toLocaleString()} EVENTS</Badge>
+      </div>
+      <div className="feed-tools">
+        <div className="search">
+          <Search size={14} />
+          <input
+            aria-label="Search events"
+            placeholder="Find player or event…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+        <select
+          aria-label="Event filter"
+          value={eventFilter}
+          onChange={(e) => setEventFilter(e.target.value)}
+        >
+          <option value="all">All actions</option>
+          {[
+            "pass",
+            "shot",
+            "goal",
+            "pressure",
+            "recovery",
+            "tackle",
+            "substitution",
+          ].map((k) => (
+            <option key={k} value={k}>
+              {words(k)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="event-list">
+        {currentEvents.length ? (
+          currentEvents.map((e) => (
+            <button
+              className="event-row"
+              key={e.event_id}
+              onClick={() => setEvidence(e)}
+            >
+              <span className="event-time">{time(e.match_clock_ms)}</span>
+              <span
+                className={`event-dot ${e.team_id === "harbor" ? "home" : "away"}`}
+              />
+              <span>
+                <b>{eventName(e)}</b>
+                <small>
+                  {words(e.event_type)} · {e.outcome.replace("_", " ")}
+                </small>
+              </span>
+              <ChevronRight size={13} />
+            </button>
+          ))
+        ) : (
+          <p className="empty">No matching events at this time.</p>
+        )}
+      </div>
+    </section>
+  );
+  return (
+    <div className="app-shell">
+      <aside className="sidebar">
+        <a
+          href="#"
+          className="brand"
+          onClick={(e) => {
+            e.preventDefault();
+            setView("live");
+          }}
+          aria-label="MatchWeave home"
+        >
+          <div className="brandmark">
+            m<span>≋</span>
+          </div>
+          <div>
+            MATCHWEAVE<span>FOOTBALL INTELLIGENCE</span>
+          </div>
+        </a>
+        <div className="workspace-label">
+          WORKSPACE <span>01</span>
+        </div>
+        <nav aria-label="Main navigation">
+          {views.map((v) => (
+            <button
+              key={v.id}
+              className={view === v.id ? "active" : ""}
+              onClick={() => {
+                setView(v.id);
+                if (v.id === "recap") {
+                  seek(5400000);
+                  setPlaying(false);
+                }
+              }}
+            >
+              <v.icon size={18} />
+              <span>{v.name}</span>
+              {view === v.id && <i />}
+            </button>
+          ))}
+        </nav>
+        <div className="sidebar-match">
+          <span className="eyebrow">ON THE REPLAY DESK</span>
+          <div>
+            <Club short="HC" />
+            <span>
+              Harbor vs Vale<small>Fictional match series</small>
+            </span>
+          </div>
+          <p>
+            <span className="tiny-dot" /> Synthetic. Transparent. Yours.
+          </p>
+        </div>
+        <div className="sidebar-bottom">
+          <div className="local-tag">
+            <ShieldCheck size={16} />
+            <span>
+              Local-first. Zero API spend.
+              <small>Microsoft Agent Framework</small>
+            </span>
+          </div>
+          <button onClick={() => setShowMethods(true)}>
+            <Code2 size={15} /> Methodology & provenance{" "}
+            <ChevronRight size={14} />
+          </button>
+        </div>
+      </aside>
+      <main>
+        <header className="topbar">
+          <div className="breadcrumb">
+            Workspace <ChevronRight size={13} /> <span>{panelTitle}</span>
+          </div>
+          <div className="topbar-right">
+            <span className="data-label">
+              <span className="tiny-dot" /> SYNTHETIC DATA
+            </span>
+            <button
+              className={`connect-button ${connected ? "connected" : ""}`}
+              onClick={() => (connected ? setConnected(false) : connect())}
+            >
+              <Link2 size={13} />
+              {connected ? "Local backend connected" : "Connect local backend"}
+            </button>
+            <button
+              className="avatar"
+              onClick={() => setView("fans")}
+              aria-label="Open personalized fan experience"
+            >
+              MW
+            </button>
+          </div>
+        </header>
+        <div className="page-body">
+          <div className="page-heading">
+            <div>
+              <div className="eyebrow">
+                <span className="tiny-dot" /> MATCHWEAVE LAB / MATCHDAY 01
+              </div>
+              <h1>
+                {view === "live"
+                  ? "The match, beyond the score."
+                  : view === "fans"
+                    ? "One match. Your perspective."
+                    : view === "broadcast"
+                      ? "From insight to on air."
+                      : view === "agents"
+                        ? "Intelligence you can inspect."
+                        : view === "recap"
+                          ? "Every moment. One story."
+                          : "Read the game in detail."}
+              </h1>
+              <p>
+                {view === "live"
+                  ? "Real-time context. Traceable evidence. A story for every fan."
+                  : match.description}
+              </p>
+            </div>
+            <select
+              className="scenario-select"
+              aria-label="Match scenario"
+              value={matchId}
+              onChange={(e) => {
+                setMatchId(e.target.value);
+                seek(view === "recap" ? 5400000 : 4200000);
+              }}
+            >
+              {matches.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <section className="scoreboard" aria-label="Match scoreboard">
+            <div className="score-meta">
+              <Badge tone="gray">
+                <span className="tiny-dot" />{" "}
+                {at === 5400000 ? "FULL TIME" : "SYNTHETIC REPLAY"}
+              </Badge>
+              <span>WEAVE PARK · FICTIONAL FIXTURE</span>
+            </div>
+            <div className="score-main">
+              <div className="team home-team">
+                <span>
+                  <strong>{match.home.name}</strong>
+                  <small>HOME</small>
+                </span>
+                <Club short="HC" />
+              </div>
+              <div className="score">
+                <div>
+                  {home.goals}
+                  <span>:</span>
+                  {away.goals}
+                </div>
+                <span className="match-clock">
+                  {time(at)} <i />
+                </span>
+              </div>
+              <div className="team">
+                <Club short="VA" away />
+                <span>
+                  <strong>{match.away.name}</strong>
+                  <small>AWAY</small>
+                </span>
+              </div>
+            </div>
+            <div className="replay-controls">
+              <button
+                className="play-button"
+                disabled={view === "recap"}
+                onClick={() => {
+                  if (at === 5400000) seek(0);
+                  setPlaying(!playing);
+                }}
+                aria-label={playing ? "Pause replay" : "Play replay"}
+              >
+                {playing ? <Pause size={16} /> : <Play size={16} />}
+              </button>
+              <button
+                className="icon-button"
+                onClick={() => {
+                  seek(0);
+                  setPlaying(false);
+                }}
+                disabled={view === "recap"}
+                aria-label="Restart replay"
+              >
+                <RotateCcw size={14} />
+              </button>
+              <span className="replay-time">{time(at)}</span>
+              <input
+                aria-label="Match timeline"
+                disabled={view === "recap"}
+                type="range"
+                min="0"
+                max="5400000"
+                step="60000"
+                value={at}
+                onChange={(e) => seek(+e.target.value)}
+                style={
+                  {
+                    "--progress": `${(at / 5400000) * 100}%`,
+                  } as React.CSSProperties
+                }
+              />
+              <span className="replay-time end-time">90:00</span>
+              <select
+                aria-label="Replay speed"
+                value={speed}
+                onChange={(e) => setSpeed(+e.target.value)}
+              >
+                <option value="1">1 min/s</option>
+                <option value="2">2 min/s</option>
+                <option value="4">4 min/s</option>
+              </select>
+              <div className="snapshot-tag">
+                <Clock3 size={12} /> 1-minute snapshots
+              </div>
+            </div>
+          </section>
+          <div className="experience-bar">
+            <div>
+              <Settings2 size={15} />
+              <span>YOUR LENS</span>
+              <div className="segmented" aria-label="Audience mode">
+                {(["fan", "analyst", "broadcaster"] as Persona[]).map((p) => (
+                  <button
+                    key={p}
+                    className={persona === p ? "selected" : ""}
+                    onClick={() => setPersona(p)}
+                  >
+                    {p === "fan"
+                      ? "Casual fan"
+                      : p === "analyst"
+                        ? "Analyst"
+                        : "Broadcast"}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <Globe2 size={14} />
+              <select
+                aria-label="Narrative language"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value as Language)}
+              >
+                <option value="en">English</option>
+                <option value="hi">हिन्दी</option>
+                <option value="es">Español</option>
+              </select>
+              <span className="bar-divider" />
+              <Badge tone="gray">
+                {connected ? "LOCAL API" : "RECORDED REPLAY"}
+              </Badge>
+            </div>
+          </div>
+          {view === "live" && (
+            <>
+              <div className="primary-grid">
+                {pitch}
+                {narrative}
+              </div>
+              <div className="secondary-grid">
+                {momentum}
+                {stats}
+                {feed}
+              </div>
+            </>
+          )}
+          {view === "analyst" && (
+            <>
+              <div className="analyst-grid">
+                <div>
+                  {pitch}
+                  {momentum}
+                </div>
+                <div>
+                  {stats}
+                  <section className="panel mini-panel">
+                    <h2>
+                      <Zap size={16} /> Transition watch
+                    </h2>
+                    <div className="big-number">
+                      {state.counterattacks.length}
+                      <span>counterattack proxy sequences</span>
+                    </div>
+                    <p>
+                      Possession won deep, then reaches the final third within
+                      15 seconds.
+                    </p>
+                    <button
+                      className="text-button"
+                      onClick={() => setShowMethods(true)}
+                    >
+                      Inspect the method <ArrowRight size={14} />
+                    </button>
+                  </section>
+                </div>
+              </div>
+              <div className="two-grid">
+                <section className="panel">
+                  <div className="panel-heading">
+                    <h2>Player comparison</h2>
+                    <span className="muted small">Observed involvement</span>
+                  </div>
+                  <PlayerTable
+                    state={state}
+                    setPlayer={(p) => {
+                      setPlayer(p);
+                      setView("fans");
+                    }}
+                  />
+                </section>
+                {feed}
+              </div>
+            </>
+          )}
+          {view === "fans" && (
+            <>
+              <div className="two-grid">
+                <section className="panel preference-panel">
+                  <div className="panel-heading">
+                    <h2>
+                      <Users size={16} /> Make this match yours
+                    </h2>
+                  </div>
+                  <p>
+                    Follow the story that matters to you. Every version shares
+                    the same verified facts.
+                  </p>
+                  <label>
+                    Favorite club
+                    <select
+                      aria-label="Favorite club"
+                      value={favorite}
+                      onChange={(e) => setFavorite(e.target.value)}
+                    >
+                      <option value="">The whole match</option>
+                      <option value="harbor">Harbor City</option>
+                      <option value="vale">Vale Athletic</option>
+                    </select>
+                  </label>
+                  <label>
+                    Player focus
+                    <select
+                      aria-label="Favorite player"
+                      value={player}
+                      onChange={(e) => setPlayer(e.target.value)}
+                    >
+                      {roster.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} · {p.position}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <div className="player-profile">
+                    <span className="jersey">{playerState?.number}</span>
+                    <div>
+                      <h3>{playerState?.name}</h3>
+                      <p>
+                        {playerState?.position} ·{" "}
+                        {playerState?.team_id === "harbor"
+                          ? match.home.name
+                          : match.away.name}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="player-metrics">
+                    {[
+                      ["Actions", playerState?.involvement],
+                      ["Passes", playerState?.completed],
+                      ["Shots", playerState?.shots],
+                      ["Goals", playerState?.goals],
+                    ].map(([k, v]) => (
+                      <div key={k}>
+                        <strong>{v}</strong>
+                        <span>{k}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="small muted">
+                    Evidence-derived focus: {playerState?.name} has{" "}
+                    {playerState?.defensive} defensive actions and{" "}
+                    {playerState?.completed} completed passes from{" "}
+                    {playerState?.passes} attempts at {time(at)}.
+                  </p>
+                </section>
+                {narrative}
+              </div>
+              <section className="panel">
+                <div className="panel-heading">
+                  <h2>{playerState?.name} · observed actions</h2>
+                  <Badge tone="gray">PLAYER FOCUS</Badge>
+                </div>
+                <div className="player-pitch">
+                  <Pitch
+                    match={match}
+                    events={events}
+                    playerId={player}
+                    onEvent={setEvidence}
+                  />
+                  <div>
+                    <h3>Every touch has a source.</h3>
+                    <p>
+                      These locations come from {playerState?.name}'s own
+                      synthetic events. Inspect any action to see the original
+                      record.
+                    </p>
+                    <div className="focus-events">
+                      {events
+                        .filter((e) => e.player_id === player)
+                        .slice(-5)
+                        .reverse()
+                        .map((e) => (
+                          <button
+                            key={e.event_id}
+                            onClick={() => setEvidence(e)}
+                          >
+                            <span>{time(e.match_clock_ms)}</span>{" "}
+                            {words(e.event_type)} <ChevronRight size={12} />
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
+          {view === "broadcast" && (
+            <>
+              <div className="broadcast-grid">
+                <section className="panel">
+                  <div className="panel-heading">
+                    <h2>
+                      <Radio size={16} /> Program preview
+                    </h2>
+                    <Badge tone="green">
+                      {showOverlay ? "GRAPHIC ACTIVE" : "GRAPHIC HIDDEN"}
+                    </Badge>
+                  </div>
+                  <div className="program">
+                    <div className="program-bug">
+                      HBC{" "}
+                      <b>
+                        {home.goals}–{away.goals}
+                      </b>{" "}
+                      VAL <span>{time(at)}</span>
+                    </div>
+                    <Pitch match={match} events={events.slice(-10)} />
+                    <div className="program-watermark">
+                      MATCHWEAVE / SYNTHETIC EVENT REPLAY
+                    </div>
+                    {showOverlay && story && (
+                      <div className={`broadcast-graphic ${overlayType}`}>
+                        <span className="graphic-brand">
+                          MW <i>INTELLIGENCE</i>
+                        </span>
+                        <h3>{story.headline}</h3>
+                        <p lang={language}>{story.text}</p>
+                        <small>
+                          <ShieldCheck size={11} /> VERIFIED ·{" "}
+                          {story.claim.source_event_ids.length} SOURCE EVENTS ·{" "}
+                          {time(run!.at_ms)}
+                        </small>
+                      </div>
+                    )}
+                  </div>
+                  <div className="program-footer">
+                    <span>16:9 composition · original SVG graphics</span>
+                    <button onClick={() => setShowOverlay(!showOverlay)}>
+                      {showOverlay ? "Hide graphic" : "Show graphic"}
+                    </button>
+                  </div>
+                </section>
+                <section className="panel studio-controls">
+                  <div className="panel-heading">
+                    <h2>Graphic controls</h2>
+                    <Layers3 size={16} />
+                  </div>
+                  <label>
+                    Output format
+                    <select
+                      aria-label="Overlay format"
+                      value={overlayType}
+                      onChange={(e) => setOverlayType(e.target.value)}
+                    >
+                      <option value="lower_third">Lower third</option>
+                      <option value="stat_card">Stat card</option>
+                      <option value="score_bug">Score bug</option>
+                    </select>
+                  </label>
+                  <div className="verification-block">
+                    <ShieldCheck size={22} />
+                    <h3>
+                      {story ? "Ready for the rundown" : "Awaiting evidence"}
+                    </h3>
+                    <p>
+                      Only source-verified claims reach this output. Timings
+                      refer to the recorded insight window.
+                    </p>
+                  </div>
+                  <button
+                    className="primary-button"
+                    disabled={!story}
+                    onClick={() =>
+                      save(
+                        { ...story!.overlay, overlay_type: overlayType },
+                        `matchweave-${matchId}-overlay.json`,
+                      )
+                    }
+                  >
+                    <ArrowDownToLine size={15} /> Export overlay JSON
+                  </button>
+                  <button
+                    className="secondary-button"
+                    disabled={!story}
+                    onClick={() => setEvidence(story!.claim)}
+                  >
+                    <Search size={14} /> Review source evidence
+                  </button>
+                  <p className="small muted">
+                    Overlay interval:{" "}
+                    {story
+                      ? `${time(story.overlay.start_ms)}–${time(story.overlay.end_ms)}`
+                      : "—"}
+                    . Preview is a design monitor; exported timing synchronizes
+                    the graphic with replay.
+                  </p>
+                </section>
+              </div>
+              <section className="panel">
+                <div className="panel-heading">
+                  <h2>Narrative rundown</h2>
+                  <span className="muted small">
+                    Verified published moments
+                  </span>
+                </div>
+                <div className="rundown">
+                  {artifact.runs
+                    .filter(
+                      (r) => r.at_ms <= at && !r.favorite_team && r.published,
+                    )
+                    .sort((a, b) => b.at_ms - a.at_ms)
+                    .slice(0, 5)
+                    .map((r) => (
+                      <button key={r.run_id} onClick={() => seek(r.at_ms)}>
+                        <span>{time(r.at_ms)}</span>
+                        <div>
+                          <strong>{r.published!.headline}</strong>
+                          <small>{r.published!.text}</small>
+                        </div>
+                        <ShieldCheck size={15} />
+                      </button>
+                    ))}
+                </div>
+              </section>
+            </>
+          )}
+          {view === "agents" && (
+            <>
+              <div className="agent-intro">
+                <div>
+                  <Badge>
+                    <Network size={12} /> MICROSOFT AGENT FRAMEWORK 1.22.0
+                  </Badge>
+                  <h2>A story earns its place on screen.</h2>
+                  <p>
+                    Parallel analysis → evidence reconciliation → narrative →
+                    independent recount → publication.
+                  </p>
+                </div>
+                <div className="agent-actions">
+                  <select
+                    aria-label="Inference provider"
+                    value={provider}
+                    onChange={(e) => setProvider(e.target.value)}
+                  >
+                    <option value="deterministic">
+                      Deterministic · no LLM
+                    </option>
+                    <option value="local">
+                      Local model · Foundry / Ollama
+                    </option>
+                  </select>
+                  <button
+                    className="primary-button"
+                    disabled={!connected || busy}
+                    onClick={() => analyze()}
+                  >
+                    {busy ? (
+                      <LoaderCircle size={15} className="spin" />
+                    ) : (
+                      <Play size={15} />
+                    )}{" "}
+                    Run workflow
+                  </button>
+                  <button
+                    className="secondary-button"
+                    onClick={() => {
+                      if (at < 4200000) seek(4200000);
+                      setRecovery(!recovery);
+                      setFreshRun(null);
+                    }}
+                  >
+                    <ShieldCheck size={14} />
+                    {recovery ? "Show regular run" : "Inspect failure recovery"}
+                  </button>
+                </div>
+              </div>
+              {run && (
+                <>
+                  <div className="run-summary">
+                    <div>
+                      <span>EXECUTION</span>
+                      <strong>
+                        {run.recording_label || "Fresh local workflow"}
+                      </strong>
+                    </div>
+                    <div>
+                      <span>DURATION</span>
+                      <strong>{run.duration_ms.toFixed(1)} ms</strong>
+                    </div>
+                    <div>
+                      <span>PUBLICATION</span>
+                      <strong className="lime">{run.status}</strong>
+                    </div>
+                    <div>
+                      <span>CORRECTIONS</span>
+                      <strong>{run.repairs}</strong>
+                    </div>
+                  </div>
+                  <div className="agent-traces">
+                    {run.traces.map((t, i) => (
+                      <details
+                        className={`trace-card ${t.validation === "rejected" ? "rejected" : ""}`}
+                        key={`${t.agent}-${i}`}
+                      >
+                        <summary>
+                          <span className="agent-step">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <div className="trace-identity">
+                            <strong>{words(t.agent)}</strong>
+                            <small>{t.output_summary}</small>
+                          </div>
+                          <Badge
+                            tone={
+                              t.mode === "local-llm"
+                                ? "purple"
+                                : t.status === "fallback"
+                                  ? "amber"
+                                  : "gray"
+                            }
+                          >
+                            {t.mode}
+                          </Badge>
+                          <span className="trace-duration">
+                            {t.duration_ms.toFixed(1)} ms
+                          </span>
+                          <span className="trace-validation">
+                            {t.validation === "rejected" ? (
+                              <X size={16} />
+                            ) : (
+                              <CheckCheck size={16} />
+                            )}
+                          </span>
+                          <ChevronRight size={15} />
+                        </summary>
+                        <div className="trace-detail">
+                          <p>
+                            <b>Task:</b> {t.task}
+                          </p>
+                          <p>
+                            <b>Input:</b> {t.input_summary}
+                          </p>
+                          <p>
+                            <b>Validation:</b> {t.validation} ·{" "}
+                            {t.source_event_ids.length} sources · {t.attempts}{" "}
+                            inference attempts
+                          </p>
+                          {t.raw_output && (
+                            <>
+                              <span className="muted small">
+                                UNTRUSTED MODEL ADVICE · NOT PUBLISHED AS FACT
+                              </span>
+                              <pre>{t.raw_output}</pre>
+                            </>
+                          )}
+                          {t.scheduled_tools &&
+                            t.scheduled_tools.length > 0 && (
+                              <>
+                                <span className="muted small">
+                                  ACTUAL EXECUTOR-SCHEDULED MICROSOFT FUNCTION
+                                  TOOLS
+                                </span>
+                                <pre>
+                                  {JSON.stringify(t.scheduled_tools, null, 2)}
+                                </pre>
+                              </>
+                            )}
+                          {t.errors?.map((e, j) => (
+                            <p className="error-note" key={j}>
+                              {e}
+                            </p>
+                          ))}
+                          {t.source_event_ids.length > 0 && (
+                            <button
+                              className="text-button"
+                              onClick={() =>
+                                setEvidence(
+                                  story?.claim ||
+                                    events.find(
+                                      (e) =>
+                                        e.event_id === t.source_event_ids[0],
+                                    ) ||
+                                    null,
+                                )
+                              }
+                            >
+                              Inspect published claim evidence{" "}
+                              <ArrowRight size={13} />
+                            </button>
+                          )}
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                  <div className="two-grid">
+                    <section className="panel mini-panel">
+                      <h2>What the comparison measures</h2>
+                      {comparison && (
+                        <div className="model-comparison">
+                          <p>
+                            Measured local model runs · {comparison.sample_size}{" "}
+                            checkpoints · structured claims with exact evidence
+                          </p>
+                          <div className="comparison-row">
+                            <span>Basic single agent</span>
+                            <strong>
+                              {comparison.single_correct}/
+                              {comparison.sample_size} verified ·{" "}
+                              {(comparison.single_median_ms / 1000).toFixed(1)}{" "}
+                              s median
+                            </strong>
+                          </div>
+                          <div className="comparison-row">
+                            <span>Complete verified workflow</span>
+                            <strong>
+                              {comparison.multi_correct}/
+                              {comparison.sample_size} verified ·{" "}
+                              {(comparison.multi_median_ms / 1000).toFixed(1)} s
+                              median
+                            </strong>
+                          </div>
+                          <p>
+                            Complete systems differ in verification and
+                            constrained rendering; this small sample does not
+                            isolate the effect of agent count.
+                          </p>
+                        </div>
+                      )}
+                      <p>
+                        One editorial selection without a gate versus the
+                        complete workflow under the same injected +99 count
+                        fault. This is a controlled deterministic ablation, not
+                        evidence of LLM superiority.
+                      </p>
+                      <div className="comparison-row">
+                        <span>Unverified corrupted claim</span>
+                        <Badge tone="amber">REJECTED BY RECOUNT</Badge>
+                      </div>
+                      <div className="comparison-row">
+                        <span>Complete verified workflow</span>
+                        <Badge>REPAIRED BEFORE PUBLISHING</Badge>
+                      </div>
+                      <button
+                        className="text-button"
+                        onClick={() =>
+                          save(
+                            artifact.recovery_run,
+                            `${matchId}-recovery-trace.json`,
+                          )
+                        }
+                      >
+                        Download actual recovery run{" "}
+                        <ArrowDownToLine size={13} />
+                      </button>
+                    </section>
+                    <section className="panel mini-panel">
+                      <h2>Proof before prose.</h2>
+                      <p>
+                        The local model chooses evidence-backed claims and
+                        layouts. Published language uses constrained English,
+                        Hindi and Spanish templates, so arithmetic stays
+                        identical in every version. Unsupported claims are
+                        withheld or repaired.
+                      </p>
+                      <div className="run-id">RUN {run.run_id}</div>
+                      <button
+                        className="text-button"
+                        onClick={() => save(run, `${matchId}-agent-trace.json`)}
+                      >
+                        Export execution trace <ArrowDownToLine size={13} />
+                      </button>
+                    </section>
+                  </div>
+                </>
+              )}
+            </>
+          )}
+          {view === "recap" && (
+            <>
+              <section className="panel recap-hero">
+                <Badge tone="gray">
+                  FULL-TIME · {match.title.toUpperCase()}
+                </Badge>
+                <h2>
+                  {match.home.name} {home.goals} – {away.goals}{" "}
+                  {match.away.name}
+                </h2>
+                <p>
+                  {home.goals > away.goals
+                    ? "Harbor City finish ahead."
+                    : home.goals < away.goals
+                      ? "Vale Athletic finish ahead."
+                      : "The sides finish level."}{" "}
+                  {state.event_count.toLocaleString()} synthetic events, one
+                  reproducible match story.
+                </p>
+                <div className="recap-numbers">
+                  <div>
+                    <strong>{home.shots + away.shots}</strong>
+                    <span>total shots</span>
+                  </div>
+                  <div>
+                    <strong>{state.key_moments.length}</strong>
+                    <span>goals, source linked</span>
+                  </div>
+                  <div>
+                    <strong>{state.counterattacks.length}</strong>
+                    <span>counterattack proxies</span>
+                  </div>
+                </div>
+              </section>
+              <div className="two-grid">
+                <section className="panel">
+                  <div className="panel-heading">
+                    <h2>The moments that changed the score</h2>
+                    <Target size={17} />
+                  </div>
+                  <div className="goal-timeline">
+                    {state.key_moments.map((e, i) => (
+                      <button key={e.event_id} onClick={() => setEvidence(e)}>
+                        <span>{time(e.match_clock_ms)}</span>
+                        <div>
+                          <b>{eventName(e)}</b>
+                          <p>
+                            {e.team_id === "harbor"
+                              ? match.home.name
+                              : match.away.name}{" "}
+                            · Goal {i + 1}
+                          </p>
+                          <small>
+                            Linked on-target shot: {e.related_event_ids[0]}
+                          </small>
+                        </div>
+                        <ShieldCheck size={17} />
+                      </button>
+                    ))}
+                  </div>
+                </section>
+                {narrative}
+              </div>
+              <div className="two-grid">
+                {stats}
+                <section className="panel">
+                  <div className="panel-heading">
+                    <h2>Player highlights</h2>
+                    <Users size={16} />
+                  </div>
+                  <PlayerTable
+                    state={state}
+                    setPlayer={(p) => {
+                      setPlayer(p);
+                      setView("fans");
+                    }}
+                  />
+                </section>
+              </div>
+            </>
+          )}
+          <footer className="page-footer">
+            <span>
+              MATCHWEAVE AI <i /> Every moment has a story. Every fan gets their
+              version.
+            </span>
+            <button onClick={() => setShowMethods(true)}>
+              Synthetic data & transparent methods <ArrowRight size={12} />
+            </button>
+          </footer>
+        </div>
+      </main>
+      {notice && (
+        <div role="status" className="toast">
+          <ShieldCheck size={17} />
+          {notice}
+          <button
+            aria-label="Dismiss notification"
+            onClick={() => setNotice("")}
+          >
+            <X size={15} />
+          </button>
+        </div>
+      )}
+      {(evidence || showMethods) && (
+        <div
+          className="drawer-backdrop"
+          onClick={() => {
+            setEvidence(null);
+            setShowMethods(false);
+          }}
+        >
+          <aside
+            className="evidence-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label={
+              showMethods ? "Methods and provenance" : "Evidence inspector"
+            }
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="drawer-header">
+              <span>
+                <ShieldCheck size={18} />
+                {showMethods ? "Methods & provenance" : "Follow the evidence"}
+              </span>
+              <button
+                autoFocus
+                aria-label="Close evidence inspector"
+                onClick={() => {
+                  setEvidence(null);
+                  setShowMethods(false);
+                }}
+              >
+                <X size={19} />
+              </button>
+            </div>
+            {showMethods ? (
+              <Methods />
+            ) : (
+              evidence &&
+              ("claim_id" in evidence ? (
+                <>
+                  <Badge>INDEPENDENT EVENT RECOUNT</Badge>
+                  <h2>{words(evidence.metric)}</h2>
+                  <div className="evidence-value">
+                    {evidence.value}
+                    <span>observations · {evidence.confidence}</span>
+                  </div>
+                  <p>
+                    Window {time(evidence.window_start_ms)}–
+                    {time(evidence.window_end_ms)}. Previous window:{" "}
+                    {evidence.previous_value}. Exact source set and count are
+                    checked before publication.
+                  </p>
+                  <p className="warning-note">
+                    Descriptive evidence, not a causal conclusion or a
+                    statistically calibrated confidence interval.
+                  </p>
+                  {evidence.source_event_ids.map((id) => {
+                    const e = events.find((x) => x.event_id === id);
+                    return e ? (
+                      <div className="evidence-event" key={id}>
+                        <b>
+                          {time(e.match_clock_ms)} · {eventName(e)}
+                        </b>
+                        <span>
+                          {words(e.event_type)} · {e.outcome}
+                        </span>
+                        <code>{id}</code>
+                        <small>
+                          ({e.start_x}, {e.start_y}) → ({e.end_x}, {e.end_y}) m
+                        </small>
+                      </div>
+                    ) : (
+                      <p key={id}>
+                        Event not available at this replay time: {id}
+                      </p>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  <Badge tone="gray">SOURCE EVENT</Badge>
+                  <h2>{words(evidence.event_type)}</h2>
+                  <p>
+                    {eventName(evidence)} · {time(evidence.match_clock_ms)}
+                  </p>
+                  <pre>{JSON.stringify(evidence, null, 2)}</pre>
+                </>
+              ))
+            )}
+          </aside>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PlayerTable({
+  state,
+  setPlayer,
+}: {
+  state: State;
+  setPlayer: (id: string) => void;
+}) {
+  return (
+    <div className="player-table">
+      <div className="table-head">
+        <span>PLAYER</span>
+        <span>ACT</span>
+        <span>PASS</span>
+        <span>G</span>
+      </div>
+      {[...state.players]
+        .sort(
+          (a, b) =>
+            b.goals * 30 + b.involvement - (a.goals * 30 + a.involvement),
+        )
+        .slice(0, 8)
+        .map((p) => (
+          <button key={p.id} onClick={() => setPlayer(p.id)}>
+            <span>
+              <i className={p.team_id === "harbor" ? "home" : "away"}>
+                {p.number}
+              </i>
+              <b>
+                {p.name}
+                <small>
+                  {p.position} · {p.team_id === "harbor" ? "HBC" : "VAL"}
+                </small>
+              </b>
+            </span>
+            <span>{p.involvement}</span>
+            <span>
+              {p.completed}/{p.passes}
+            </span>
+            <span>{p.goals}</span>
+          </button>
+        ))}
+    </div>
+  );
+}
+function Methods() {
+  return (
+    <div className="methods">
+      <Badge tone="gray">ORIGINAL SYNTHETIC DATA</Badge>
+      <h2>Understand the measurement.</h2>
+      <p>
+        Five fictional matches, reproducible seeds, no real clubs, match footage
+        or tracking feeds. All metrics are computed by Python from the original
+        event log.
+      </p>
+      <h3>Possession proxy</h3>
+      <p>
+        Share of pass, carry and shot actions. This is event share, not measured
+        possession time.
+      </p>
+      <h3>Attacking momentum</h3>
+      <p>
+        Weighted shots (5), goals (8), pressures (1.5), recoveries (1), carries
+        (0.25). Outside the attacking third, the weight is 35%. Five-minute
+        bins; arbitrary relative units.
+      </p>
+      <h3>Synthetic xG Proxy</h3>
+      <p>
+        0.55 × exp(−distance/18) × (1 − |y−34|/68), clamped to 0.01–0.7. An
+        uncalibrated geometry heuristic. It is not an official statistic or a
+        predictive model.
+      </p>
+      <h3>Evidence and uncertainty</h3>
+      <p>
+        Claims require the exact source event set and an independent recount.
+        Fewer than five events: small sample. Five or more: moderate descriptive
+        evidence. Goals: high observation certainty. No causal attribution or
+        outcome prediction.
+      </p>
+      <h3>Local AI and recorded replay</h3>
+      <p>
+        Microsoft Agent Framework runs the actual workflow. Optional Foundry
+        Local model agents choose constrained claims and graphic layouts.
+        Published language uses English, Hindi and Spanish templates. Per-agent
+        fallback and timing are visible in the trace.
+      </p>
+      <h3>Replay resolution</h3>
+      <p>
+        Offline statistics are sampled each minute. Stories are recorded every
+        five minutes, with their original timestamps. Event dots show event
+        locations, not live player tracking. Pitch coordinates are
+        team-normalized metres.
+      </p>
+      <h3>Zero additional monetary cost</h3>
+      <p>
+        No paid API keys, subscriptions or cloud infrastructure. Foundry
+        inference is local. GitHub Pages packaging is static and requires a
+        public repository for publication.
+      </p>
+    </div>
+  );
+}

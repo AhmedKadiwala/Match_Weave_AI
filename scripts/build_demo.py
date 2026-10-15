@@ -31,6 +31,10 @@ async def main():
                 run
             ]
         recovery = await run_workflow(match, 4_200_000, inject_failure=True)
+        recovery_source = ROOT / "demos" / f"{match.id}-local-recovery.json"
+        if recovery_source.exists():
+            recovery = json.loads(recovery_source.read_text(encoding="utf-8"))
+            recovery["recording_label"] = "Recorded Agent Run · injected count fault, source repair and re-verification"
         artifact = {
             "match": match.model_dump(mode="json"),
             "snapshots": snapshots,
@@ -50,6 +54,9 @@ async def main():
             flush=True,
         )
     (output / "index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
+    comparison = ROOT / "docs/reports/model-comparison.json"
+    if comparison.exists():
+        (output / "comparison.json").write_text(comparison.read_text(encoding="utf-8"), encoding="utf-8")
 
 
 if __name__ == "__main__":

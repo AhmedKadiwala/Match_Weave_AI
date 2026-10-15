@@ -18,6 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from .analytics import build_claims, metric_events, verify_claim
 from .models import Claim, Match
 from .publishing import publish
+from .tools import metric_tool
 
 
 class Decision(BaseModel):
@@ -194,6 +195,30 @@ class Analysis(Executor):
             relevant, key=lambda c: (c.metric != "passes_completed", c.value - c.previous_value), reverse=True
         )
         decision, detail = await decide(self.role, {"candidates": candidate_payload(relevant)}, data)
+        calculator = metric_tool(data.match, data.at_ms)
+        scheduled = []
+        for claim in relevant[:3]:
+            args = {
+                "team_id": claim.team_id,
+                "metric": claim.metric,
+                "start_ms": claim.window_start_ms,
+                "end_ms": claim.window_end_ms,
+            }
+            tool_start = time.perf_counter()
+            result = await calculator.invoke(arguments=args, skip_parsing=True)
+            if result["count"] != claim.value:
+                raise ValueError("Metric tool disagreed with source claim")
+            scheduled.append(
+                {
+                    "name": "calculate_metric",
+                    "origin": "executor-scheduled Microsoft FunctionTool",
+                    "arguments": args,
+                    "count": result["count"],
+                    "evidence_count": len(result["source_event_ids"]),
+                    "duration_ms": round((time.perf_counter() - tool_start) * 1000, 3),
+                }
+            )
+        detail["scheduled_tools"] = scheduled
         idx = decision.choice if decision and decision.choice < len(relevant) else 0
         data.candidates = (
             ([relevant[idx]] + [c for i, c in enumerate(relevant) if i != idx])[:3] if relevant else []

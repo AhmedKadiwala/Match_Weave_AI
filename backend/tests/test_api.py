@@ -49,3 +49,13 @@ def test_cors(client):
         )
         is None
     )
+
+
+def test_sse_resume_and_host_boundary(client):
+    events = client.get("/api/matches/pressing").json()["events"]
+    response = client.get(f"/api/matches/pressing/stream?speed=10000&after={len(events) - 2}")
+    assert response.status_code == 200
+    assert "text/event-stream" in response.headers["content-type"]
+    assert f"id: {len(events) - 1}" in response.text
+    assert "event: complete" in response.text
+    assert client.get("/api/health", headers={"Host": "attacker.example"}).status_code == 400

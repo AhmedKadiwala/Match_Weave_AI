@@ -16,3 +16,5 @@ Budget: $0 / ₹0 additional spend. No accounts, cards, API keys or cloud provis
 | Synthetic data and SVG graphics | Original project assets | No licensed sports data or imagery |
 
 No promotional credits or free trials. Static deployment is optional. Application startup never downloads models or provisions resources. Existing Codex access is user-authorized. Free service policies may change: verify before public publication. No recurring service fee is introduced.
+
+Complete installed inventory: docs/dependency-inventory.json (70 Python distributions and 129 npm lockfile entries at audit time). Exact versions: requirements.txt and frontend/package-lock.json. Fontsource fonts use SIL OFL 1.1; original license notices are retained in docs/licenses. Windows built-in speech synthesis and FFmpeg are optional local video-production tools; no music or licensed footage is purchased. Existing device, power and internet connectivity are assumed available; there is no new cloud charge or service subscription. GitHub Pages free-public availability was checked against official documentation on 2026-10-15. No paid platform was activated.

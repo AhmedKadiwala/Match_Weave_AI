@@ -62,6 +62,48 @@
   },
   "suites": [
     {
+      "title": "accessibility.spec.ts",
+      "file": "accessibility.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "all views expose usable accessible names and no serious axe violations",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8145,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T14:51:17.812Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddd864604af8a6a0198f-364b5ffb606a11bbeacf",
+          "file": "accessibility.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
       "title": "journeys.spec.ts",
       "file": "journeys.spec.ts",
       "column": 0,
@@ -83,12 +125,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5144,
+                  "duration": 3763,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-15T14:28:48.456Z",
+                  "startTime": "2026-10-15T14:51:26.129Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -117,12 +159,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1983,
+                  "duration": 2368,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-15T14:28:54.021Z",
+                  "startTime": "2026-10-15T14:51:29.918Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -151,12 +193,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1340,
+                  "duration": 1641,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-15T14:28:56.020Z",
+                  "startTime": "2026-10-15T14:51:32.307Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -185,12 +227,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1589,
+                  "duration": 1250,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-15T14:28:57.376Z",
+                  "startTime": "2026-10-15T14:51:33.966Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -219,12 +261,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1886,
+                  "duration": 1967,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-15T14:28:58.981Z",
+                  "startTime": "2026-10-15T14:51:35.240Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -253,12 +295,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4189,
+                  "duration": 4594,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-15T14:29:00.887Z",
+                  "startTime": "2026-10-15T14:51:37.248Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -287,12 +329,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1273,
+                  "duration": 1466,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-15T14:29:05.094Z",
+                  "startTime": "2026-10-15T14:51:41.871Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -306,13 +348,55 @@
           "column": 1
         }
       ]
+    },
+    {
+      "title": "production.spec.ts",
+      "file": "production.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "production static build serves every view, bundled font and recorded model trace",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T14:51:43.372Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ed69554c53210704c98c-30a814a3ffa6bdb6a31c",
+          "file": "production.spec.ts",
+          "line": 2,
+          "column": 1
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-15T14:28:47.386Z",
-    "duration": 20502.446,
-    "expected": 7,
+    "startTime": "2026-10-15T14:51:16.154Z",
+    "duration": 30178.665999999997,
+    "expected": 9,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

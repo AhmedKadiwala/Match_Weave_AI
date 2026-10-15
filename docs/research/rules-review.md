@@ -1,0 +1,11 @@
+# Official-source review — 15 October 2026
+
+Sources: [Official rules](https://github.com/microsoft/insidethegamehackathon/blob/main/OFFICIAL%20RULES.md), [entry portal](https://aka.ms/insidethegame), [Foundry Local quickstart](https://learn.microsoft.com/en-us/azure/foundry-local/get-started), [MAF workflow API](https://learn.microsoft.com/en-us/python/api/agent-framework-core/agent_framework.workflowbuilder), [MAF agents in workflows](https://learn.microsoft.com/en-us/agent-framework/tutorials/workflows/agents-in-workflows).
+
+The rules require a new solution created after registration opened, original/authorized materials, synthetic realistic football events, explainable intelligence, narratives/recaps and audience personalization. They describe ingest, interpret, explain, render and personalize stages. Optional video auto-eventing is not implemented or claimed. Microsoft Agent Framework is explicitly recognized for the multi-agent category. The category table calls it Best Multi-Agent System Prize; the prize list calls it Best Multi-Agent Orchestration.
+
+Registration ends Oct 20 at noon Pacific; submission ends Oct 27 at 23:59 Pacific; judging access must last through Nov 10 at 23:59 Pacific. Team size ≤4, adult eligibility and residence/conflict exclusions require entrant confirmation. Entry needs English materials, a public GitHub URL, a functioning build/demo, and functioning-device footage in a video shorter than two minutes with a public URL. No submission or eligibility attestation has been made by this project.
+
+The full source was retrieved and read locally for review; it is not redistributed in this repository. Portal short-link fetching failed in the tool environment, so portal-specific additional fields are unverified. SUBMISSION.md covers every field mandated by rules §4.4 and marks entrant-specific fields for completion.
+
+Foundry documentation examples use v1 catalog access in places; installed SDK 2.1.0 uses manager.get_catalog(). The actual imported package signatures were inspected and executed. MAF 1.22.0 uses WorkflowBuilder(start_executor=...), and Chat Completions local endpoints require OpenAIChatCompletionClient rather than the Responses client OpenAIChatClient. The separate provider distribution is agent-framework-openai 1.17.0 (compatible with core ≥1.22).

@@ -12,6 +12,9 @@ async def test_real_framework_and_failure_recovery():
     assert result["framework"].startswith("Microsoft Agent Framework")
     assert result["status"] == "published"
     assert result["repairs"] == 1
+    assert all(
+        t["scheduled_tools"] for t in result["traces"] if t["agent"] in {"match_analyst", "tactical_analyst"}
+    )
     assert {"match_analyst", "tactical_analyst", "narrative", "fact_checker", "publisher"} <= {
         t["agent"] for t in result["traces"]
     }

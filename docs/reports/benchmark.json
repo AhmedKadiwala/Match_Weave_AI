@@ -4,16 +4,16 @@
   "python": "3.14.7",
   "measurements": 90,
   "deterministic_state_claim_overlay_ms": {
-    "p50": 21.368,
-    "p95": 44.259,
-    "max": 63.725
+    "p50": 20.894,
+    "p95": 44.624,
+    "max": 57.809
   },
   "comparison_type": "Controlled deterministic ablation, not evidence of LLM superiority. Same injected +99 count fault. Clean baseline may already be correct.",
   "comparison": [
     {
       "match_id": "comeback",
-      "baseline_ms": 6.247,
-      "workflow_ms": 487.494,
+      "baseline_ms": 7.111,
+      "workflow_ms": 444.196,
       "clean_baseline_correct": true,
       "fault_baseline_correct": false,
       "verified_workflow_correct": true,
@@ -23,8 +23,8 @@
     },
     {
       "match_id": "pressing",
-      "baseline_ms": 7.379,
-      "workflow_ms": 392.523,
+      "baseline_ms": 6.793,
+      "workflow_ms": 353.332,
       "clean_baseline_correct": true,
       "fault_baseline_correct": false,
       "verified_workflow_correct": true,
@@ -34,8 +34,8 @@
     },
     {
       "match_id": "counter",
-      "baseline_ms": 5.764,
-      "workflow_ms": 355.504,
+      "baseline_ms": 5.591,
+      "workflow_ms": 347.663,
       "clean_baseline_correct": true,
       "fault_baseline_correct": false,
       "verified_workflow_correct": true,
@@ -45,8 +45,8 @@
     },
     {
       "match_id": "defensive",
-      "baseline_ms": 6.22,
-      "workflow_ms": 338.368,
+      "baseline_ms": 5.019,
+      "workflow_ms": 353.179,
       "clean_baseline_correct": true,
       "fault_baseline_correct": false,
       "verified_workflow_correct": true,
@@ -56,8 +56,8 @@
     },
     {
       "match_id": "star",
-      "baseline_ms": 7.176,
-      "workflow_ms": 384.505,
+      "baseline_ms": 6.192,
+      "workflow_ms": 410.258,
       "clean_baseline_correct": true,
       "fault_baseline_correct": false,
       "verified_workflow_correct": true,

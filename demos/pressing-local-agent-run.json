@@ -1,12 +1,12 @@
 {
-  "run_id": "1919d7845e844caaa9a4af887b33d752",
+  "run_id": "f9ea6e4f829641edb147419863465aa3",
   "match_id": "pressing",
   "at_ms": 4200000,
   "framework": "Microsoft Agent Framework 1.22.0",
   "provider_requested": "local",
   "favorite_team": null,
   "execution_mode": "local-llm",
-  "duration_ms": 29649.104,
+  "duration_ms": 25569.052,
   "published": {
     "claim": {
       "claim_id": "pressing-4200000-harbor-pressure",
@@ -695,7 +695,7 @@
       "task": "You are the Match Analyst. Choose the most useful numerical claim, preferring shots or score changes. Use metric_lookup if helpful. Never compute your own facts. Return JSON {choice: zero-based index, note: short explanation}.",
       "input_summary": "pressing @ 4200000 ms; 3 candidate claims; analyst/en",
       "output_summary": "Ranked 3 evidence-linked claims",
-      "duration_ms": 13103.822,
+      "duration_ms": 11151.521,
       "source_event_ids": [
         "pressing-01354",
         "pressing-01365",
@@ -730,14 +730,55 @@
       "attempts": 1,
       "raw_output": "{\n    \"choice\": 2,\n    \"note\": \"The 'passes_completed' metric shows moderate confidence increase for Vale.\"\n}",
       "tool_calls": [],
-      "errors": []
+      "errors": [],
+      "scheduled_tools": [
+        {
+          "name": "calculate_metric",
+          "origin": "executor-scheduled Microsoft FunctionTool",
+          "arguments": {
+            "team_id": "harbor",
+            "metric": "shots",
+            "start_ms": 3600000,
+            "end_ms": 4200000
+          },
+          "count": 3,
+          "evidence_count": 3,
+          "duration_ms": 2.101
+        },
+        {
+          "name": "calculate_metric",
+          "origin": "executor-scheduled Microsoft FunctionTool",
+          "arguments": {
+            "team_id": "vale",
+            "metric": "goals",
+            "start_ms": 0,
+            "end_ms": 4200000
+          },
+          "count": 1,
+          "evidence_count": 1,
+          "duration_ms": 1.532
+        },
+        {
+          "name": "calculate_metric",
+          "origin": "executor-scheduled Microsoft FunctionTool",
+          "arguments": {
+            "team_id": "harbor",
+            "metric": "passes_completed",
+            "start_ms": 3600000,
+            "end_ms": 4200000
+          },
+          "count": 25,
+          "evidence_count": 25,
+          "duration_ms": 0.956
+        }
+      ]
     },
     {
       "agent": "tactical_analyst",
       "task": "You are the Tactical Intelligence specialist. Prefer evidence of a pressure/recovery change, with at least five observations. Avoid causal assertions. Choose from supplied candidates only. Return JSON {choice: index, note: short uncertainty-aware explanation}.",
       "input_summary": "pressing @ 4200000 ms; 3 candidate claims; analyst/en",
       "output_summary": "Ranked 3 evidence-linked claims",
-      "duration_ms": 12541.306,
+      "duration_ms": 9405.406,
       "source_event_ids": [
         "pressing-01347",
         "pressing-01360",
@@ -761,14 +802,55 @@
       "attempts": 1,
       "raw_output": "{\"choice\":0,\"note\":\"Evidence shows a significant increase in pressure for harbor and moderate recovery changes.\"}",
       "tool_calls": [],
-      "errors": []
+      "errors": [],
+      "scheduled_tools": [
+        {
+          "name": "calculate_metric",
+          "origin": "executor-scheduled Microsoft FunctionTool",
+          "arguments": {
+            "team_id": "harbor",
+            "metric": "pressure",
+            "start_ms": 3600000,
+            "end_ms": 4200000
+          },
+          "count": 14,
+          "evidence_count": 14,
+          "duration_ms": 3.382
+        },
+        {
+          "name": "calculate_metric",
+          "origin": "executor-scheduled Microsoft FunctionTool",
+          "arguments": {
+            "team_id": "vale",
+            "metric": "pressure",
+            "start_ms": 3600000,
+            "end_ms": 4200000
+          },
+          "count": 12,
+          "evidence_count": 12,
+          "duration_ms": 1.678
+        },
+        {
+          "name": "calculate_metric",
+          "origin": "executor-scheduled Microsoft FunctionTool",
+          "arguments": {
+            "team_id": "harbor",
+            "metric": "recoveries",
+            "start_ms": 3600000,
+            "end_ms": 4200000
+          },
+          "count": 19,
+          "evidence_count": 19,
+          "duration_ms": 1.644
+        }
+      ]
     },
     {
       "agent": "narrative",
       "task": "You are the Narrative editor. Select one claim for a concise football story matching the audience. Prefer a meaningful recent change over routine passing. Return JSON {choice: index, note: short editorial reason}. Do not invent events.",
       "input_summary": "pressing @ 4200000 ms; 6 candidate claims; analyst/en",
       "output_summary": "Selected pressing-4200000-harbor-pressure",
-      "duration_ms": 7338.459,
+      "duration_ms": 6559.589,
       "source_event_ids": [
         "pressing-01347",
         "pressing-01360",
@@ -799,7 +881,7 @@
       "task": "You are the independent Fact Checker. The supplied tool recount is authoritative. Choice 0 means accept, 1 means reject. Return JSON {choice: 0 or 1, note: short verification reason}. Never accept a failed recount.",
       "input_summary": "pressing @ 4200000 ms; 6 candidate claims; analyst/en",
       "output_summary": "independent event recount and exact evidence set passed",
-      "duration_ms": 5125.998,
+      "duration_ms": 5161.393,
       "source_event_ids": [
         "pressing-01347",
         "pressing-01360",
@@ -830,7 +912,7 @@
       "task": "You are the Personalization and Publishing specialist. Select layout: 0=lower third for fans/broadcast, 1=stat card for analysts, 2=score bug for goals. Return JSON {choice: 0,1,2, note: short audience-specific reason}. Verified facts must stay unchanged.",
       "input_summary": "pressing @ 4200000 ms; 6 candidate claims; analyst/en",
       "output_summary": "Published 9 fact-consistent persona/language variants; score_bug",
-      "duration_ms": 2652.098,
+      "duration_ms": 2267.788,
       "source_event_ids": [
         "pressing-01347",
         "pressing-01360",
