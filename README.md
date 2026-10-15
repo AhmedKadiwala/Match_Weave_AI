@@ -6,6 +6,8 @@ MatchWeave turns football events into explanations whose supporting evidence you
 
 [Demo video — 105 seconds](demos/matchweave-demo.mp4) · [Judge quick start](JUDGE_QUICKSTART.md) · [Architecture](ARCHITECTURE.md) · [Model card](MODEL_CARD.md) · [Test results](TEST_RESULTS.md)
 
+Competition form: [ready-to-paste title, pitch, description and testing instructions](SUBMISSION_COPY_PASTE.txt).
+
 This repository includes source, licensed datasets, trained statistical model weights, instructions, test reports, screenshots and the actual submission video. Download the video if GitHub does not play it inline. The MP4 in the repository is also the file to upload in the competition's Project Images/Video section; including it here does not submit the project to the competition.
 
 ## Run locally on Windows

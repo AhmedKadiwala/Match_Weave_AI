@@ -1,5 +1,7 @@
 # Competition submission text
 
+For the final form, use [SUBMISSION_COPY_PASTE.txt](SUBMISSION_COPY_PASTE.txt): it combines the original pipeline and Real match lab into one description, with a short alternative and separate technology/testing fields. The longer notes below retain implementation details and submission history.
+
 Status: public source uploaded and verified; competition entry **not submitted**. Public website and externally hosted video URLs remain unverified. These materials cover the fields mandated by official rules §4.4 and the requested team fields. Confirm any additional portal-only fields before submission.
 
 ## Project title

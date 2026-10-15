@@ -4,12 +4,14 @@ Public source repository: https://github.com/AhmedKadiwala/Match_Weave_AI — up
 
 Publishing the repository is separate from finalizing the competition form. Complete the actual form in Innovation Studio and retain its confirmation. This guide does not claim a portal submission or a verified public website/video URL.
 
+**Ready-to-paste fields:** [SUBMISSION_COPY_PASTE.txt](SUBMISSION_COPY_PASTE.txt) contains the title, tagline, pitch, consolidated project description, shorter fallback, technologies, category, differentiators and testing instructions. Keep the video URL you have already uploaded in the form. The participant details and final portal submission are completed by you.
+
 ## What to put in each field
 
 | Portal field | File or value |
 |---|---|
 | Project title | MATCHWEAVE AI — Evidence you can see. Stories made for you. |
-| Project description | Use SUBMISSION.md, including its Real match lab addendum and the actual technology/capability boundaries |
+| Project description | Copy the PROJECT DESCRIPTION field from SUBMISSION_COPY_PASTE.txt; use its shorter alternative only if the portal has a small limit |
 | Project Code Repository Link | https://github.com/AhmedKadiwala/Match_Weave_AI after verifying the source is visible while signed out |
 | Project Images/Video | demos/matchweave-demo.mp4 — actual 105-second video |
 | Captions, if accepted | demos/captions.srt |

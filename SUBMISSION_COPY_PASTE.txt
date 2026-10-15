@@ -1,0 +1,64 @@
+MATCHWEAVE AI — COMPETITION FORM TEXT
+===================================
+
+Use the field contents below. Your GitHub repository is published and you have reported the video task complete. Keep your already-uploaded video URL in the form. Complete your actual participant details and finalize the form yourself; publishing these files is not a portal submission.
+
+PROJECT TITLE
+MATCHWEAVE AI
+
+TAGLINE
+Evidence you can see. Stories made for you.
+
+SHORT PITCH
+MatchWeave AI transforms football events into evidence-checked stories, personalized fan experiences and timed broadcast graphics using Microsoft Agent Framework and local AI, with a separate model trained on real historical match results.
+
+PROJECT DESCRIPTION
+Football fans see the score, but understanding why a match is changing requires context. Analysts need supporting evidence, while broadcast producers need concise graphics they can time and reuse. MatchWeave AI connects these needs through one workflow: ingest, interpret, explain, render and personalize.
+
+The application processes 9,887 reproducible synthetic events across five fictional matches. Seven views support match replay, tactical exploration, player focus, automated recaps, agent inspection, broadcast graphics and historical analysis. Fans, analysts and producers receive different presentations of the same verified facts, with English, Hindi and Spanish templates and club/player preferences.
+
+Microsoft Agent Framework coordinates specialist agents through parallel analysis, shared results, numerical verification and conditional repair. Microsoft Foundry Local runs the pretrained Qwen2.5 1.5B language model on the computer, without a paid cloud-model API. The agents select constrained claims and layouts; canonical event calculations check numerical claims before publication. Viewers can inspect the supporting event IDs and see an intentionally incorrect claim rejected, repaired and checked again. The studio exports timed JSON containing the approved facts and evidence for graphics workflows.
+
+A separate Real match lab includes 12,372 completed results, plus two cancelled fixtures, from January 2021 through 2025–26 across the European big five leagues and Champions League, Europa League and Conference League. Qualifying rounds and 2026–27 are excluded. A locally trained logistic-regression model estimates home-win, draw and away-win probabilities from pre-match features. Its frozen evaluation model achieved 52.17% accuracy on 2,283 held-out 2025–26 matches, compared with a 45.38% frequency baseline. Historical results remain separate from synthetic tactical events.
+
+The React/TypeScript frontend connects to a FastAPI/Python backend. Fresh local language-model inference, recorded AI runs and deterministic verification are explicitly labeled. The default demo includes recorded local-model traces and fresh historical-model inference; optional Foundry setup enables new language-model calls. Executed checks include 45 backend tests, 12 browser journeys and five health-ping checks. Source, datasets, model weights, setup instructions, reports and the 105-second demonstration are included in the public repository.
+
+SHORTER DESCRIPTION — USE ONLY IF THE FORM HAS A SMALL LIMIT
+MatchWeave AI turns synthetic football events into explanations, personalized stories and timed broadcast graphics. Microsoft Agent Framework coordinates specialist agents, while Foundry Local runs Qwen2.5 on the computer without a paid AI API. Numerical claims link to their supporting events; a visible repair workflow rejects and corrects an incorrect count. Seven views serve fans, analysts and producers, with English, Hindi and Spanish templates. A separate historical lab contains 12,372 completed results across eight main competitions from 2021 through 2025–26. Its trained result model achieved 52.17% accuracy on 2,283 held-out matches versus a 45.38% baseline. Code, data, trained weights, run instructions, test reports and the 105-second video are public. Recorded AI runs and fresh inference are clearly labeled.
+
+TECHNOLOGIES USED
+Microsoft Agent Framework; Microsoft Foundry Local; Qwen2.5 1.5B Instruct; Python; FastAPI; Pydantic; SQLite; React; TypeScript; Vite; NumPy for historical-model training; pytest; Playwright.
+
+Microsoft technologies actually executed: Agent Framework and Foundry Local. Vercel/Render deployment configuration is included; no verified public website or Azure cloud deployment is claimed.
+
+CATEGORY — IF THE FORM ASKS
+Best Multi-Agent System Prize.
+
+WHAT MAKES IT DIFFERENT — IF THE FORM ASKS
+One approved evidence record feeds a fan explanation, an analyst view and a timed graphic. Numerical claims retain source-event links, and an incorrect count visibly travels through rejection, canonical repair and re-verification. Actual agent traces, trained weights and chronological historical evaluation are inspectable. Recorded runs, deterministic checks and fresh model inference are clearly distinguished.
+
+TESTING / RUN INSTRUCTIONS — IF THE FORM ASKS
+1. Open https://github.com/AhmedKadiwala/Match_Weave_AI and follow README.md. The executed environment used Windows 11, Python 3.14.7 and Node.js 24.19.0.
+2. Clone or download and extract the repository. Double-click RUN_MATCHWEAVE.cmd. First launch installs dependencies and builds the frontend, so internet access is needed. No paid API key is required.
+3. Wait for http://127.0.0.1:8000/ to open and keep the terminal running. Explore the match views, audience/language choices, evidence drawer and broadcast JSON export.
+4. In Agent intelligence, inspect actual recorded local-model traces and the repair example. Select the deterministic provider and run a fresh workflow through the Python backend.
+5. In Real match lab, select a historical fixture, inspect its source and evaluation label, then recompute its result-model probabilities through the backend.
+6. For optional fresh language-model inference, open a second terminal in the project folder and run .\.venv\Scripts\python.exe -m scripts.local_model. Wait for Foundry Local to be ready, select the local model in Agent intelligence and run a workflow. This downloads model weights if missing. Default startup does not download them.
+
+PROJECT CODE REPOSITORY LINK
+https://github.com/AhmedKadiwala/Match_Weave_AI
+
+TESTING INSTRUCTIONS LINK
+https://github.com/AhmedKadiwala/Match_Weave_AI/blob/main/JUDGE_QUICKSTART.md
+
+SCREENSHOTS / DIAGRAM — IF STILL NEEDED
+docs/screenshots/01-live-intelligence.png
+docs/screenshots/07-real-match-lab.png
+docs/architecture.svg
+
+FINAL FORM CHECK
+- Keep your existing video upload and public viewing URL attached.
+- Enter actual participant/team details and Microsoft Learn usernames where applicable.
+- Confirm the working project/testing instructions link is supplied.
+- Review the form, finalize/submit it and save the portal confirmation.
+- Do not paste this instruction sheet or personal participant details into the public project description; copy only the relevant field content.
