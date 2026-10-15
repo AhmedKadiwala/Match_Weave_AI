@@ -1,0 +1,32 @@
+[
+  {
+    "id": "comeback",
+    "title": "The comeback",
+    "seed": 41,
+    "events": 2054
+  },
+  {
+    "id": "pressing",
+    "title": "Pressure makes the moment",
+    "seed": 52,
+    "events": 2057
+  },
+  {
+    "id": "counter",
+    "title": "Control versus chaos",
+    "seed": 63,
+    "events": 1786
+  },
+  {
+    "id": "defensive",
+    "title": "A game of fine margins",
+    "seed": 74,
+    "events": 1994
+  },
+  {
+    "id": "star",
+    "title": "The Sol Vega show",
+    "seed": 85,
+    "events": 1996
+  }
+]
