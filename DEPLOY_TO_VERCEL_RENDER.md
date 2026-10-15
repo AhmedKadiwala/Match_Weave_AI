@@ -4,12 +4,19 @@ These files prepare deployment; no public Vercel/Render URL or Apps Script trigg
 
 ## 1. Upload the source
 
-Create an empty public GitHub repository, then push from this folder:
+Create an empty public GitHub repository. The clean READY_TO_UPLOAD folder contains the source without local dependencies and has no Git metadata yet. From that folder:
 
 ```powershell
+cd "C:\Users\Ahmed Kadiwala\matchweave-ai\READY_TO_UPLOAD"
+git init
+git add .
+git commit -m "MatchWeave AI submission"
+git branch -M main
 git remote add origin https://github.com/YOUR_LOGIN/matchweave-ai.git
-git push -u origin HEAD:main
+git push -u origin main
 ```
+
+If you deliberately use the original already-initialized project instead, keep its existing branch/history and use `git push -u origin HEAD:main`. Do not reinitialize or force-rename an unrelated repository.
 
 The URL is a placeholder: substitute your actual repository. If an origin already exists, inspect `git remote -v` instead of adding a duplicate. The project contains source, original synthetic scenarios, licensed historical results, trained model JSON and static replay assets. `.env`, runtime databases/model downloads and dependencies are excluded. Do not upload only `frontend/dist` as the full project.
 
