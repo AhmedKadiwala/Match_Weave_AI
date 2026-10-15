@@ -1,0 +1,69 @@
+{
+  "hardware": "Intel CPU / 16 GB RAM / Windows; Foundry Qwen CPU timings reported separately",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.14.7",
+  "measurements": 90,
+  "deterministic_state_claim_overlay_ms": {
+    "p50": 21.368,
+    "p95": 44.259,
+    "max": 63.725
+  },
+  "comparison_type": "Controlled deterministic ablation, not evidence of LLM superiority. Same injected +99 count fault. Clean baseline may already be correct.",
+  "comparison": [
+    {
+      "match_id": "comeback",
+      "baseline_ms": 6.247,
+      "workflow_ms": 487.494,
+      "clean_baseline_correct": true,
+      "fault_baseline_correct": false,
+      "verified_workflow_correct": true,
+      "repairs": 1,
+      "baseline_persona_language_variants": 1,
+      "workflow_variants": 9
+    },
+    {
+      "match_id": "pressing",
+      "baseline_ms": 7.379,
+      "workflow_ms": 392.523,
+      "clean_baseline_correct": true,
+      "fault_baseline_correct": false,
+      "verified_workflow_correct": true,
+      "repairs": 1,
+      "baseline_persona_language_variants": 1,
+      "workflow_variants": 9
+    },
+    {
+      "match_id": "counter",
+      "baseline_ms": 5.764,
+      "workflow_ms": 355.504,
+      "clean_baseline_correct": true,
+      "fault_baseline_correct": false,
+      "verified_workflow_correct": true,
+      "repairs": 1,
+      "baseline_persona_language_variants": 1,
+      "workflow_variants": 9
+    },
+    {
+      "match_id": "defensive",
+      "baseline_ms": 6.22,
+      "workflow_ms": 338.368,
+      "clean_baseline_correct": true,
+      "fault_baseline_correct": false,
+      "verified_workflow_correct": true,
+      "repairs": 1,
+      "baseline_persona_language_variants": 1,
+      "workflow_variants": 9
+    },
+    {
+      "match_id": "star",
+      "baseline_ms": 7.176,
+      "workflow_ms": 384.505,
+      "clean_baseline_correct": true,
+      "fault_baseline_correct": false,
+      "verified_workflow_correct": true,
+      "repairs": 1,
+      "baseline_persona_language_variants": 1,
+      "workflow_variants": 9
+    }
+  ]
+}

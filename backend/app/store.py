@@ -63,6 +63,10 @@ class Store:
         with self.connect() as c:
             c.execute("INSERT INTO runs VALUES (?,?)", (run["run_id"], json.dumps(run, ensure_ascii=False)))
 
+    def events(self, match_id: str) -> list[Event]:
+        with self.connect() as c:
+            return [Event.model_validate_json(r[0]) for r in c.execute("SELECT body FROM events WHERE match_id=? ORDER BY sequence", (match_id,))]
+
     def get_run(self, run_id: str):
         with self.connect() as c:
             row = c.execute("SELECT body FROM runs WHERE run_id=?", (run_id,)).fetchone()
