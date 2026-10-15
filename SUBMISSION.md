@@ -1,6 +1,6 @@
 # Competition submission text
 
-Status: prepared materials, **not submitted**. The entry portal's authenticated form was not accessible; these cover the fields mandated by official rules §4.4 and the requested team fields. Confirm any additional portal-only fields before submission.
+Status: public source uploaded and verified; competition entry **not submitted**. Public website and externally hosted video URLs remain unverified. These materials cover the fields mandated by official rules §4.4 and the requested team fields. Confirm any additional portal-only fields before submission.
 
 ## Project title
 
@@ -41,9 +41,9 @@ No Azure cloud deployment, GitHub Copilot, Fabric, MCP/A2A orchestration or vide
 
 | Field | Value / action |
 |---|---|
-| Public GitHub repository | Target: https://github.com/AhmedKadiwala/Match_Weave_AI — verify that the source upload is present before submitting |
+| Public GitHub repository | https://github.com/AhmedKadiwala/Match_Weave_AI — source, README and video verified through unauthenticated HTTP requests |
 | Public interactive demo | Optional Vercel/Render deployment remains unverified; a functioning test build is another route under §4.8 |
-| Working test build | deployment/matchweave-static-demo.zip after packaging; serve extracted files over HTTP |
+| Working test build | Clone the public repository and follow README.md / RUN_MATCHWEAVE.cmd. The optional deployment/matchweave-static-demo.zip is generated locally by scripts/package_release.py and is not committed to GitHub |
 | Demo video | demos/matchweave-demo.mp4, 105 seconds; upload in Project Images/Video and add an unrestricted YouTube/Vimeo URL to the description to cover the official public-video URL requirement |
 | Video captions | demos/captions.srt |
 | Test instructions | JUDGE_QUICKSTART.md |
@@ -63,7 +63,7 @@ Legal entrant/representative name, country/residence, adult eligibility, organiz
 - [x] Actual working-device screenshots and browser footage prepared by the capture workflow.
 - [x] Functional local test build and zero-paid-API path.
 - [ ] Entrant confirms eligibility, ownership, registration and any additional portal fields.
-- [ ] Public GitHub URL verified.
+- [x] Public GitHub source, README and included MP4 verified without authentication.
 - [ ] Public demo or downloadable test build URL verified.
 - [ ] Video file reviewed, hosted and its public URL verified.
 - [ ] All final field values entered and submitted; confirmation saved.

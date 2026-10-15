@@ -27,3 +27,5 @@ No unresolved critical automated-test failure or known critical dependency advis
 ## Follow-up verification status
 
 The requested Vercel/Render/Google configuration and real historical result-model extension were added after this provisional scorecard. Current executed test totals are in TEST_RESULTS.md and TESTING_EXPLAINED.md. Source coverage, two actually fitted models, held-out metrics and the seventh Real match lab view are documented in MODEL_CARD and REAL_DATA_AND_TRAINING. A separate minimal Render-profile environment passed an actual local browser integration. Public cloud verification and independent review still remain; no automatic score increase or new judging result is claimed.
+
+Public source was subsequently published to https://github.com/AhmedKadiwala/Match_Weave_AI and verified without authentication, including matching source Git blobs, the README local setup and the video SHA-256. See docs/reports/github-publication.json. This completes the earlier public-source backlog item; public website/video hosting, portal submission and independent evaluation remain outstanding. The provisional score remains 89/100.

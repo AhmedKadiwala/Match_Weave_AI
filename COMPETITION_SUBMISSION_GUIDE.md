@@ -1,6 +1,6 @@
 # Competition submission field guide
 
-Target public source repository: https://github.com/AhmedKadiwala/Match_Weave_AI
+Public source repository: https://github.com/AhmedKadiwala/Match_Weave_AI — uploaded and verified without authentication. Publication evidence: docs/reports/github-publication.json.
 
 Publishing the repository is separate from finalizing the competition form. Complete the actual form in Innovation Studio and retain its confirmation. This guide does not claim a portal submission or a verified public website/video URL.
 

@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/AhmedKadiwala/Match_Weave_AI",
+  "public": true,
+  "default_branch": "main",
+  "source_files_verified": 246,
+  "unauthenticated_http_checks": true,
+  "readme_local_and_ai_instructions": true,
+  "video_sha256_matches_local": true,
+  "commit": "2d2d4a5dfda5867c80fa7f2ee24a47d52ab65723"
+}

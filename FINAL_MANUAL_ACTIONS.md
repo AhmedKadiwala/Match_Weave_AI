@@ -1,6 +1,6 @@
 # Remaining manual actions
 
-1. Follow UPLOAD_CHECKLIST.md: push/upload this complete source repository to GitHub.
+1. Public source upload is complete: https://github.com/AhmedKadiwala/Match_Weave_AI. Source files, README and included MP4 were verified without authentication. Update the same repository if making further changes; do not create another empty repository.
 2. Choose the working-project access route. A functioning local test build with README setup instructions is an alternative to a hosted website under official rules §4.8. Validate a clean clone on another machine if using that route. See COMPETITION_SUBMISSION_GUIDE.md.
 3. If hosting: deploy the backend on Render Free, then frontend/ on Vercel Hobby with VITE_API_URL set to the actual backend URL. Set MATCHWEAVE_CORS_ORIGINS on Render to the actual Vercel production origin and verify signed-out browser access.
 4. If using Render and the optional ping: paste GOOGLE_KEEP_ALIVE.gs into Google Apps Script, set its real backend URL, run pingBackend once, and create your Time-driven > Every 5 minutes trigger. No Google trigger has been installed here.
