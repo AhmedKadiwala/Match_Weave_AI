@@ -1,0 +1,33 @@
+{
+  "overlay_id": "overlay-pressing-4200000-harbor-pressure-broadcaster-en",
+  "match_id": "pressing",
+  "start_ms": 4200000,
+  "end_ms": 4215000,
+  "overlay_type": "stat_card",
+  "heading": "Pressure, with the evidence",
+  "supporting_statistic": "HBC | 14 pressure events | in the latest 10 minutes.",
+  "source_event_ids": [
+    "pressing-01347",
+    "pressing-01360",
+    "pressing-01374",
+    "pressing-01391",
+    "pressing-01415",
+    "pressing-01449",
+    "pressing-01458",
+    "pressing-01496",
+    "pressing-01517",
+    "pressing-01538",
+    "pressing-01549",
+    "pressing-01566",
+    "pressing-01567",
+    "pressing-01589"
+  ],
+  "position": {
+    "x": 0.05,
+    "y": 0.78,
+    "width": 0.6
+  },
+  "audience": "broadcaster",
+  "language": "en",
+  "verification_status": "verified"
+}

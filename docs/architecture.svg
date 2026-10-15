@@ -15,7 +15,7 @@
 <rect x="740" y="414" width="165" height="60" class="box"/><text x="758" y="442" class="head">Fact Checker</text><text x="758" y="462" class="small">Independent recount</text>
 <rect x="960" y="414" width="235" height="60" class="box" style="stroke:#85ad60"/><text x="977" y="442" class="head">Publishing Agent</text><text x="977" y="462" class="small">Verified multilingual templates</text>
 <path class="line" d="M240 400H270V444H295M240 483H270V444H295M465 444H515M685 444H735M905 444H955"/>
-<path d="M820 474V529H605V479" fill="none" stroke="#d4b075" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a)"/><text x="640" y="551" font-size="12" fill="#d4b075">Reject → source repair → re-verify (one bounded correction)</text>
+<rect x="740" y="512" width="165" height="38" class="box"/><text x="758" y="536" font-size="14">Source repair</text><path d="M785 474V507M865 512V479" fill="none" stroke="#d4b075" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a)"/><text x="930" y="537" font-size="12" fill="#d4b075">Reject → repair → re-verify</text>
 <rect x="55" y="610" width="555" height="72" class="box"/><text x="75" y="637" class="head">Local application</text><text x="75" y="661" class="small">FastAPI + SQLite + MAF + optional Foundry Local Qwen inference</text>
 <rect x="650" y="610" width="575" height="72" class="box"/><text x="670" y="637" class="head">Static judging replay</text><text x="670" y="661" class="small">Python-generated snapshots + actual recorded runs → GitHub Pages</text>
 </svg>

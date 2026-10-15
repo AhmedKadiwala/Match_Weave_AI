@@ -1,0 +1,29 @@
+{
+  "created_ist": "2026-10-15T20:32:59.530977+05:30",
+  "source_files": 130,
+  "archives": [
+    {
+      "path": "deployment/matchweave-submission.zip",
+      "bytes": 15406041,
+      "sha256": "afb4609cd766328b2e7c3960e91319e43a097103cb7fcbe84b6b01921dc8c606"
+    },
+    {
+      "path": "deployment/matchweave-static-demo.zip",
+      "bytes": 836348,
+      "sha256": "2a723f6899cf890230db23bfcbbbf80b26b5ea974e945c4778369e6fb0254db9"
+    }
+  ],
+  "video": {
+    "path": "demos/matchweave-demo.mp4",
+    "bytes": 4573008,
+    "sha256": "a84b99dd1ec8754745e7ee6729ac8b36d515526d765a8ae6ef5207b49af52def"
+  },
+  "backend_tests": "27/27 passed",
+  "browser_tests": "9/9 passed",
+  "video_duration_seconds": 105.0,
+  "internal_score": 89,
+  "public_repository_url": null,
+  "public_demo_url": null,
+  "public_video_url": null,
+  "portal_submitted": false
+}

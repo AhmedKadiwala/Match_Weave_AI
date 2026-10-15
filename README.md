@@ -74,3 +74,5 @@ Models make constrained editorial choices. Free-form model notes can hallucinate
 Official dates: register by Oct 20 noon Pacific; submit by Oct 27 23:59 Pacific; maintain free judging access through Nov 10 23:59 Pacific. Entrant eligibility, registration and ownership must be confirmed by the entrant. [Official rules](https://github.com/microsoft/insidethegamehackathon/blob/main/OFFICIAL%20RULES.md).
 
 MIT for original project code and synthetic datasets. Third-party dependencies retain their own licenses; [notices](THIRD_PARTY_NOTICES.md). No protected club logos, footage, paid sports data or music.
+
+Demo assets: [watch the actual narrated 1:45 MP4](demos/matchweave-demo.mp4), [raw browser recording](demos/matchweave-screen-recording.webm), [captions](demos/captions.srt), [complete deliverable inventory](IMPLEMENTATION_INVENTORY.md). Internal evidence assessment: 89/100, below the requested target; see SCORECARD_FINAL.md.

@@ -1,0 +1,12 @@
+{
+  "kind": "actual Chromium video of running local application",
+  "source_url": "http://127.0.0.1:5173",
+  "viewport": {
+    "width": 1600,
+    "height": 900
+  },
+  "scene_duration_seconds": 105,
+  "trim_start_seconds": 2.574,
+  "recorded_model_outputs": true,
+  "live_inference_during_capture": false
+}

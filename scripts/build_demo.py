@@ -34,7 +34,9 @@ async def main():
         recovery_source = ROOT / "demos" / f"{match.id}-local-recovery.json"
         if recovery_source.exists():
             recovery = json.loads(recovery_source.read_text(encoding="utf-8"))
-            recovery["recording_label"] = "Recorded Agent Run · injected count fault, source repair and re-verification"
+            recovery["recording_label"] = (
+                "Recorded Agent Run · injected count fault, source repair and re-verification"
+            )
         artifact = {
             "match": match.model_dump(mode="json"),
             "snapshots": snapshots,
