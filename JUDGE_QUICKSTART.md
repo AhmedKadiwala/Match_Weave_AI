@@ -1,6 +1,6 @@
 # Judge quick start
 
-Public URL: pending your Vercel/Render deployment. No hosting or submission is claimed. See UPLOAD_CHECKLIST.md for the deployment order and exact configuration.
+Source repository: https://github.com/AhmedKadiwala/Match_Weave_AI (verify source publication). Public website: optional Vercel/Render deployment remains unverified. No competition submission is claimed. README.md contains clone/setup/start commands; COMPETITION_SUBMISSION_GUIDE.md explains the working-test-build alternative to a hosted website.
 
 For local use, double-click RUN_MATCHWEAVE.cmd. It opens http://127.0.0.1:8000/ after readiness and serves frontend plus API from one process. Keep the window open. First-run setup requires Python/Node and can download the open-source dependencies; no paid API key is required.
 

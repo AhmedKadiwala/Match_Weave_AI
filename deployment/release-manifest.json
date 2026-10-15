@@ -1,16 +1,16 @@
 {
-  "created_ist": "2026-10-15T21:39:19.228017+05:30",
-  "source_files": 243,
+  "created_ist": "2026-10-15T22:03:41.467124+05:30",
+  "source_files": 245,
   "archives": [
     {
       "path": "deployment/matchweave-submission.zip",
-      "bytes": 19002032,
-      "sha256": "e05056ef037613d2ce21abf3c1e93cb2e8797f0fdfdbb9cd4f8383a056645110"
+      "bytes": 19008357,
+      "sha256": "cdb69ab07ab5b6eade81fc9f4bebb4cb9f98f6d0b06f31805d1f7d6e156cc16b"
     },
     {
       "path": "deployment/matchweave-static-demo.zip",
       "bytes": 2082235,
-      "sha256": "ac003b78acbf38b8367617c06ad753ac4a2376290fd12fefc856909a6919ed77"
+      "sha256": "66b3929fce950b273a214704db74cc42742d9f58fa99b4dd6fd5063775101377"
     }
   ],
   "video": {
@@ -28,7 +28,7 @@
   "excluded_season": "2026-27",
   "video_duration_seconds": 105.0,
   "internal_score": 89,
-  "public_repository_url": null,
+  "public_repository_url": "https://github.com/AhmedKadiwala/Match_Weave_AI",
   "public_demo_url": null,
   "public_video_url": null,
   "portal_submitted": false

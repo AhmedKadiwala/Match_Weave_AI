@@ -96,7 +96,7 @@ def main():
         "excluded_season": "2026-27",
         "video_duration_seconds": video["duration_seconds"],
         "internal_score": 89,
-        "public_repository_url": None,
+        "public_repository_url": "https://github.com/AhmedKadiwala/Match_Weave_AI",
         "public_demo_url": None,
         "public_video_url": None,
         "portal_submitted": False,

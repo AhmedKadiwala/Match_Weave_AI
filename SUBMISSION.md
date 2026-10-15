@@ -41,14 +41,14 @@ No Azure cloud deployment, GitHub Copilot, Fabric, MCP/A2A orchestration or vide
 
 | Field | Value / action |
 |---|---|
-| Public GitHub repository | Pending GitHub authentication; create and push the prepared repository using DEPLOYMENT.md |
-| Public interactive demo | Pending verified Pages deployment; paste the literal successful deployment URL |
+| Public GitHub repository | Target: https://github.com/AhmedKadiwala/Match_Weave_AI — verify that the source upload is present before submitting |
+| Public interactive demo | Optional Vercel/Render deployment remains unverified; a functioning test build is another route under §4.8 |
 | Working test build | deployment/matchweave-static-demo.zip after packaging; serve extracted files over HTTP |
-| Demo video | demos/matchweave-demo.mp4, 105 seconds; upload publicly or unlisted with unrestricted viewing to YouTube/Vimeo, then verify signed-out access |
+| Demo video | demos/matchweave-demo.mp4, 105 seconds; upload in Project Images/Video and add an unrestricted YouTube/Vimeo URL to the description to cover the official public-video URL requirement |
 | Video captions | demos/captions.srt |
 | Test instructions | JUDGE_QUICKSTART.md |
 | Architecture | docs/architecture.svg |
-| Screenshots | docs/screenshots/01-live-intelligence.png through 06-recap.png, plus responsive captures |
+| Screenshots | docs/screenshots/01-live-intelligence.png through 06-recap.png, plus 07-real-match-lab.png, 08-single-server-proof.png and responsive captures |
 | Category target | Best Multi-Agent System / Orchestration; overall Grand Prize consideration |
 
 ## Entrant fields — complete personally

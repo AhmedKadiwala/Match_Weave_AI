@@ -4,7 +4,7 @@ These files prepare deployment; no public Vercel/Render URL or Apps Script trigg
 
 ## 1. Upload the source
 
-Create an empty public GitHub repository. The clean READY_TO_UPLOAD folder contains the source without local dependencies and has no Git metadata yet. From that folder:
+The target public repository is https://github.com/AhmedKadiwala/Match_Weave_AI. It already exists; verify its contents before pushing. The clean READY_TO_UPLOAD folder contains the source without local dependencies and has no Git metadata yet. If the remote is still empty, from that folder:
 
 ```powershell
 cd "C:\Users\Ahmed Kadiwala\matchweave-ai\READY_TO_UPLOAD"
@@ -12,13 +12,13 @@ git init
 git add .
 git commit -m "MatchWeave AI submission"
 git branch -M main
-git remote add origin https://github.com/YOUR_LOGIN/matchweave-ai.git
+git remote add origin https://github.com/AhmedKadiwala/Match_Weave_AI.git
 git push -u origin main
 ```
 
 If you deliberately use the original already-initialized project instead, keep its existing branch/history and use `git push -u origin HEAD:main`. Do not reinitialize or force-rename an unrelated repository.
 
-The URL is a placeholder: substitute your actual repository. If an origin already exists, inspect `git remote -v` instead of adding a duplicate. The project contains source, original synthetic scenarios, licensed historical results, trained model JSON and static replay assets. `.env`, runtime databases/model downloads and dependencies are excluded. Do not upload only `frontend/dist` as the full project.
+If an origin already exists, inspect `git remote -v` instead of adding a duplicate. If the remote contains newer commits, fetch and integrate them; do not force-push over them. The project contains source, original synthetic scenarios, licensed historical results, trained model JSON and static replay assets. `.env`, runtime databases/model downloads and dependencies are excluded. Do not upload only `frontend/dist` as the full project. Hosting is optional if you provide a working demo/test build under official rules §4.8; the rest of this guide applies when choosing Vercel/Render.
 
 ## 2. Render — backend
 

@@ -2,19 +2,68 @@
 
 **Every moment has a story. Every fan gets their version.**
 
-Start with **START_HERE.txt**. Before uploading, follow **UPLOAD_CHECKLIST.md**. Everything needed—source, data, trained weights, instructions, test reports, screenshots and video—is in this folder.
+MatchWeave turns football events into explanations whose supporting evidence you can inspect, personalized for fans, analysts and broadcast producers. It combines Microsoft Agent Framework, optional local language-model inference and a separately trained historical match-result model.
 
-## Run on your PC
+[Demo video — 105 seconds](demos/matchweave-demo.mp4) · [Judge quick start](JUDGE_QUICKSTART.md) · [Architecture](ARCHITECTURE.md) · [Model card](MODEL_CARD.md) · [Test results](TEST_RESULTS.md)
 
-Double-click **RUN_MATCHWEAVE.cmd**. It serves the built UI and API together at **http://127.0.0.1:8000/** and opens the browser after the server is ready. Keep its terminal window open. The first launch installs/builds when needed. A localhost link is local to the running PC, not a public website. Python 3.11+ and Node 22.12+ are needed for a clean setup; tested here with Python 3.14.7 / Node 24.19.0 / Windows 11.
+This repository includes source, licensed datasets, trained statistical model weights, instructions, test reports, screenshots and the actual submission video. Download the video if GitHub does not play it inline. The MP4 in the repository is also the file to upload in the competition's Project Images/Video section; including it here does not submit the project to the competition.
+
+## Run locally on Windows
+
+1. Install **Git**, **64-bit Python 3.11+** and **Node.js 22.12+**, including npm. Ensure `git`, `python` and `npm` are available in a new terminal. The executed setup used **Windows 11, Python 3.14.7 and Node 24.19.0**; other systems and dependency combinations have not been independently verified.
+2. Open PowerShell and clone the source:
+
+   ```powershell
+   git clone https://github.com/AhmedKadiwala/Match_Weave_AI.git
+   cd Match_Weave_AI
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-local.ps1
+   ```
+
+   Alternatively, use **Code → Download ZIP**, extract it into a writable folder and double-click **RUN_MATCHWEAVE.cmd**. Do not run files inside the unextracted ZIP.
+3. Allow the first launch to install Python dependencies, run `npm ci` and build the frontend. Internet access is needed for these downloads. The launcher does **not** download language-model weights automatically.
+4. Your browser opens **http://127.0.0.1:8000/** after the combined UI/API server is ready. Keep its terminal window open. Press **Ctrl+C** to stop the server.
+5. Explore **Real match lab** for historical matches and model estimates. In **Agent intelligence**, inspect recorded local-model runs or select the deterministic provider and click **Run workflow** to execute a fresh Microsoft workflow.
+
+**No paid API key, Azure subscription or `.env` file is needed for the default local demo.** The included data and fitted result-model weights do not need to be fetched or trained again. `127.0.0.1` works only on the computer running the server; opening `frontend/index.html` directly is not a supported way to run the app.
+
+To run setup and startup separately:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1
+.\.venv\Scripts\python.exe -m scripts.serve_local
+```
 
 If a legacy backend already occupies port 8000, stop it with `powershell -ExecutionPolicy Bypass -File scripts/stop.ps1`, then launch again. Current setup and developer scripts are under scripts/.
 
-## Deploy your requested stack
+## Run fresh local language-model inference (optional)
+
+With the application running, open a second PowerShell terminal in the repository and run:
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.local_model
+```
+
+This explicitly downloads Qwen2.5 1.5B if missing and starts Microsoft Foundry Local on your computer. Wait until the model service is ready and keep that terminal open. In **Agent intelligence**, select **Local model · Foundry / Ollama** and click **Run workflow**. Foundry Local is the tested provider; Ollama was not executed in the recorded verification. See [the local AI guide](docs/LOCAL_AI.md) for hardware/runtime details and overrides.
+
+## Why this is an AI project without a paid AI API
+
+- **Local language model:** Qwen2.5 1.5B performs inference through Foundry Local. Microsoft Agent Framework coordinates the specialist agents. The model service uses a local HTTP API on `127.0.0.1`; it does not call a paid cloud model. Actual run records are included under `demos/` and `frontend/public/artifacts/`.
+- **Trained machine learning:** the historical lab loads logistic-regression weights learned from real match results and computes home-win/draw/away-win probabilities. This is fresh model inference and does not need a hosted AI API.
+- **Explicit execution modes:** recorded runs replay previous AI executions. Deterministic workflows perform calculations and verification without new LLM inference. Published multilingual text uses constrained templates. These modes are labeled; neither framework orchestration nor templates alone are presented as proof of fresh generative AI.
+
+We trained the match-result model, not the language model. See [AI_EXPLAINED.md](AI_EXPLAINED.md) for the distinction and an explanation you can use in your presentation.
+
+## Hosting and the competition submission
+
+A hosted website is **optional**. Official rules §4.8 allow a website, functioning demo **or test build**, and require free access for judging. The public repository with these setup instructions provides the source-based local testing route; verify it on another computer before relying on that route. A working public demo makes evaluation easier. [Official rules §§4.4 and 4.8](https://github.com/microsoft/insidethegamehackathon/blob/main/OFFICIAL%20RULES.md).
+
+Upload the source to GitHub first, then deploy from that repository if you choose hosting. Enter the public repository URL in **Project Code Repository Link**, and upload the actual video, screenshots and architecture graphic in **Project Images/Video**. The official rules also request a publicly accessible video URL; hosting the video on YouTube or Vimeo and including its URL in the description covers that requirement as well. [Submission field guide](COMPETITION_SUBMISSION_GUIDE.md).
+
+## Optional deployment: Vercel + Render
 
 **Frontend: Vercel. Backend: Render Free. Health ping: Google Apps Script every five minutes.**
 
-[Copy/paste deployment settings](DEPLOY_TO_VERCEL_RENDER.md) and [pre-upload checklist](UPLOAD_CHECKLIST.md). `render.yaml`, `requirements-render.txt`, `frontend/vercel.json`, environment examples and `GOOGLE_KEEP_ALIVE.gs` are included. No cloud account, public deployment or Google trigger has been created. Public URLs stay pending until verified.
+[Copy/paste deployment settings](DEPLOY_TO_VERCEL_RENDER.md) and [pre-upload checklist](UPLOAD_CHECKLIST.md). `render.yaml`, `requirements-render.txt`, `frontend/vercel.json`, environment examples and `GOOGLE_KEEP_ALIVE.gs` are included. No public Vercel/Render deployment or Google trigger has been created. Demo and video hosting URLs stay pending until verified.
 
 Render executes real deterministic Microsoft Agent Framework workflows and the trained result model. The public frontend also replays actual recorded local LLM runs. Live Foundry inference runs on your PC with `python -m scripts.local_model`; the large model is not falsely advertised as running on Render Free. Public pages never silently connect to a visitor's localhost.
 
