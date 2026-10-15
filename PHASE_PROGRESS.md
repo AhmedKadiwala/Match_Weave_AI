@@ -17,3 +17,4 @@ Pending.
 
 ## Phase 6 — Submission package and final audit
 Pending.
+`nPhase 1 checks: backend health test 1 passed; Vite production build passed (27 modules); Uvicorn started successfully and HTTP health verified. MAF OpenAI provider is a separate distribution; install resolved in phase 3. Files: architecture/cost/traceability/scoring/progress, manifests, frontend entry, health API/test.
